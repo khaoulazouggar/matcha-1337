@@ -1,16 +1,18 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+* {
+    font-family: "Roboto", sans-serif;
+} */
+
 body {
     background: linear-gradient( 135deg, #FAB2FF 10%, #1904E5 100%);
     background-size: cover;
     background-repeat: no-repeat;
+    font-family: 'fantasy', sans-serif;
     background-attachment: fixed;
-    font-family: 'Open Sans', sans-serif;
     color: #333333;
   }
   
   .box-form {
-    margin: 0 auto;
-    margin: auto;
-    width: 80%;
     background: #FFFFFF;
     border-radius: 10px;
     display: flex;
@@ -18,8 +20,9 @@ body {
     }
   
   .left{
+    width: 640px;
     color: white;
-    overflow: hidden;
+    /* overflow: hidden; */
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -28,8 +31,59 @@ body {
   .left p:nth-of-type(1) {
       color: #f3f9fb;
   }
-  
+
+  .overlay {
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    background: #5961f9ad;
+     border-radius: 10px 0 0 10px; 
+    /* overflow: hidden; */
+    box-sizing: border-box;
+  }
+
+  h1{
+      font-size: 80px;
+      line-height: 1;
+      font-weight: 900px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+  img{
+      width: 20px;
+    }
+
+  button.media{
+      float: left;
+      color: rgb(0, 0, 0);
+      font-size: 16px;
+      border-radius: 10px;
+      border: 0; outline: 0;
+      box-shadow: 0px 4px 20px 0px #090b6f85;
+      background-color: white;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      height: 44px;
+  }
+
+  .overlay button:nth-of-type(1){
+      width: 250px;
+      margin-right: 20px;
+  }
+
+  .overlay button:hover{
+          box-shadow: 0px 0px 5px 3px #cadefc;
+          border: 1px solid #5961f9ad;
+  }
+
+  .overlay button:nth-of-type(2){
+      width: 60px;
+  }
+
   .right {
+    width: 470px;
     padding: 40px;
     }
   
@@ -49,35 +103,17 @@ body {
     background-color: #5961f9ad;
   }
   
-  .overlay {
-    padding: 30px;
-    width: 100%;
-    height: 100%;
-    background: #5961f9ad;
-     border-radius: 10px 0 0 10px; 
-    overflow: hidden;
-    box-sizing: border-box;
-  }
-    
-  h1{
-    font-size: 80px;
-    line-height: 1;
-    font-weight: 900px;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
-  
   input{
     width: 100%;
     padding: 10px;
     margin-top: 25px;
     font-size: 16px;
     border: none;
-    outline: none;
+    /* outline: none; */
     border-bottom: 2px solid #B0B3B9;
   }
   
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 1200px) {
     .box-form {
       flex-direction: column;
     }
@@ -87,33 +123,4 @@ body {
     
   }
 
-    img{
-    width: 20px;
-    background-image: white;
-    }
-
-    .overlay button:nth-of-type(1){
-        width: 250px;
-        margin-right: 20px;
-    }
-    .overlay button:hover{
-            box-shadow: 0px 0px 5px 3px #cadefc;
-            border: 1px solid #5961f9ad;
-    }
-    .overlay button:nth-of-type(2){
-        width: 60px;
-    }
-
-    button.media{
-        float: left;
-        color: rgb(0, 0, 0);
-        font-size: 16px;
-        border-radius: 10px;
-        border: 0; outline: 0;
-        box-shadow: 0px 4px 20px 0px #090b6f85;
-        background-color: white;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        height: 44px;
-    }
+    

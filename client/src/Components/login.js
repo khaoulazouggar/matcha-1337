@@ -10,10 +10,14 @@ function Login()
             <div className="box-form">
                 <div className="left">
                     <div className="overlay">
-                        <h1>find your perfect match</h1>
-                        <p>We are here to build emotion, connect people and create happy stories.</p>
+                        <h1>find your perfect match</h1><br/>
+                        <p>We are here to build emotion, connect people and create happy stories.
+                        Online dating sites are the way to go for people seeking love.
+                        </p>
+                        
                         <span>
                             <p>login with social media</p>
+                            <br/>
                             <button className="media">
                              <img src={fb}/>
                                 sign up with Facebook   
@@ -21,10 +25,6 @@ function Login()
                             <button className="media">
                              <img src={google}/>   
                             </button>
-                            
-
-                            {/* <img src={test} style={{width:'20px'}} />
-                            <a href="#"><i className="fa fa-twitter" aria-hidden="true"></i> Login with Twitter</a> */}
                         </span>
                     </div>
                 </div>
