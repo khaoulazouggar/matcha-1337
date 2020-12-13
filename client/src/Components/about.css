@@ -1,4 +1,10 @@
-about {
-  background-image: url(../photos/heartshape.png);
-  height: 900px;
+.im{
+    height: 100%;
+    width: 100%;   
+}
+
+h2{
+    font-size: 50px;
+  line-height: 0;
+  color: #333333;
 }

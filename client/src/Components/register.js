@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./login.css";
+// import "./login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 
@@ -53,7 +53,7 @@ function Register() {
           </div>
           <br />
           <br />
-          <button className="login">Register</button>
+          <button className="btn">Register</button>
         </div>
       </div>
     </div>

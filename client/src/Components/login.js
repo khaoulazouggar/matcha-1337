@@ -81,7 +81,7 @@ function Login() {
             <a href="">forget password?</a>
           </div>
           <br />
-          <button className="login">Login</button>
+          <button className="btn">Login</button>
         </div>
         {/* )} */}
       </div>
