@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import "./login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
-import _ from "lodash";
+// import _ from "lodash";
+import isEmpty from "./isEmpty";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [errusername, setErrUsername] = useState("");
+  const [username, setusername] = useState("");
+  const [errusername, setErrusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [errpassword, setErrpassword] = useState("");
   // const [show, setShow] = useState(false);
   // const handleShow = () => {
   //   setShow(!show);
   // };
   const hadnleLogin = () => {
-    setErrUsername("");
-    if (_.isEmpty(username)) {
-      setErrUsername("this field should not be empty");
+    setErrusername("");
+    if (isEmpty(username)) {
+      setErrusername("this field should not be empty");
+    }
+    setErrpassword("");
+    if (isEmpty(password)) {
+      setErrpassword("this field should not be empty");
     }
   };
   return (
@@ -76,18 +83,27 @@ function Login() {
             minute
           </p>
           <div className="inputs">
-            <input type="text" placeholder="User name" />
+            <input
+              type="text"
+              placeholder="User name"
+              value={username}
+              onChange={(e) => {
+                setusername(e.target.value);
+                console.log(username);
+              }}
+            />
+             <span style={{ color: "red" }}>{errusername}</span>
             <br />
             <input
               type="password"
               placeholder="Password"
-              value={username}
+              value={password}
               onChange={(e) => {
-                setUsername(e.target.value);
-                console.log(username);
+                setpassword(e.target.value);
+                console.log(password);
               }}
             />
-            <span style={{ color: "red" }}>{errusername}</span>
+            <span style={{ color: "red" }}>{errpassword}</span>
           </div>
           <br />
           <br />
