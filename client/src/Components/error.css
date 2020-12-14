@@ -8,7 +8,7 @@ img.error {
 
 button.bth {
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   padding: 12px 35px;
   border-radius: 50px;
   border: 0;
@@ -19,9 +19,6 @@ button.bth {
   overflow: hidden;
   z-index: 3;
   cursor: pointer;
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-  align-items: center;
 }
 
 button.bth::after {
@@ -34,7 +31,6 @@ button.bth::after {
   background-color: #c3bef0;
   z-index: -1;
   transition: all 0.5s;
-  /* transform: translateX(-100%); */
 }
 button.bth:hover:after {
   width: 100%;

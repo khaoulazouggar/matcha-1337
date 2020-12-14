@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import "./login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
@@ -20,11 +20,11 @@ function Register() {
               <p>Login with your social network</p>
               <br />
               <button className="media">
-                <img src={fb} />
+                <img alt="" src={fb} />
                 Sign Up With Facebook
               </button>
               <button className="media">
-                <img src={google} />
+                <img alt="" src={google} />
               </button>
             </span>
           </div>

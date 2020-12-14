@@ -5,6 +5,7 @@ import Register from "./Components/register";
 import About from "./Components/about";
 import Home from "./Components/home";
 import Error from "./Components/error";
+import Fgpass from "./Components/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -14,11 +15,14 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/" component={Home} />
+
             <Route path="/register" component={Register} />
 
             <Route path="/login" component={Login} />
 
             <Route path="/about" component={About} />
+
+            <Route path="/fgpass" component={Fgpass} />
 
             <Route path="*" component={Error} />
           </Switch>

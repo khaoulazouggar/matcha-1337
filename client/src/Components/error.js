@@ -2,7 +2,6 @@ import React from "react";
 import error from "../photos/404.png";
 import "./error.css";
 import { useHistory } from "react-router-dom";
-import arrow from "../photos/right-arrow.png";
 import { ArrowRight } from "react-feather";
 
 function Error() {
@@ -15,12 +14,12 @@ function Error() {
 
   return (
     <div className="div">
-      <img className="error" src={error} />
+      <img alt="" className="error" src={error} />
       <h1>Oops.. Looks Like You Got Lost :(</h1>
       <br /> <br />
       <button className="bth" onClick={routeChange}>
        Back To Home
-        <ArrowRight /*style={{ marginTop: 5 }}*/ size={20} />
+        <ArrowRight style={{     marginLeft: 10, display:"flex" ,float: "right", marginTop: 1}} size={30} />
       </button>
     </div>
   );

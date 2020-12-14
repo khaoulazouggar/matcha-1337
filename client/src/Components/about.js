@@ -41,7 +41,7 @@ function About() {
           <br />
           <br />
           <div>
-            <img className="im" src={world} />
+            <img alt="" className="im" src={world} />
           </div>
 
           <div>

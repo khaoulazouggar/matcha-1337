@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import "./login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
+import _ from "lodash";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [errusername, setErrUsername] = useState("");
   // const [show, setShow] = useState(false);
   // const handleShow = () => {
   //   setShow(!show);
   // };
+  const hadnleLogin = () => {
+    setErrUsername("");
+    if (_.isEmpty(username)) {
+      setErrUsername("this field should not be empty");
+    }
+  };
   return (
     <div>
       <div className="box-form">
@@ -24,11 +33,11 @@ function Login() {
               <p>Login with your social network</p>
               <br />
               <button className="media">
-                <img src={fb} />
+                <img alt="" src={fb} />
                 Sign Up With Facebook
               </button>
               <button className="media">
-                <img src={google} />
+                <img alt="" src={google} />
               </button>
             </span>
           </div>
@@ -63,25 +72,33 @@ function Login() {
         <div className="right">
           <h5>Login</h5>
           <p>
-            Don't have an account?{" "}
-            <a href="./register">
-              Creat Your Account
-            </a>{" "}
-            it takes less than a minute
+            Don't have an account? <a href="./register">Creat Your Account</a> it takes less than a
+            minute
           </p>
           <div className="inputs">
             <input type="text" placeholder="User name" />
             <br />
-            <input type="password" placeholder="Password" />
+            <input
+              type="password"
+              placeholder="Password"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                console.log(username);
+              }}
+            />
+            <span style={{ color: "red" }}>{errusername}</span>
           </div>
           <br />
           <br />
 
           <div className="forget-password">
-            <a href="">forget password?</a>
+            <a href="./fgpass">forget password?</a>
           </div>
           <br />
-          <button className="btn">Login</button>
+          <button className="btn" onClick={() => hadnleLogin()}>
+            Login
+          </button>
         </div>
         {/* )} */}
       </div>
