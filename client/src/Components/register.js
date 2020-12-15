@@ -19,22 +19,22 @@ function Register() {
 
   const handelRegister = () => {
     seterrusername("");
-    if (isEmty(username)) seterrusername("username should not be empty");
+    if (isEmty(username)) seterrusername("User name should not be empty");
 
     seterrfirstname("");
-    if (isEmty(firstname)) seterrfirstname("firstname should not be empty");
+    if (isEmty(firstname)) seterrfirstname("First name should not be empty");
 
     seterrlastname("");
-    if (isEmty(lastname)) seterrlastname("firstname should not be empty");
+    if (isEmty(lastname)) seterrlastname("Last name should not be empty");
 
     seterremail("");
-    if (isEmty(email)) seterremail("email should not be empty");
+    if (isEmty(email)) seterremail("Email should not be empty");
 
     seterrpassword("");
-    if (isEmty(password)) seterrpassword("password should not be empty");
+    if (isEmty(password)) seterrpassword("Password should not be empty");
 
     seterrverifypassword("");
-    if (isEmty(verifypassword)) seterrverifypassword("verifypassword should not be empty");
+    if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
   };
   return (
     <div>
@@ -76,7 +76,7 @@ function Register() {
                 setfirstname(e.target.value);
               }}
             />
-            <span style={{ color: "red" }}>{errfirstname}</span>
+            <span className="errors">{errfirstname}</span>
             <br />
             <input
               type="text"
@@ -86,8 +86,7 @@ function Register() {
                 setlastname(e.target.value);
               }}
             />
-            <br />
-            <span style={{ color: "red" }}>{errlastname}</span>
+            <span className="errors">{errlastname}</span> <br />
             <input
               type="text"
               placeholder="User name"
@@ -96,8 +95,8 @@ function Register() {
                 setusername(e.target.value);
               }}
             />
+            <span className="errors">{errusername}</span>
             <br />
-            <span style={{ color: "red" }}>{errusername}</span>
             <input
               type="email"
               placeholder="Email"
@@ -106,8 +105,8 @@ function Register() {
                 setemail(e.target.value);
               }}
             />
+            <span className="errors">{erremail}</span>
             <br />
-            <span style={{ color: "red" }}>{erremail}</span>
             <input
               type="password"
               placeholder="Password"
@@ -116,8 +115,7 @@ function Register() {
                 setpassword(e.target.value);
               }}
             />
-            <br />
-            <span style={{ color: "red" }}>{errpassword}</span>
+            <span className="errors">{errpassword}</span> <br />
             <input
               type="password"
               placeholder="Verify Password"
@@ -126,8 +124,8 @@ function Register() {
                 setverifypassword(e.target.value);
               }}
             />
+            <sapn className="errors">{errverifypassword}</sapn>
           </div>
-          <sapn style={{ color: "red" }}>{errverifypassword}</sapn>
           <br />
           <br />
           <button className="btn" onClick={() => handelRegister()}>

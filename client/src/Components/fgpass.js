@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import isEmty from "./isEmpty";
 
 function Fgpass() {
+  const [email, setemail] = useState("");
+  const [erremail, seterremail] = useState("");
+
+  const handleFgpass = () => {
+    seterremail("");
+    if (isEmty(email)) seterremail("Email should not be empty");
+  };
   return (
     <div>
       <div className="box-form">
@@ -23,12 +31,22 @@ function Fgpass() {
             reset your password.
           </p>
           <div className="inputs">
-            <input type="email" placeholder="Email" />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => {
+                setemail(e.target.value);
+              }}
+            />
+            <span className="errors">{erremail}</span>
           </div>
           <br />
           <br />
 
-          <button className="btn">Send Reset Instructions</button>
+          <button className="btn" onClick={() => handleFgpass()}>
+            Send Reset Instructions
+          </button>
           <br />
           <p>
             Just remembered? <a href="./login">Log in</a>

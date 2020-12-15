@@ -140,6 +140,10 @@ input {
   border-bottom: 2px solid #b0b3b9;
 }
 
+.errors{
+  color: #fa1010;
+}
+
 @media only screen and (max-width: 1200px) {
   .box-form {
     flex-direction: column;

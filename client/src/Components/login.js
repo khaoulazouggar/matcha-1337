@@ -17,11 +17,11 @@ function Login() {
   const hadnleLogin = () => {
     setErrusername("");
     if (isEmpty(username)) {
-      setErrusername("this field should not be empty");
+      setErrusername("User name should not be empty");
     }
     setErrpassword("");
     if (isEmpty(password)) {
-      setErrpassword("this field should not be empty");
+      setErrpassword("Password should not be empty");
     }
   };
   return (
@@ -92,7 +92,7 @@ function Login() {
                 console.log(username);
               }}
             />
-             <span style={{ color: "red" }}>{errusername}</span>
+             <span className="errors">{errusername}</span>
             <br />
             <input
               type="password"
@@ -103,7 +103,7 @@ function Login() {
                 console.log(password);
               }}
             />
-            <span style={{ color: "red" }}>{errpassword}</span>
+            <span className="errors">{errpassword}</span>
           </div>
           <br />
           <br />
