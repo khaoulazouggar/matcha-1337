@@ -1,6 +1,6 @@
 import React from "react";
 import error from "../photos/404.png";
-import "./error.css";
+import "../css/error.css";
 import { useHistory } from "react-router-dom";
 import { ArrowRight } from "react-feather";
 

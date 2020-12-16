@@ -1,7 +1,7 @@
 import React from "react";
 import world from "../photos/Online world (1).gif";
 import { useHistory } from "react-router-dom";
-import "./about.css";
+import "../css/about.css";
 
 function About() {
   const history = useHistory();

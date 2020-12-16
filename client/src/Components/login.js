@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "./login.css";
+import "../css/login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
-// import _ from "lodash";
 import isEmpty from "./isEmpty";
 
 function Login() {
@@ -10,10 +9,6 @@ function Login() {
   const [errusername, setErrusername] = useState("");
   const [password, setpassword] = useState("");
   const [errpassword, setErrpassword] = useState("");
-  // const [show, setShow] = useState(false);
-  // const handleShow = () => {
-  //   setShow(!show);
-  // };
   const hadnleLogin = () => {
     setErrusername("");
     if (isEmpty(username)) {
@@ -41,7 +36,7 @@ function Login() {
               <br />
               <button className="media">
                 <img alt="" src={fb} />
-                Sign Up With Facebook
+                Sign In With Facebook
               </button>
               <button className="media">
                 <img alt="" src={google} />
@@ -49,33 +44,6 @@ function Login() {
             </span>
           </div>
         </div>
-        {/* {show === true ? (
-          <div className="right">
-            <h5>Register</h5>
-            <p>
-              Already have an account?{" "}
-              <a href="#" onClick={() => handleShow()}>
-                Log in
-              </a>
-            </p>
-            <div className="inputs">
-              <input type="text" placeholder="First name" />
-              <br />
-              <input type="text" placeholder="Last name" />
-              <br />
-              <input type="text" placeholder="User name" />
-              <br />
-              <input type="email" placeholder="Email" />
-              <br />
-              <input type="password" placeholder="Password" />
-              <br />
-              <input type="password" placeholder="Verify Password" />
-            </div>
-            <br />
-            <br />
-            <button className="login">Register</button>
-          </div>
-        ) : ( */}
         <div className="right">
           <h5>Login</h5>
           <p>
@@ -92,7 +60,7 @@ function Login() {
                 console.log(username);
               }}
             />
-             <span className="errors">{errusername}</span>
+            <span className="errors">{errusername}</span>
             <br />
             <input
               type="password"
@@ -116,7 +84,6 @@ function Login() {
             Login
           </button>
         </div>
-        {/* )} */}
       </div>
     </div>
   );

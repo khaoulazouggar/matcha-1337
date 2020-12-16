@@ -4,7 +4,7 @@ import google from "../photos/google.png";
 import isEmty from "./isEmpty";
 
 function Register() {
-  const [username, setusername] = useState("");
+  const [username, setusername] = useState('')
   const [errusername, seterrusername] = useState("");
   const [firstname, setfirstname] = useState("");
   const [errfirstname, seterrfirstname] = useState("");
@@ -36,6 +36,7 @@ function Register() {
     seterrverifypassword("");
     if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
   };
+  
   return (
     <div>
       <div className="box-form">
@@ -124,7 +125,7 @@ function Register() {
                 setverifypassword(e.target.value);
               }}
             />
-            <sapn className="errors">{errverifypassword}</sapn>
+            <span className="errors">{errverifypassword}</span>
           </div>
           <br />
           <br />
