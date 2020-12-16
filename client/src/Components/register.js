@@ -69,7 +69,7 @@ function Register() {
             Already have an account? <a href="./login">Log in</a>
           </p>
           <div className="inputs">
-            <input
+            <input className="inpt"
               type="text"
               placeholder="First name"
               value={firstname}
@@ -79,7 +79,7 @@ function Register() {
             />
             <span className="errors">{errfirstname}</span>
             <br />
-            <input
+            <input className="inpt"
               type="text"
               placeholder="Last name"
               value={lastname}
@@ -88,7 +88,7 @@ function Register() {
               }}
             />
             <span className="errors">{errlastname}</span> <br />
-            <input
+            <input className="inpt"
               type="text"
               placeholder="User name"
               value={username}
@@ -98,7 +98,7 @@ function Register() {
             />
             <span className="errors">{errusername}</span>
             <br />
-            <input
+            <input className="inpt"
               type="email"
               placeholder="Email"
               value={email}
@@ -108,7 +108,7 @@ function Register() {
             />
             <span className="errors">{erremail}</span>
             <br />
-            <input
+            <input className="inpt"
               type="password"
               placeholder="Password"
               value={password}
@@ -117,7 +117,7 @@ function Register() {
               }}
             />
             <span className="errors">{errpassword}</span> <br />
-            <input
+            <input className="inpt"
               type="password"
               placeholder="Verify Password"
               value={verifypassword}

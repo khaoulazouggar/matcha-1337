@@ -31,7 +31,7 @@ function Fgpass() {
             reset your password.
           </p>
           <div className="inputs">
-            <input
+            <input className="inpt"
               type="email"
               placeholder="Email"
               value={email}

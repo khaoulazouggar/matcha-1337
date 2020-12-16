@@ -51,7 +51,7 @@ function Login() {
             minute
           </p>
           <div className="inputs">
-            <input
+            <input className="inpt"
               type="text"
               placeholder="User name"
               value={username}
@@ -62,7 +62,7 @@ function Login() {
             />
             <span className="errors">{errusername}</span>
             <br />
-            <input
+            <input className="inpt"
               type="password"
               placeholder="Password"
               value={password}
