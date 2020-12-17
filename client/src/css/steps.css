@@ -5,7 +5,8 @@
 }
 .progressbar div:nth-of-type(1),
 .progressbar div:nth-of-type(3),
-.progressbar div:nth-of-type(5) {
+.progressbar div:nth-of-type(5),
+.progressbar div:nth-of-type(7) {
   width: 50px;
   height: 50px;
   background-color: white;
@@ -15,7 +16,8 @@
   border-radius: 16px;
 }
 .progressbar div:nth-of-type(2),
-.progressbar div:nth-of-type(4) {
+.progressbar div:nth-of-type(4),
+.progressbar div:nth-of-type(6) {
   width: 95px;
   height: 5px;
   background-color: white;
@@ -24,10 +26,7 @@
   background: #646bfaad;
   color: white;
 }
-.progressbar div:nth-of-type(2),.progressbar div:nth-of-type(3){
-  background: #646bfaad;
-  color: white;
-}
+
 .step {
   width: 700px;
   height: 445px;
@@ -46,9 +45,6 @@
   flex-direction: column;
   align-items: center;
 }
-.step1 {
-  font-size: 50px;
-}
 .para {
   font-size: 23px;
 }
@@ -65,19 +61,6 @@
   outline: 0;
 }
 
-/* .next{
-    width: 200px;
-    background: #5961f9ad;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 15px;
-    cursor: pointer;
-    padding: 10px;
-    margin: 10px 5px;
-
-} */
-
 .divv {
   display: flex;
   justify-content: center;
@@ -86,11 +69,9 @@
   /* padding-right: 50px; */
   /* margin-top: 50px; */
 }
-.s {
-  margin-top: 30px;
-}
 
-button.next, button.previous {
+button.next,
+button.previous {
   width: 160px;
   color: #fff;
   padding: 12px 35px;
@@ -135,13 +116,13 @@ button.previous::after {
 button.previous:hover:after {
   width: 100%;
 }
-button.next{
+button.next {
   margin-left: 25px;
 }
 
 .genre:hover {
   background-color: #c3bef0;
-  box-shadow: 0px 4px 20px 0px #090b6f85;
+  box-shadow: 0px 4px 20px 0px #62626485;
 }
 .genre:focus {
   /* box-shadow: 0px 4px 20px 0px #090b6f85; */
@@ -152,10 +133,51 @@ button.next{
   flex-direction: column;
 }
 
-.bio{
+.bio {
   outline: none;
   width: 240px;
   height: 195px;
   margin-top: 40px;
-
+  resize: none;
+  border-color: #62626485;
+  border-radius: 10px;
+  margin-left: 15px;
+  padding: 20px;
+  line-height: 2;
+  background-color: #f8f7ff;
+  border: none;
+}
+.bio:hover {
+  box-shadow: 0px 0px 8px 0px #090b6f85;
+}
+.bio:focus {
+  box-shadow: 0px 0px 8px 0px #090b6f85;
+}
+@media only screen and (max-width: 700px) {
+  .photo {
+    display: none;
+  }
+  .In {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step {
+    width: 400px;
+    height: 410px;
+  }
+  button.next {
+    margin-left: 0px;
+  }
+  .progressbar div:nth-of-type(2),
+  .progressbar div:nth-of-type(4),
+  .progressbar div:nth-of-type(6) {
+    width: 35px;
+  }
+  .bio{
+    margin-left: 0px;
+  }
+  button.previous {
+    margin-right: 20px;
+  }
 }
