@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../css/steps.css";
 import hc from "../photos/hc.png";
-import write from "../photos/write.svg";
+import write from "../photos/write.gif";
 import list from "../photos/Checklist.gif";
 import { ArrowRight } from "react-feather";
 import { ArrowLeft } from "react-feather";
 import InStep from "./instep";
-import upload from "../photos/upload.svg"
+import upload from "../photos/upload.gif"
+import Tag from "./tag"
 let handleImg = (nbrStep) => {
   let srcImg;
   if (nbrStep === 0  )
@@ -24,22 +25,22 @@ function Steps() {
   return (
     <div className="steps">
       <div className="progressbar">
-        <div>1</div>
+        <div onClick= {() =>setInStep(0)} style={{ background: "#646bfaad", color: "white"}} >1</div>
         <div style={inStep1 === 0 ? {background:"white"} : { background: "#646bfaad"}}></div>
-        <div style={inStep1 === 0 ? {background:"white"} : { background: "#646bfaad", color:"white"}}>2</div>
+        <div  onClick= {() =>setInStep(1)} style={inStep1 === 0 ? {background:""} : { background: "#646bfaad", color:"white"}}>2</div>
         <div style={inStep1 === 0 || inStep1 === 1 ? {background:"white"} : { background: "#646bfaad"}}></div>
-        <div style={inStep1 === 0 || inStep1 === 1 ? {background:"white"} : { background: "#646bfaad", color:"white"}}>3</div>
+        <div onClick= {() =>setInStep(2)} style={inStep1 === 0 || inStep1 === 1 ? {background:""} : { background: "#646bfaad", color:"white"}}>3</div>
         <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? {background:"white"} : { background: "#646bfaad"}}></div>
-        <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? {background:"white"} : { background: "#646bfaad", color:"white"}}>4</div>
+        <div onClick= {() =>setInStep(3)} style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? {background:""} : { background: "#646bfaad", color:"white"}}>4</div>
       </div>
       <div className="all">
         <div className="step">
           <div className="instep">
-            {inStep1 === 0  ? (<InStep />) : inStep1 === 1 ? (<textarea className="bio" type="text" placeholder="Add your Bio" />) : inStep1 === 2 ? ("step 3") : ("step 4")}
+            {inStep1 === 0  ? (<InStep />) : inStep1 === 1 ? (<textarea className="bio" type="text" placeholder="Add your Bio" />) : inStep1 === 2 ? (<Tag />) : ("step 4")}
           </div>
           <div className="photo">
             {}
-            <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? {width: '275px'} : inStep1 === 1 ? { width: '380px', marginTop:'40px' } : {width : '310px'} }  />
+            <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? {width: '275px'} : inStep1 === 1 ? { width: '350px'} : {width : '350px'} }  />
           </div>
         </div>
         <div className="divv">
