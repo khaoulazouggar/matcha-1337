@@ -1,47 +1,26 @@
-import React from "react";
-import ImageUploading from "react-images-upload";
+import React, { useState } from "react";
 import "../css/upload.css";
 
 function Upload() {
+  const [photos, setPhotos] = useState([]);
+  const onDrop = (picture) => {
+  const prev = URL.createObjectURL(picture[0]);
+    setPhotos([prev, ...photos]);
+  };
   return (
     <div className="upload">
       <div className="file-upload">
         <div className="image-upload-wrap">
-          <input className="file-upload-input" type="file" accept="image/*" />
+          <input className="file-upload-input" type="file" accept="image/*" onChange={(e) => onDrop(e.target.files)} />
           <div className="drag-text">
             <h3>Drag and drop a file or select add Image</h3>
           </div>
         </div>
-        {/* <div className="file-upload-content">
-          <img className="file-upload-image" src="#" alt="your image" />
-          <div className="image-title-wrap">
-            <button type="button" onclick={() => removeUpload} className="remove-image">
-              Remove <span className="image-title">Uploaded Image</span>
-            </button>
-          </div>
-        </div> */}
+        {photos.map((p) => (
+          <img className="file-upload-image" src={p} alt={p} key={p} />
+        ))}   
       </div>
     </div>
   );
 }
 export default Upload;
-
-// function Upload(){
-//    const onDrop = (picture) => {
-//         this.setState({
-//             pictures: this.state.pictures.concat(picture),
-//         });
-//     }
-//     return(
-//         <div>
-//         <ImageUploader
-//                 withIcon={true}
-//                 buttonText='Choose images'
-//                 onChange={onDrop}
-//                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
-//                 maxFileSize={5242880}
-//          />
-//         </div>
-//     );
-// }
-// export default Upload;

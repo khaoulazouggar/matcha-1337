@@ -122,8 +122,8 @@ button.previous::after {
 button.previous:hover:after {
   width: 100%;
 }
-button.next {
-  margin-left: 25px;
+button.previous {
+  margin-right: 25px;
 }
 
 
