@@ -1,5 +1,5 @@
 import React from "react";
-import world from "../photos/Online world (1).gif";
+import world from "../photos/OnlineWorld.gif";
 import { useHistory } from "react-router-dom";
 import "../css/about.css";
 
