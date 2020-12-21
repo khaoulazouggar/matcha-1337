@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import CreatableSelect from 'react-select/creatable';
 
 function Tag(){
 return(
     <div className= "tags"> <p>Add your Tags ...</p>
-       <CreatableSelect
-        isMulti
-      />
+       <CreatableSelect isMulti/>
     </div>
 );
 }

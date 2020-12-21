@@ -132,10 +132,7 @@ button.previous {
   background-color: #c3bef0;
   box-shadow: 0px 4px 20px 0px #62626485;
 }
-.genre:focus {
-  /* box-shadow: 0px 4px 20px 0px #090b6f85; */
-  background-color: #c3bef0;
-}
+
 .all {
   display: flex;
   flex-direction: column;

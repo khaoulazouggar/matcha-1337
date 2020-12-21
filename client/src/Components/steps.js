@@ -20,6 +20,10 @@ let handleImg = (nbrStep) => {
   return srcImg;
 };
 function Steps() {
+  
+  const [notes, setNotes] = useState("");
+  const [gender, setGender] = useState({yourGender:"",genderLooking:""})
+ 
   const history = useHistory();
   const routeChange = () => {
     let path = "/";
@@ -47,10 +51,9 @@ function Steps() {
       </div>
       <div className="all">
         <div className="step">
-          <div className="instep">{inStep1 === 0 ? <InStep /> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" /> : inStep1 === 2 ? <Tag /> : <Upload />}</div>
+          <div className="instep">{inStep1 === 0 ? <InStep data={{gender,setGender}}/> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)}/> : inStep1 === 2 ? <Tag /> : <Upload />}</div>
           <div className="photo">
-            {}
-            <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : inStep1 === 1 ? { width: "350px" } : { width: "350px" }} />
+            <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />
           </div>
         </div>
         <div className="divv">
@@ -61,7 +64,6 @@ function Steps() {
                 setInStep(inStep1 - 1);
               }}
             >
-              {" "}
               <ArrowLeft style={{ marginRight: 9, display: "flex", float: "left", marginTop: 2 }} size={20} />
               Previous
             </button>
