@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "../css/upload.css";
 
 function Upload(props) {
-  const [photos, setPhotos] = useState([]);
   const onDrop = (picture) => {
-  const prev = URL.createObjectURL(picture[0]);
-    setPhotos([prev, ...photos]);
+    
+  let   data = URL.createObjectURL(picture[0])
+
+    props.data.setImg([data, ...props.data.img]);
   };
+  console.log(props.data.img)
   return (
     <div className="upload">
       <div className="file-upload">
@@ -16,12 +18,9 @@ function Upload(props) {
             <h3>Drag and drop a file or select add Image</h3>
           </div>
         </div>
-        {photos.map((p) => /*(<img className="file-upload-image" src={p} alt={p} key={p} />)*/
-        { let data = props.data.img ;
-          data = {p};
-          props.data.setImg = {...data}
-        }
-        )}  
+        {props.data.img.map((p) => (
+          <img className="file-upload-image" src={p} alt={p} key={p} />
+        ))}   
       </div>
     </div>
   );
