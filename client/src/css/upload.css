@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  height: 345px;
 }
 
 .file-upload {
@@ -62,10 +63,10 @@ color: #ffffff;
 } */
 
 .file-upload-image {
-  max-height: 200px;
-  max-width: 200px;
-  margin: auto;
-  padding: 20px;
+  /* max-height: 200px; */
+  max-width: 155px;
+  /* margin: auto; */
+  padding: 11px;
   background-size: contain;
 }
 
