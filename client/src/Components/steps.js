@@ -22,8 +22,8 @@ let handleImg = (nbrStep) => {
 function Steps() {
   
   const [notes, setNotes] = useState("");
-  const [gender, setGender] = useState({yourGender:"",genderLooking:""})
- 
+  const [gender, setGender] = useState({yourGender:"",genderLooking:""});
+  const [img, setImg] = useState("");
   const history = useHistory();
   const routeChange = () => {
     let path = "/";
@@ -51,9 +51,10 @@ function Steps() {
       </div>
       <div className="all">
         <div className="step">
-          <div className="instep">{inStep1 === 0 ? <InStep data={{gender,setGender}}/> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)}/> : inStep1 === 2 ? <Tag /> : <Upload />}</div>
+          <div className="instep">{inStep1 === 0 ? <InStep data={{gender,setGender}}/> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)}/> : inStep1 === 2 ? <Tag /> : <Upload data= {{img,setImg}}/>}</div>
           <div className="photo">
-            <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />
+            {inStep1=== 3 && img !== "" ? <img className="file-upload-image" src={img} alt={img} key={img} /> : <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />}
+            {/* <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} /> */}
           </div>
         </div>
         <div className="divv">

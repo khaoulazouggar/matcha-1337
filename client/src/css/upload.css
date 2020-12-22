@@ -24,13 +24,13 @@
   border: 3px dashed #B4ADF1;
   border-radius: 10px;
   position: relative;
-  transition: all .5s;
+  transition: all .8s;
   /* height: 152px; */
 }
 
 .image-upload-wrap:hover {
   background-color: #B4ADF1;
-  border: 4px dashed #ffffff;
+  border: 3px dashed #ffffff;
 }
 
 /* .image-upload-wrap:hover .drag-text h3 {
