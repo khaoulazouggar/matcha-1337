@@ -1,10 +1,15 @@
 import React from "react";
 import CreatableSelect from 'react-select/creatable';
 
-function Tag(){
+function Tag(props){
+   const handleChange = (newValue) => {
+    props.data.setTags([newValue, props.data.Tags]);
+        console.log(newValue);
+      };
+    
 return(
     <div className= "tags"> <p>Add your Tags ...</p>
-       <CreatableSelect isMulti/>
+       <CreatableSelect isClearable isMulti  defaultValue={[ {label:"props.data.Tags", value:"props.data.Tags"} ]} onChange={handleChange}/>
     </div>
 );
 }

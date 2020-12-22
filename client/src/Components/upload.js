@@ -3,7 +3,6 @@ import "../css/upload.css";
 
 function Upload(props) {
   const onDrop = (e, picture) => {
-    console.log('loj')
     let data = URL.createObjectURL(picture[0]);
     props.data.setImg([data, ...props.data.img]);
     e.target.value = "";
