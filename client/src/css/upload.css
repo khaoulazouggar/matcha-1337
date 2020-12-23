@@ -75,31 +75,21 @@ color: #ffffff;
   color: #222;
 } */
 
-/* .remove-image {
-  width: 200px;
-  margin: 0;
+.remove-image {
+  max-width: 165px;
   color: #fff;
   background: #cd4535;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  border-bottom: 4px solid #b02818;
-  transition: all 0.2s ease;
-  outline: none;
   text-transform: uppercase;
-  font-weight: 700;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  /* display: none; */
 }
-
-.remove-image:hover {
-  background: #c13b2a;
-  color: #ffffff;
-  transition: all 0.2s ease;
-  cursor: pointer;
+.upload-image{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* flex-direction: row; */
 }
-
-.remove-image:active {
-  border: 0;
-  transition: all 0.2s ease;
-} */
-
 

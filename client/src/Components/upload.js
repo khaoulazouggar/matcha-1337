@@ -13,7 +13,7 @@ function Upload(props) {
         <div className="image-upload-wrap">
           <input className="file-upload-input" type="file" accept="image/*" onChange={(e) => onDrop(e, e.target.files)} />
           <div className="drag-text">
-            <h3>Drag and drop a file or select add Image</h3>
+            <h3>Drag And Drop At Most Five Images Here</h3>
           </div>
         </div>
         {/* {props.data.img.map((p) => (

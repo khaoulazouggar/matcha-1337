@@ -24,7 +24,7 @@ function Steps() {
   const [notes, setNotes] = useState("");
   const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [img, setImg] = useState([]);
-  const [tags, setTags] = useState('so');
+  const [tags, setTags] = useState([]);
 
   const history = useHistory();
   const routeChange = () => {
@@ -54,10 +54,10 @@ function Steps() {
       <div className="all">
         <div className="step">
           <div className="instep">
-            {inStep1 === 0 ? <InStep data={{ gender, setGender }} /> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} /> : inStep1 === 2 ? <Tag data={{tags, setTags}}/> : <Upload data={{ img, setImg }} />}
+            {inStep1 === 0 ? <InStep data={{ gender, setGender }} /> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} /> : inStep1 === 2 ? <Tag data={{tags, setTags}} /> : <Upload data={{ img, setImg }} />}
           </div>
           <div className="photo">
-            {inStep1 === 3 && img.length ? img.map((p) => <img className="file-upload-image" src={p} alt={p} key={p} />) : <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />}
+            {inStep1 === 3 && img.length ? img.map((p) => <div className="upload-image"><img className="file-upload-image" src={p} alt={p} /><button className="remove-image">Remove</button></div>) : <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />}
             {/* <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} /> */}
           </div>
         </div>
@@ -79,7 +79,7 @@ function Steps() {
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length && gender.yourGender && gender.genderLooking && notes) routeChange();
+                if (img.length === 5 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
                 else {Alert()}
               } 
               else setInStep(inStep1 + 1);

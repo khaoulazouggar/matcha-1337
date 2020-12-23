@@ -1,20 +1,22 @@
 import React from "react";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 
-function Tag(props){
-   const handleChange = (newValue) => {
-    props.data.setTags([newValue, props.data.Tags]);
-        console.log(newValue);
-      };
-    
-return(
-    <div className= "tags"> <p>Add your Tags ...</p>
-       <CreatableSelect isClearable isMulti  defaultValue={[ {label:"props.data.Tags", value:"props.data.Tags"} ]} onChange={handleChange}/>
+function Tag(props) {
+  const handleChange = (newValue) => {
+    props.data.setTags([...newValue]);
+    // console.log(newValue);
+   
+  };
+
+  return (
+    <div className="tags">
+      {console.log(props.data.tags)}
+      <p>Add your Tags ...</p>
+      <CreatableSelect isClearable isMulti defaultValue={props.data.tags} onChange={handleChange} />
     </div>
-);
+  );
 }
 export default Tag;
-
 
 // function Tag() {
 //   const [tag, setTag] = useState("");
@@ -26,7 +28,7 @@ export default Tag;
 //         onChange={(e) => {
 //           setTag(e.target.value);
 //         }}
-       
+
 //         onKeyUp={(e) => {
 //           if (e.keyCode === 13) {
 //             setTags(tag);
