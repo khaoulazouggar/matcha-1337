@@ -8,9 +8,11 @@ import { ArrowLeft } from "react-feather";
 import InStep from "./instep";
 import upload from "../photos/upload.gif";
 import Tag from "./tag";
-import Upload from "./upload";
+import Uploader from "./upload";
 import { useHistory } from "react-router-dom";
-import Alert from "./alert"
+import Alert from "./alert";
+import { Trash2 } from "react-feather";
+import { User } from "react-feather";
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -25,6 +27,11 @@ function Steps() {
   const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [img, setImg] = useState([]);
   const [tags, setTags] = useState([]);
+
+  const handleRemoveItem = (e) => {
+    // console.log(e);
+    setImg(img.filter((item, i) => i !== e)); 
+  };
 
   const history = useHistory();
   const routeChange = () => {
@@ -54,10 +61,34 @@ function Steps() {
       <div className="all">
         <div className="step">
           <div className="instep">
-            {inStep1 === 0 ? <InStep data={{ gender, setGender }} /> : inStep1 === 1 ? <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} /> : inStep1 === 2 ? <Tag data={{tags, setTags}} /> : <Upload data={{ img, setImg }} />}
+            {inStep1 === 0 ? (
+              <InStep data={{ gender, setGender }} />
+            ) : inStep1 === 1 ? (
+              <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
+            ) : inStep1 === 2 ? (
+              <Tag data={{ tags, setTags }} />
+            ) : (
+              <Uploader data={{ img, setImg }} />
+            )}
           </div>
           <div className="photo">
-            {inStep1 === 3 && img.length ? img.map((p) => <div className="upload-image"><img className="file-upload-image" src={p} alt={p} /><button className="remove-image">Remove</button></div>) : <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />}
+            {inStep1 === 3 && img.length ? (
+              <div className="upload-image">
+                {img.map((p, i) => (
+                  <div style={{ width: "155px" }} className="test" key={i}>
+                    <img className="file-upload-image" src={p} alt={p} />
+                    <button className="remove-image" onClick={() => handleRemoveItem(i)}>
+                      <Trash2 size={20} />
+                    </button>{" "}
+                    <button className="default-image">
+                      <User size={20} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />
+            )}
             {/* <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} /> */}
           </div>
         </div>
@@ -79,13 +110,14 @@ function Steps() {
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length === 5 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
-                else {Alert()}
-              } 
-              else setInStep(inStep1 + 1);
+                if (img.length <= 5 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
+                else {
+                  Alert();
+                }
+              } else setInStep(inStep1 + 1);
             }}
           >
-            {inStep1 === 3 ?'Finish' : 'Next'} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
+            {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
           </button>
         </div>
       </div>

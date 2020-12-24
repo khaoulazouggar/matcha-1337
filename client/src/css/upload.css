@@ -20,23 +20,18 @@
   display: none;
 }
 
-
 .image-upload-wrap {
-  border: 3px dashed #B4ADF1;
+  border: 3px dashed #b4adf1;
   border-radius: 10px;
   position: relative;
-  transition: all .8s;
+  transition: all 0.8s;
   /* height: 152px; */
 }
 
 .image-upload-wrap:hover {
-  background-color: #B4ADF1;
+  background-color: #b4adf1;
   border: 3px dashed #ffffff;
 }
-
-/* .image-upload-wrap:hover .drag-text h3 {
-color: #ffffff;
-} */
 
 .file-upload-input {
   position: absolute;
@@ -48,19 +43,17 @@ color: #ffffff;
   opacity: 0;
   cursor: pointer;
 }
-
+.drag-text {
+  text-align: center;
+  color: #7871b8;
+}
 .drag-text h3 {
   font-weight: 100;
   /* text-transform: uppercase; */
   color: #7871b8;
-  padding: 60px 0;
+  padding-bottom: 60px;
   text-align: center;
 }
-
-/* .file-upload-content {
-  display: none;
-  text-align: center;
-} */
 
 .file-upload-image {
   /* max-height: 200px; */
@@ -70,11 +63,15 @@ color: #ffffff;
   background-size: contain;
 }
 
-/* .image-title-wrap {
-  padding: 0 15px 15px 15px;
-  color: #222;
+/* .file-upload-image:hover{
+  background-color: rgb(93, 91, 94);
+  z-index: -1;
 } */
 
+.upload-image {
+  display: flex;
+  flex-wrap: wrap;
+}
 .remove-image {
   max-width: 165px;
   color: #fff;
@@ -84,12 +81,41 @@ color: #ffffff;
   outline: none;
   padding: 10px;
   border-radius: 10px;
+  position: absolute;
+  top: 10px;
+  left: 15px;
   /* display: none; */
-}
-.upload-image{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  /* flex-direction: row; */
+  opacity: 0;
+  cursor: pointer;
+  transition: all 1.1s;
 }
 
+
+.default-image {
+  max-width: 165px;
+  color: #fff;
+  background: #3489da;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  position: absolute;
+  top: 60px;
+  left: 15px;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 1.8s;
+}
+.test {
+  position: relative;
+}
+.test:hover .remove-image {
+  /* display: block; */
+ opacity: 1;
+
+}
+
+.test:hover .default-image {
+  opacity: 1;
+}
