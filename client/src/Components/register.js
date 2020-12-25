@@ -4,7 +4,7 @@ import google from "../photos/google.png";
 import isEmty from "./isEmpty";
 
 function Register() {
-  const [username, setusername] = useState('')
+  const [username, setusername] = useState("");
   const [errusername, seterrusername] = useState("");
   const [firstname, setfirstname] = useState("");
   const [errfirstname, seterrfirstname] = useState("");
@@ -36,7 +36,7 @@ function Register() {
     seterrverifypassword("");
     if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
   };
-  
+
   return (
     <div>
       <div className="box-form">
@@ -44,10 +44,7 @@ function Register() {
           <div className="overlay">
             <h1>Find Your Perfect Match</h1>
             <br />
-            <p>
-              We are here to build emotion, connect people and create happy stories. Online dating
-              sites are the way to go for people seeking love.
-            </p>
+            <p>We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking love.</p>
 
             <span>
               <p>Login with your social network</p>
@@ -69,7 +66,8 @@ function Register() {
             Already have an account? <a href="./login">Log in</a>
           </p>
           <div className="inputs">
-            <input className="inpt"
+            <input
+              className="inpt"
               type="text"
               placeholder="First name"
               value={firstname}
@@ -79,7 +77,8 @@ function Register() {
             />
             <span className="errors">{errfirstname}</span>
             <br />
-            <input className="inpt"
+            <input
+              className="inpt"
               type="text"
               placeholder="Last name"
               value={lastname}
@@ -88,7 +87,8 @@ function Register() {
               }}
             />
             <span className="errors">{errlastname}</span> <br />
-            <input className="inpt"
+            <input
+              className="inpt"
               type="text"
               placeholder="User name"
               value={username}
@@ -98,7 +98,8 @@ function Register() {
             />
             <span className="errors">{errusername}</span>
             <br />
-            <input className="inpt"
+            <input
+              className="inpt"
               type="email"
               placeholder="Email"
               value={email}
@@ -108,7 +109,8 @@ function Register() {
             />
             <span className="errors">{erremail}</span>
             <br />
-            <input className="inpt"
+            <input
+              className="inpt"
               type="password"
               placeholder="Password"
               value={password}
@@ -117,7 +119,8 @@ function Register() {
               }}
             />
             <span className="errors">{errpassword}</span> <br />
-            <input className="inpt"
+            <input
+              className="inpt"
               type="password"
               placeholder="Verify Password"
               value={verifypassword}

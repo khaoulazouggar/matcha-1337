@@ -79,7 +79,7 @@ function Steps() {
                     <img className="file-upload-image" src={p} alt={p} />
                     <button className="remove-image" onClick={() => handleRemoveItem(i)}>
                       <Trash2 size={20} />
-                    </button>{" "}
+                    </button>
                     <button className="default-image">
                       <User size={20} />
                     </button>
@@ -110,7 +110,7 @@ function Steps() {
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length <= 5 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
+                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
                 else {
                   Alert();
                 }
