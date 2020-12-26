@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 import isEmty from "./isEmpty";
+import Axios from "axios"
 
 function Register() {
   const [username, setusername] = useState("");
@@ -35,6 +36,8 @@ function Register() {
 
     seterrverifypassword("");
     if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
+
+    if (username && firstname && lastname && email && password && verifypassword) { Axios.post('http://localhost:3000/api/insert', { firstname: firstname, lastname: lastname }).then(() => alert('sucess')) }
   };
 
   return (
