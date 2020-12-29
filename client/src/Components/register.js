@@ -37,7 +37,7 @@ function Register() {
     seterrverifypassword("");
     if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
 
-    if (username && firstname && lastname && email && password && verifypassword) { Axios.post('http://localhost:3000/api/insert', { firstname: firstname, lastname: lastname }).then(() => alert('sucess')) }
+    if (username && firstname && lastname && email && password && verifypassword) { Axios.post('http://localhost:3001/register', { firstname: firstname, lastname: lastname, username: username, email: email, password: password }).then(() => alert('sucess')) }
   };
 
   return (

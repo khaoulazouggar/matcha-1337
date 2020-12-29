@@ -3,6 +3,8 @@ import "../css/login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 import isEmpty from "./isEmpty";
+import Axios from "axios";
+import Swal from "sweetalert2";
 
 function Login() {
   const [username, setusername] = useState("");
@@ -17,6 +19,10 @@ function Login() {
     setErrpassword("");
     if (isEmpty(password)) {
       setErrpassword("Password should not be empty");
+    }
+    if (username && password) {
+      Axios.post('http://localhost:3001/login', { username: username, password: password })
+        .then((response) => { if (response.data.message) { Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false, }); } else { Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false, }); } })
     }
   };
   return (
@@ -57,7 +63,6 @@ function Login() {
               value={username}
               onChange={(e) => {
                 setusername(e.target.value);
-                console.log(username);
               }}
             />
             <span className="errors">{errusername}</span>
@@ -68,7 +73,6 @@ function Login() {
               value={password}
               onChange={(e) => {
                 setpassword(e.target.value);
-                console.log(password);
               }}
             />
             <span className="errors">{errpassword}</span>
