@@ -13,21 +13,21 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <div>
-          <Switch>
-            <Route exact path="/" component={Home} />
 
-            <Route path="/register" component={Register} />
+        <Switch>
+          <Route exact path="/" component={Home} />
 
-            <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
 
-            <Route path="/about" component={About} />
+          <Route path="/login" component={Login} />
 
-            <Route path="/fgpass" component={Fgpass} />
-            <Route path="/steps" component={Steps} />
-            <Route path="*" component={Error} />
-          </Switch>
-        </div>
+          <Route path="/about" component={About} />
+
+          <Route path="/fgpass" component={Fgpass} />
+          <Route path="/steps" component={Steps} />
+          <Route path="*" component={Error} />
+        </Switch>
+
       </div>
     </Router>
   );
