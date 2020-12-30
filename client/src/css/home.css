@@ -32,19 +32,24 @@ li{
 }
 
 .nav-list a:hover{
-    color : black;
-    width: 100px;
-    height: 100px;
-    transform: scale(3, 3);
+    color : #c79ecf;
+    /* width: 100px;
+    height: 100px; */
+    font-size: 14px;
+    transition: all 0.5s;
 }
 
-.nav-list a::before{
+.nav-list a:not( :hover ){
+    transition: all 0.5s;
+}
+
+/* .nav-list a::before{
     content: "";
-    /* display: none; */
+    
     position: absolute;
     bottom: 0px;
     width: 50px;
     text-align: center;
     background-color: white;
     height: 2px;
-}
+} */
