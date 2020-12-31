@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import Alert from "./alert";
 import { Trash2 } from "react-feather";
 import { User } from "react-feather";
+import Navbar from "./navbar"
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -38,8 +39,11 @@ function Steps() {
     let path = "/";
     history.push(path);
   };
+  const [page, setPage] = useState(0);  
   const [inStep1, setInStep] = useState(0);
   return (
+    <>
+    <Navbar data ={{page, setPage}}/>
     <div className="steps">
       <div className="progressbar">
         <div onClick={() => setInStep(0)} style={{ background: "#646bfaad", color: "white" }}>
@@ -122,6 +126,7 @@ function Steps() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default Steps;

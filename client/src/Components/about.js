@@ -2,6 +2,7 @@ import React from "react";
 import world from "../photos/OnlineWorld.gif";
 import { useHistory } from "react-router-dom";
 import "../css/about.css";
+import Navbar from "./navbar"
 
 function About() {
   const history = useHistory();
@@ -11,6 +12,8 @@ function About() {
     history.push(path);
   }
   return (
+    <>
+    <Navbar />
     <div>
       <div className="box-form">
         <div className="left">
@@ -37,7 +40,7 @@ function About() {
         </div>
 
         <div className="right">
-          <h1>Best Ways to Find Your True Sole Mate</h1>
+          <h1 className="soulmate">Best Ways to Find Your True Soulmate</h1>
           <br />
           <br />
           <div>
@@ -50,6 +53,7 @@ function About() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 export default About;
