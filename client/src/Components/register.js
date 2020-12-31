@@ -3,7 +3,6 @@ import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 import isEmty from "./isEmpty";
 import Axios from "axios"
-import Navbar from "./navbar"
 
 function Register() {
   const [username, setusername] = useState("");
@@ -42,8 +41,6 @@ function Register() {
   };
 
   return (
-    <>
-    <Navbar />
     <div>
       <div className="box-form">
         <div className="left">
@@ -144,7 +141,6 @@ function Register() {
         </div>
       </div>
     </div>
-    </>
   );
 }
 export default Register;

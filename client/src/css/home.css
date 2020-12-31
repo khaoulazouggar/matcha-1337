@@ -1,0 +1,39 @@
+.cards{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.card{
+    background-color: rgba(53, 71, 125, 0.38);
+   /* background: #ffffff; */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 0 20px 6px #090b6f85;
+  width: 317px;
+  height: 450px;
+  margin: 20px;
+}
+
+.card-img{
+    width: 224px;
+    height: 250px;
+    border-radius: 10px;
+}
+
+.card-name{
+    font-size: 30px;
+    padding-top:10px
+}
+
+.card-icon{
+    width: 60px;
+    padding-top: 20px;
+    padding-right: 35px;
+    padding-left: 35px;
+    cursor: pointer;
+}

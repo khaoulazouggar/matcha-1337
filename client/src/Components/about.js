@@ -2,7 +2,6 @@ import React from "react";
 import world from "../photos/OnlineWorld.gif";
 import { useHistory } from "react-router-dom";
 import "../css/about.css";
-import Navbar from "./navbar"
 
 function About() {
   const history = useHistory();
@@ -12,8 +11,6 @@ function About() {
     history.push(path);
   }
   return (
-    <>
-    <Navbar />
     <div>
       <div className="box-form">
         <div className="left">
@@ -53,7 +50,6 @@ function About() {
         </div>
       </div>
     </div>
-    </>
   );
 }
 export default About;

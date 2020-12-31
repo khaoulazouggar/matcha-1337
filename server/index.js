@@ -16,7 +16,7 @@ app.use(express.json())
 // app.use(bodyParser.urlencoded({ extended: true }))
 app.get("/", (req, res) => {
     console.log("sssdsss");
-    res.send("fuck you")
+    res.send("f")
 })
 app.post("/register", (req, res) => {
     console.log(req.body)

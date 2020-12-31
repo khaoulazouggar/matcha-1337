@@ -5,7 +5,6 @@ import google from "../photos/google.png";
 import isEmpty from "./isEmpty";
 import Axios from "axios";
 import Swal from "sweetalert2";
-import Navbar from "./navbar"
 
 function Login() {
   const [username, setusername] = useState("");
@@ -27,8 +26,6 @@ function Login() {
     }
   };
   return (
-    <>
-    <Navbar />
     <div>
       <div className="box-form">
         <div className="left">
@@ -93,7 +90,6 @@ function Login() {
         </div>
       </div>
     </div>
-    </>
   );
 }
 export default Login;

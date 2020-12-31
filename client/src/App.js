@@ -8,12 +8,13 @@ import Error from "./Components/error";
 import Fgpass from "./Components/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Steps from "./Components/steps";
+import Navbar from "./Components/navbar"
 
 function App() {
   return (
     <Router>
       <div className="App">
-
+        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
 
