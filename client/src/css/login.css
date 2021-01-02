@@ -17,6 +17,7 @@ body {
   border-radius: 10px;
   display: flex;
   box-shadow: 0 0 20px 6px #090b6f85;
+  margin-top: 120px;
 }
 
 .left {

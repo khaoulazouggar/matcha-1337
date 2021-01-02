@@ -1,8 +1,11 @@
 const express = require('express')
 const app = express()
 const mysql = require('mysql')
-// const bodyParser = require('body-parser')
 const cors = require('cors')
+const bcrypt = require('bcrypt')
+
+
+
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -13,11 +16,7 @@ const db = mysql.createConnection({
 
 app.use(cors());
 app.use(express.json())
-// app.use(bodyParser.urlencoded({ extended: true }))
-app.get("/", (req, res) => {
-    console.log("sssdsss");
-    res.send("f")
-})
+
 app.post("/register", (req, res) => {
     console.log(req.body)
     const firstname = req.body.firstname
@@ -26,10 +25,16 @@ app.post("/register", (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password) VALUES (?,?,?,?,?);"
-    db.query(sqlInsert, [firstname, lastname, username, email, password], (err, result) => {
-        console.log(err)
+    bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+            console.log(err)
+        }
+        const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password) VALUES (?,?,?,?,?);"
+        db.query(sqlInsert, [firstname, lastname, username, email, hash], (err, result) => {
+            console.log(err)
+        })
     })
+
 })
 
 app.post("/login", (req, res) => {
@@ -37,11 +42,19 @@ app.post("/login", (req, res) => {
     const username = req.body.username
     const password = req.body.password
 
-    const sqlInsert = "SELECT * FROM users WHERE username = ? AND password = ?"
-    db.query(sqlInsert, [username, password], (err, result) => {
+    const sqlInsert = "SELECT * FROM users WHERE username = ?"
+    db.query(sqlInsert, username, (err, result) => {
         if (err) { res.send({ err: err }); }
-        if (result.length > 0) { res.send(result) }
-        else { res.send({ message: "Wrong combination!" }) }
+        if (result.length > 0) { 
+            bcrypt.compare(password,result[0].password,(error, result) => {
+                if(result){
+                    res.send(result)
+                }else{
+                    res.send({ message: "Wrong combination!" })
+                }
+            })
+         }
+        else { res.send({ message: "User Dosen't exist " }) }
     })
 })
 

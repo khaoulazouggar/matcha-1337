@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../css/login.css";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
-import isEmpty from "./isEmpty";
+// import isEmpty from "./isEmpty";
 import Axios from "axios";
 import Swal from "sweetalert2";
 
@@ -13,11 +13,11 @@ function Login() {
   const [errpassword, setErrpassword] = useState("");
   const hadnleLogin = () => {
     setErrusername("");
-    if (isEmpty(username)) {
+    if (!(username)) {
       setErrusername("User name should not be empty");
     }
     setErrpassword("");
-    if (isEmpty(password)) {
+    if (!(password)) {
       setErrpassword("Password should not be empty");
     }
     if (username && password) {
@@ -26,7 +26,7 @@ function Login() {
     }
   };
   return (
-    <div>
+  
       <div className="box-form">
         <div className="left">
           <div className="overlay">
@@ -89,7 +89,6 @@ function Login() {
           </button>
         </div>
       </div>
-    </div>
   );
 }
 export default Login;

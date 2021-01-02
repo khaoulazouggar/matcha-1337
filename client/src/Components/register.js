@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
-import isEmty from "./isEmpty";
+// import isEmty from "./isEmpty";
 import Axios from "axios"
 
 function Register() {
@@ -20,22 +20,22 @@ function Register() {
 
   const handelRegister = () => {
     seterrusername("");
-    if (isEmty(username)) seterrusername("User name should not be empty");
+    if (!(username)) seterrusername("User name should not be empty");
 
     seterrfirstname("");
-    if (isEmty(firstname)) seterrfirstname("First name should not be empty");
+    if (!(firstname)) seterrfirstname("First name should not be empty");
 
     seterrlastname("");
-    if (isEmty(lastname)) seterrlastname("Last name should not be empty");
+    if (!(lastname)) seterrlastname("Last name should not be empty");
 
     seterremail("");
-    if (isEmty(email)) seterremail("Email should not be empty");
+    if (!(email)) seterremail("Email should not be empty");
 
     seterrpassword("");
-    if (isEmty(password)) seterrpassword("Password should not be empty");
+    if (!(password)) seterrpassword("Password should not be empty");
 
     seterrverifypassword("");
-    if (isEmty(verifypassword)) seterrverifypassword("Verify Password should not be empty");
+    if (!(verifypassword)) seterrverifypassword("Verify Password should not be empty");
 
     if (username && firstname && lastname && email && password && verifypassword) { Axios.post('http://localhost:3001/register', { firstname: firstname, lastname: lastname, username: username, email: email, password: password }).then(() => alert('sucess')) }
   };
