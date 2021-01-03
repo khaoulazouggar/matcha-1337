@@ -76,11 +76,11 @@ function Steps() {
               <div className="upload-image">
                 {img.map((p, i) => (
                   <div style={{ width: "155px" }} className="test" key={i}>
-                    <img className="file-upload-image" src={p} alt={p} />
-                    <button className="remove-image" onClick={() => handleRemoveItem(i)}>
+                    <img className="file-upload-image" src={p} alt={p}/>
+                    <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i)}>
                       <Trash2 size={20} />
                     </button>
-                    <button className="default-image">
+                    <button className="default-image" title="default-image">
                       <User size={20} />
                     </button>
                   </div>

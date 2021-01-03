@@ -3,6 +3,8 @@ import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 // import isEmty from "./isEmpty";
 import Axios from "axios"
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Register() {
   const [username, setusername] = useState("");
@@ -18,32 +20,45 @@ function Register() {
   const [verifypassword, setverifypassword] = useState("");
   const [errverifypassword, seterrverifypassword] = useState("");
 
+
+  const history = useHistory();
+  const routeChange = () => {
+    let path = "/login";
+    history.push(path);
+  };
   const handelRegister = () => {
+    let i = 0
     seterrusername("");
-    if (!(username)) seterrusername("User name should not be empty");
+    if (!(username)) {
+      i = 1;
+      seterrusername("User name should not be empty");
+    }
 
     seterrfirstname("");
-    if (!(firstname)) seterrfirstname("First name should not be empty");
+    if (!(firstname)) {i = 1; seterrfirstname("First name should not be empty");}
 
     seterrlastname("");
-    if (!(lastname)) seterrlastname("Last name should not be empty");
+    if (!(lastname)) {i = 1; seterrlastname("Last name should not be empty");}
 
     seterremail("");
-    if (!(email)) seterremail("Email should not be empty");
+    if (!(email)) {i = 1; seterremail("Email should not be empty");}
 
     seterrpassword("");
-    if (!(password)) seterrpassword("Password should not be empty");
+    if (!(password)) {i = 1; seterrpassword("Password should not be empty");}
 
     seterrverifypassword("");
-    if (!(verifypassword)) seterrverifypassword("Verify Password should not be empty");
+    if (!(verifypassword)) {i = 1; seterrverifypassword("Verify Password should not be empty");}
 
-    if (username && firstname && lastname && email && password && verifypassword) { Axios.post('http://localhost:3001/register', { firstname: firstname, lastname: lastname, username: username, email: email, password: password }).then(() => alert('sucess')) }
+    if (username && firstname && lastname && email && password && verifypassword) {
+      Axios.post('http://localhost:3001/register', { firstname: firstname, lastname: lastname, username: username, email: email, password: password })
+    }
+    return i !== 0 ? false : true
   };
 
   return (
     <div>
       <div className="box-form">
-        <div className="left">
+        <div className="left-register">
           <div className="overlay">
             <h1>Find Your Perfect Match</h1>
             <br />
@@ -135,7 +150,7 @@ function Register() {
           </div>
           <br />
           <br />
-          <button className="btn" onClick={() => handelRegister()}>
+          <button className="btn" onClick={() => handelRegister() ? (Swal.fire({ icon: "success", text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ", showConfirmButton: false, }), routeChange()) : ""}>
             Register
           </button>
         </div>

@@ -33,6 +33,20 @@ body {
   color: #f3f9fb;
 }
 
+.left-register {
+  width: 640px;
+  color: white;
+  /* overflow: hidden; */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../photos/4.png);
+}
+.left-register p:nth-of-type(1) {
+  color: #f3f9fb;
+}
+
+
 .overlay {
   padding: 30px;
   width: 100%;
@@ -149,6 +163,11 @@ input.inpt {
   .box-form {
     flex-direction: column;
   }
+
+  .left-register{
+    display: none;
+  }
+
   .overlay {
     border-radius: 10px 10px 0 0;
     padding-bottom: 70px;

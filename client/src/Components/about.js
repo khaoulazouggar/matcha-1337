@@ -36,7 +36,7 @@ function About() {
           </div>
         </div>
 
-        <div className="right">
+        <div className="right-about">
           <h1 className="soulmate">Best Ways to Find Your True Soulmate</h1>
           <br />
           <br />
