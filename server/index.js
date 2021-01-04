@@ -3,9 +3,16 @@ const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
+var nodemailer = require('nodemailer');
 
 
-
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'caramel1337l@gmail.com',
+      pass: 'khawla.1140'
+    }
+  });
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -31,7 +38,19 @@ app.post("/register", (req, res) => {
         }
         const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password) VALUES (?,?,?,?,?);"
         db.query(sqlInsert, [firstname, lastname, username, email, hash], (err, result) => {
-            console.log(err)
+            var mailOptions = {
+                from: 'caramel1337l@gmail.com',
+                to: email,
+                subject: 'Sending Email using Node.js',
+                text: 'That was easy!'
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
         })
     })
 
