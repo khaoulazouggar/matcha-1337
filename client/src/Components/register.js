@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import fb from "../photos/fb.png";
 import google from "../photos/google.png";
 // import isEmty from "./isEmpty";
-import Axios from "axios"
+import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import isEmail from "../tools/isEmail";
+import isUsername from "../tools/isUsername";
+import isName from "../tools/isName";
+import isPassword from "../tools/isPassword";
+import _ from "lodash";
 
 function Register() {
   const [username, setusername] = useState("");
@@ -19,7 +24,7 @@ function Register() {
   const [errpassword, seterrpassword] = useState("");
   const [verifypassword, setverifypassword] = useState("");
   const [errverifypassword, seterrverifypassword] = useState("");
-
+  const [success, setsuccess] = useState(false);
 
   const history = useHistory();
   const routeChange = () => {
@@ -27,32 +32,54 @@ function Register() {
     history.push(path);
   };
   const handelRegister = () => {
-    let i = 0
+    let i = 0;
     seterrusername("");
-    if (!(username)) {
+    if (!username) {
       i = 1;
-      seterrusername("User name should not be empty");
-    }
+      seterrusername("Username should not be empty");
+      console.log(errusername);
+    } else if (!isUsername(username)) seterrusername("Username is not valide");
 
     seterrfirstname("");
-    if (!(firstname)) {i = 1; seterrfirstname("First name should not be empty");}
+    if (!firstname) {
+      i = 1;
+      seterrfirstname("First name should not be empty");
+    } else if (!isName(firstname)) seterrfirstname("first name is not valide");
 
     seterrlastname("");
-    if (!(lastname)) {i = 1; seterrlastname("Last name should not be empty");}
+    if (!lastname) {
+      i = 1;
+      seterrlastname("Last name should not be empty");
+    } else if (!isName(lastname)) seterrlastname("Last Name is not valide");
 
     seterremail("");
-    if (!(email)) {i = 1; seterremail("Email should not be empty");}
+    if (!email) {
+      i = 1;
+      seterremail("Email should not be empty");
+    } else if (!isEmail(email)) seterremail("Email is not valide");
 
     seterrpassword("");
-    if (!(password)) {i = 1; seterrpassword("Password should not be empty");}
+    if (!password) {
+      i = 1;
+      seterrpassword("Password should not be empty");
+    } else if (!isPassword(password)) seterrpassword("Password is not valide");
 
     seterrverifypassword("");
-    if (!(verifypassword)) {i = 1; seterrverifypassword("Verify Password should not be empty");}
-
-    if (username && firstname && lastname && email && password && verifypassword) {
-      Axios.post('http://localhost:3001/register', { firstname: firstname, lastname: lastname, username: username, email: email, password: password })
+    if (!verifypassword) {
+      i = 1;
+      seterrverifypassword("Verify Password should not be empty");
+    } else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    //username && firstname && lastname && email && password && verifypassword &&
+    else if (_.isEmpty(errusername)) {
+      setsuccess(true);
+      // Axios.post("http://localhost:3001/register", {
+      //   firstname: firstname,
+      //   lastname: lastname,
+      //   username: username,
+      //   email: email,
+      //   password: password,
+      // });
     }
-    return i !== 0 ? false : true
   };
 
   return (
@@ -62,7 +89,10 @@ function Register() {
           <div className="overlay">
             <h1>Find Your Perfect Match</h1>
             <br />
-            <p>We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking love.</p>
+            <p>
+              We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people
+              seeking love.
+            </p>
 
             <span>
               <p>Login with your social network</p>
@@ -150,9 +180,17 @@ function Register() {
           </div>
           <br />
           <br />
-          <button className="btn" onClick={() => handelRegister() ? (Swal.fire({ icon: "success", text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ", showConfirmButton: false, }), routeChange()) : ""}>
+          <button className="btn" onClick={() => handelRegister()}>
             Register
           </button>
+          {success
+            ? (Swal.fire({
+                icon: "success",
+                text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
+                showConfirmButton: false,
+              }),
+              routeChange())
+            : ""}
         </div>
       </div>
     </div>

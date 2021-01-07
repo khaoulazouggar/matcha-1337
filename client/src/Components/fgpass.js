@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import isEmail from "../tools/isEmail"
 // import isEmty from "./isEmpty";
 
 function Fgpass() {
@@ -8,6 +9,7 @@ function Fgpass() {
   const handleFgpass = () => {
     seterremail("");
     if (!(email)) seterremail("Email should not be empty");
+    else if(!isEmail(email)) seterremail("Email is not valide");
   };
   return (
     <div>
