@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import isEmty from "./isEmpty";
+// import isEmty from "./isEmpty";
 
 function Fgpass() {
   const [email, setemail] = useState("");
@@ -7,7 +7,7 @@ function Fgpass() {
 
   const handleFgpass = () => {
     seterremail("");
-    if (isEmty(email)) seterremail("Email should not be empty");
+    if (!(email)) seterremail("Email should not be empty");
   };
   return (
     <div>
