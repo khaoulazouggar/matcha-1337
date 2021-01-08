@@ -1,8 +1,8 @@
 import React from "react"
-import "../css/home.css"
-import test from "../photos/test.jpeg"
-import checked from "../photos/checked.svg"
-import cancel from "../photos/cancel.svg"
+import "../../css/home.css"
+import test from "../../photos/test.jpeg"
+import checked from "../../photos/checked.svg"
+import cancel from "../../photos/cancel.svg"
 
 
 function Home() {

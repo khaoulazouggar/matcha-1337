@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import fb from "../photos/fb.png";
-import google from "../photos/google.png";
+import fb from "../../photos/fb.png";
+import google from "../../photos/google.png";
 // import isEmty from "./isEmpty";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import isEmail from "../tools/isEmail";
-import isUsername from "../tools/isUsername";
-import isName from "../tools/isName";
-import isPassword from "../tools/isPassword";
+import isEmail from "../../tools/isEmail";
+import isUsername from "../../tools/isUsername";
+import isName from "../../tools/isName";
+import isPassword from "../../tools/isPassword";
 import _ from "lodash";
 
 function Register() {
@@ -32,53 +32,53 @@ function Register() {
     history.push(path);
   };
   const handelRegister = () => {
-    seterrusername("");
-    if (!username) {
+    // seterrusername("");
+    // if (!username) {
      
-      seterrusername("Username should not be empty");
-      console.log(errusername);
-    } else if (!isUsername(username)) seterrusername("Username is not valide");
+    //   seterrusername("Username should not be empty");
+    //   console.log(errusername);
+    // } else if (!isUsername(username)) seterrusername("Username is not valide");
 
-    seterrfirstname("");
-    if (!firstname) {
+    // seterrfirstname("");
+    // if (!firstname) {
       
-      seterrfirstname("First name should not be empty");
-    } else if (!isName(firstname)) seterrfirstname("first name is not valide");
+    //   seterrfirstname("First name should not be empty");
+    // } else if (!isName(firstname)) seterrfirstname("first name is not valide");
 
-    seterrlastname("");
-    if (!lastname) {
+    // seterrlastname("");
+    // if (!lastname) {
     
-      seterrlastname("Last name should not be empty");
-    } else if (!isName(lastname)) seterrlastname("Last Name is not valide");
+    //   seterrlastname("Last name should not be empty");
+    // } else if (!isName(lastname)) seterrlastname("Last Name is not valide");
 
-    seterremail("");
-    if (!email) {
+    // seterremail("");
+    // if (!email) {
       
-      seterremail("Email should not be empty");
-    } else if (!isEmail(email)) seterremail("Email is not valide");
+    //   seterremail("Email should not be empty");
+    // } else if (!isEmail(email)) seterremail("Email is not valide");
 
-    seterrpassword("");
-    if (!password) {
+    // seterrpassword("");
+    // if (!password) {
       
-      seterrpassword("Password should not be empty");
-    } else if (!isPassword(password)) seterrpassword("Password is not valide");
+    //   seterrpassword("Password should not be empty");
+    // } else if (!isPassword(password)) seterrpassword("Password is not valide");
 
-    seterrverifypassword("");
-    if (!verifypassword) {
+    // seterrverifypassword("");
+    // if (!verifypassword) {
       
-      seterrverifypassword("Verify Password should not be empty");
-    } else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
-    //username && firstname && lastname && email && password && verifypassword &&
-    else if (_.isEmpty(errusername)) {
-      setsuccess(true);
-      // Axios.post("http://localhost:3001/register", {
-      //   firstname: firstname,
-      //   lastname: lastname,
-      //   username: username,
-      //   email: email,
-      //   password: password,
-      // });
-    }
+    //   seterrverifypassword("Verify Password should not be empty");
+    // } else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    // //username && firstname && lastname && email && password && verifypassword &&
+    // else if (_.isEmpty(errusername)) {
+    //   setsuccess(true);
+    //   // Axios.post("http://localhost:3001/register", {
+    //   //   firstname: firstname,
+    //   //   lastname: lastname,
+    //   //   username: username,
+    //   //   email: email,
+    //   //   password: password,
+    //   // });
+    // }
   };
 
   return (

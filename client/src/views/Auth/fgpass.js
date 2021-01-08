@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import isEmail from "../tools/isEmail"
+import isEmail from "../../tools/isEmail"
 // import isEmty from "./isEmpty";
 
 function Fgpass() {

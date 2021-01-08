@@ -11,6 +11,7 @@
     "data": "^0.6.1",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
+    "react-dev-utils": "^11.0.1",
     "react-dom": "^17.0.1",
     "react-feather": "^2.0.9",
     "react-images-upload": "^1.2.8",
