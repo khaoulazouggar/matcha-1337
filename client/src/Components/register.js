@@ -32,41 +32,40 @@ function Register() {
     history.push(path);
   };
   const handelRegister = () => {
-    let i = 0;
     seterrusername("");
     if (!username) {
-      i = 1;
+     
       seterrusername("Username should not be empty");
       console.log(errusername);
     } else if (!isUsername(username)) seterrusername("Username is not valide");
 
     seterrfirstname("");
     if (!firstname) {
-      i = 1;
+      
       seterrfirstname("First name should not be empty");
     } else if (!isName(firstname)) seterrfirstname("first name is not valide");
 
     seterrlastname("");
     if (!lastname) {
-      i = 1;
+    
       seterrlastname("Last name should not be empty");
     } else if (!isName(lastname)) seterrlastname("Last Name is not valide");
 
     seterremail("");
     if (!email) {
-      i = 1;
+      
       seterremail("Email should not be empty");
     } else if (!isEmail(email)) seterremail("Email is not valide");
 
     seterrpassword("");
     if (!password) {
-      i = 1;
+      
       seterrpassword("Password should not be empty");
     } else if (!isPassword(password)) seterrpassword("Password is not valide");
 
     seterrverifypassword("");
     if (!verifypassword) {
-      i = 1;
+      
       seterrverifypassword("Verify Password should not be empty");
     } else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
     //username && firstname && lastname && email && password && verifypassword &&
