@@ -1,4 +1,5 @@
 import React from "react";
+import "./css/style.css";
 import "./css/App.css";
 import Login from "./views/Auth/login";
 import Register from "./views/Auth/register";

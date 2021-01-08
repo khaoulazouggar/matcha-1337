@@ -17,7 +17,20 @@ body {
   border-radius: 10px;
   display: flex;
   box-shadow: 0 0 20px 6px #090b6f85;
-  margin-top: 120px;
+  /* margin-top: 205px; */
+}
+
+.box-form–Reg, .box-form–Abt  {
+  background: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  box-shadow: 0 0 20px 6px #090b6f85;
+  margin-top: 105px;
+  margin-bottom: 35px;
+}
+
+.box-form–Reg{
+  margin-top: 254px;
 }
 
 .left {

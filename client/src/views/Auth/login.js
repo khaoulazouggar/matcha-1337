@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../css/login.css";
 import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
 // import isEmpty from "./isEmpty";

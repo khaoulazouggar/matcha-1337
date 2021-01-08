@@ -12,7 +12,7 @@ function About() {
   }
   return (
     <div>
-      <div className="box-form">
+      <div className="box-form–Abt">
         <div className="left">
           <div className="overlay">
             <h1>Get to Know More</h1>
