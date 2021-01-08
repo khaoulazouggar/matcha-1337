@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
-// import isEmty from "./isEmpty";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -9,7 +8,6 @@ import isEmail from "../../tools/isEmail";
 import isUsername from "../../tools/isUsername";
 import isName from "../../tools/isName";
 import isPassword from "../../tools/isPassword";
-import _ from "lodash";
 
 function Register() {
   const [username, setusername] = useState("");
@@ -24,61 +22,58 @@ function Register() {
   const [errpassword, seterrpassword] = useState("");
   const [verifypassword, setverifypassword] = useState("");
   const [errverifypassword, seterrverifypassword] = useState("");
-  const [success, setsuccess] = useState(false);
-
   const history = useHistory();
   const routeChange = () => {
     let path = "/login";
     history.push(path);
   };
+
+  React.useEffect(() => {
+    if (firstname && !isName(firstname)) seterrfirstname("first name is not valide (minimum is 3 letters)");
+    else seterrfirstname("");
+    if (lastname && !isName(lastname)) seterrlastname("Last Name is not valide (minimum is 3 letters)");
+    else seterrlastname("");
+    if (username && !isUsername(username)) seterrusername("Username is not valide (minimum is 3 characters)");
+    else seterrusername("");
+    if (email && !isEmail(email)) seterremail("Email is not valide");
+    else seterremail("");
+    if (password && !isPassword(password))
+      seterrpassword(
+        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
+    else seterrpassword("");
+  }, [firstname, lastname, username, email, password]);
+
   const handelRegister = () => {
-    // seterrusername("");
-    // if (!username) {
-     
-    //   seterrusername("Username should not be empty");
-    //   console.log(errusername);
-    // } else if (!isUsername(username)) seterrusername("Username is not valide");
+    if (!firstname) seterrfirstname("First name should not be empty");
 
-    // seterrfirstname("");
-    // if (!firstname) {
-      
-    //   seterrfirstname("First name should not be empty");
-    // } else if (!isName(firstname)) seterrfirstname("first name is not valide");
+    if (!lastname) seterrlastname("Last name should not be empty");
 
-    // seterrlastname("");
-    // if (!lastname) {
-    
-    //   seterrlastname("Last name should not be empty");
-    // } else if (!isName(lastname)) seterrlastname("Last Name is not valide");
+    if (!username) seterrusername("Username should not be empty");
 
-    // seterremail("");
-    // if (!email) {
-      
-    //   seterremail("Email should not be empty");
-    // } else if (!isEmail(email)) seterremail("Email is not valide");
+    if (!email) seterremail("Email should not be empty");
 
-    // seterrpassword("");
-    // if (!password) {
-      
-    //   seterrpassword("Password should not be empty");
-    // } else if (!isPassword(password)) seterrpassword("Password is not valide");
+    if (!password) seterrpassword("Password should not be empty");
 
-    // seterrverifypassword("");
-    // if (!verifypassword) {
-      
-    //   seterrverifypassword("Verify Password should not be empty");
-    // } else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
-    // //username && firstname && lastname && email && password && verifypassword &&
-    // else if (_.isEmpty(errusername)) {
-    //   setsuccess(true);
-    //   // Axios.post("http://localhost:3001/register", {
-    //   //   firstname: firstname,
-    //   //   lastname: lastname,
-    //   //   username: username,
-    //   //   email: email,
-    //   //   password: password,
-    //   // });
-    // }
+    seterrverifypassword("");
+    if (!verifypassword) seterrverifypassword("Verify Password should not be empty");
+    else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    if (username && firstname && lastname && email && password && verifypassword === password && !errverifypassword) {
+      Axios.post("http://localhost:3001/register", {
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        email: email,
+        password: password,
+      });
+
+      Swal.fire({
+        icon: "success",
+        text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
+        showConfirmButton: false,
+      });
+      routeChange();
+    }
   };
 
   return (
@@ -182,14 +177,14 @@ function Register() {
           <button className="btn" onClick={() => handelRegister()}>
             Register
           </button>
-          {success
+          {/* {success
             ? (Swal.fire({
                 icon: "success",
                 text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
                 showConfirmButton: false,
               }),
               routeChange())
-            : ""}
+            : ""} */}
         </div>
       </div>
     </div>
