@@ -12,7 +12,6 @@ function Fgpass() {
     else if(!isEmail(email)) seterremail("Email is not valide");
   };
   return (
-    <div>
       <div className="box-form">
         <div className="left">
           <div className="overlay">
@@ -55,7 +54,6 @@ function Fgpass() {
           </p>
         </div>
       </div>
-    </div>
   );
 }
 

@@ -11,7 +11,6 @@ function About() {
     history.push(path);
   }
   return (
-    <div>
       <div className="box-form–Abt">
         <div className="left">
           <div className="overlay">
@@ -49,7 +48,6 @@ function About() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 export default About;

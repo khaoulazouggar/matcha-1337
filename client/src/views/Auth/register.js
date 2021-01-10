@@ -29,11 +29,14 @@ function Register() {
   };
 
   React.useEffect(() => {
-    if (firstname && !isName(firstname)) seterrfirstname("first name is not valide (minimum is 3 letters)");
+    if (firstname && !isName(firstname) && firstname.length < 24) seterrfirstname("First name is not valide (minimum is 3 letters)");
+    else if(firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
     else seterrfirstname("");
-    if (lastname && !isName(lastname)) seterrlastname("Last Name is not valide (minimum is 3 letters)");
+    if (lastname && !isName(lastname) && lastname.length < 24) seterrlastname("Last Name is not valide (minimum is 3 letters)");
+    else if(lastname.length > 24) seterrlastname("Last name is too long (maximum is 24 letters)");
     else seterrlastname("");
-    if (username && !isUsername(username)) seterrusername("Username is not valide (minimum is 3 characters)");
+    if (username && !isUsername(username) && username.length < 24) seterrusername("Username is not valide (minimum is 3 characters)");
+    else if(username.length > 24) seterrusername("Username is too long (maximum is 24 characters)");
     else seterrusername("");
     if (email && !isEmail(email)) seterremail("Email is not valide");
     else seterremail("");
@@ -42,7 +45,8 @@ function Register() {
         "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
       );
     else seterrpassword("");
-  }, [firstname, lastname, username, email, password]);
+    if (verifypassword && password !== verifypassword) seterrverifypassword("Verify Password is not valide"); else seterrverifypassword("");
+  }, [firstname, lastname, username, email, password,verifypassword]);
 
   const handelRegister = () => {
     if (!firstname) seterrfirstname("First name should not be empty");
@@ -55,10 +59,10 @@ function Register() {
 
     if (!password) seterrpassword("Password should not be empty");
 
-    seterrverifypassword("");
+    // seterrverifypassword("");
     if (!verifypassword) seterrverifypassword("Verify Password should not be empty");
-    else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
-    if (username && firstname && lastname && email && password && verifypassword === password && !errverifypassword) {
+    // else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    if (username && firstname && lastname && email && password && verifypassword === password && !errverifypassword && !errusername && !errfirstname && !errlastname && !erremail && !errpassword && !errverifypassword) {
       Axios.post("http://localhost:3001/register", {
         firstname: firstname,
         lastname: lastname,
@@ -77,107 +81,106 @@ function Register() {
   };
 
   return (
-    <div>
-      <div className="box-form–Reg">
-        <div className="left-register">
-          <div className="overlay">
-            <h1>Find Your Perfect Match</h1>
-            <br />
-            <p>
-              We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people
-              seeking love.
-            </p>
-
-            <span>
-              <p>Login with your social network</p>
-              <br />
-              <button className="media">
-                <img alt="" src={fb} />
-                Sign Up With Facebook
-              </button>
-              <button className="media">
-                <img alt="" src={google} />
-              </button>
-            </span>
-          </div>
-        </div>
-
-        <div className="right">
-          <h5>Register</h5>
+    <div className="box-form–Reg">
+      <div className="left-register">
+        <div className="overlay">
+          <h1>Find Your Perfect Match</h1>
+          <br />
           <p>
-            Already have an account? <a href="./login">Log in</a>
+            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
+            love.
           </p>
-          <div className="inputs">
-            <input
-              className="inpt"
-              type="text"
-              placeholder="First name"
-              value={firstname}
-              onChange={(e) => {
-                setfirstname(e.target.value);
-              }}
-            />
-            <span className="errors">{errfirstname}</span>
+
+          <span>
+            <p>Login with your social network</p>
             <br />
-            <input
-              className="inpt"
-              type="text"
-              placeholder="Last name"
-              value={lastname}
-              onChange={(e) => {
-                setlastname(e.target.value);
-              }}
-            />
-            <span className="errors">{errlastname}</span> <br />
-            <input
-              className="inpt"
-              type="text"
-              placeholder="User name"
-              value={username}
-              onChange={(e) => {
-                setusername(e.target.value);
-              }}
-            />
-            <span className="errors">{errusername}</span>
-            <br />
-            <input
-              className="inpt"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => {
-                setemail(e.target.value);
-              }}
-            />
-            <span className="errors">{erremail}</span>
-            <br />
-            <input
-              className="inpt"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => {
-                setpassword(e.target.value);
-              }}
-            />
-            <span className="errors">{errpassword}</span> <br />
-            <input
-              className="inpt"
-              type="password"
-              placeholder="Verify Password"
-              value={verifypassword}
-              onChange={(e) => {
-                setverifypassword(e.target.value);
-              }}
-            />
-            <span className="errors">{errverifypassword}</span>
-          </div>
+            <button className="media">
+              <img alt="" src={fb} />
+              Sign Up With Facebook
+            </button>
+            <button className="media">
+              <img alt="" src={google} />
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div className="right">
+        <h5>Register</h5>
+        <p>
+          Already have an account? <a href="./login">Log in</a>
+        </p>
+        <div className="inputs">
+          <input
+            className="inpt"
+            type="text"
+            placeholder="First name"
+            value={firstname}
+            onChange={(e) => {
+              setfirstname(e.target.value);
+            }}
+          />
+          <span className="errors">{errfirstname}</span>
           <br />
+          <input
+            className="inpt"
+            type="text"
+            placeholder="Last name"
+            value={lastname}
+            onChange={(e) => {
+              setlastname(e.target.value);
+            }}
+          />
+          <span className="errors">{errlastname}</span> <br />
+          <input
+            className="inpt"
+            type="text"
+            placeholder="User name"
+            value={username}
+            onChange={(e) => {
+              setusername(e.target.value);
+            }}
+          />
+          <span className="errors">{errusername}</span>
           <br />
-          <button className="btn" onClick={() => handelRegister()}>
-            Register
-          </button>
-          {/* {success
+          <input
+            className="inpt"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setemail(e.target.value);
+            }}
+          />
+          <span className="errors">{erremail}</span>
+          <br />
+          <input
+            className="inpt"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setpassword(e.target.value);
+            }}
+          />
+          <span className="errors">{errpassword}</span> <br />
+          <input
+            className="inpt"
+            type="password"
+            placeholder="Verify Password"
+            value={verifypassword}
+            onChange={(e) => {
+              setverifypassword(e.target.value);
+            }}
+          />
+          <span className="errors">{errverifypassword}</span>
+        </div>
+        <br />
+        <br />
+        <button className="btn" onClick={() => handelRegister()}>
+          Register
+        </button>
+        {/* {success
             ? (Swal.fire({
                 icon: "success",
                 text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
@@ -185,7 +188,6 @@ function Register() {
               }),
               routeChange())
             : ""} */}
-        </div>
       </div>
     </div>
   );

@@ -30,18 +30,23 @@ app.post("/register", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
+  require('crypto').randomBytes(48, function(err, buffer) {
+    var token = buffer.toString('hex');
+ 
+  
+
 
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
       console.log(err);
     }
-    const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password) VALUES (?,?,?,?,?);";
-    db.query(sqlInsert, [firstname, lastname, username, email, hash], (err, result) => {
+    const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);";
+    db.query(sqlInsert, [firstname, lastname, username, email, hash, token], (err, result) => {
       var mailOptions = {
         from: "caramel1337l@gmail.com",
         to: email,
         subject: "Confirm account",
-        html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To activate your account please click <a href="http://localhost/matcha/confirm/?token=${tzdvs}">Here</a></p></p><p>
+        html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To activate your account please click <a href="http://localhost:3000/confirm/?token=${token}">Here</a></p></p><p>
         <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
@@ -52,6 +57,7 @@ app.post("/register", (req, res) => {
         }
       });
     });
+  });
   });
 });
 
@@ -66,15 +72,23 @@ app.post("/login", (req, res) => {
       res.send({ err: err });
     }
     if (result.length > 0) {
-      bcrypt.compare(password, result[0].password, (error, result) => {
-        if (result) {
-          res.send(result);
+      //console.log(result)
+      bcrypt.compare(password, result[0].password, (error, rslt) => {
+        // console.log(result[0].confirm)
+        if (rslt){ 
+          if(result[0].confirm === 1)     
+            res.send(rslt);
+          else {
+              res.send({ message: "Please check your email" });
+            }
         } else {
+          // console.log(1)
           res.send({ message: "Wrong combination!" });
         }
       });
     } else {
-      res.send({ message: "User Dosen't exist " });
+      // console.log(2)
+      res.send({ message: "User Dosen't exist" });
     }
   });
 });

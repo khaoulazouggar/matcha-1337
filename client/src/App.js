@@ -9,8 +9,8 @@ import Error from "./Components/error";
 import Fgpass from "./views/Auth/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Steps from "./Components/steps";
-import Navbar from "./Components/navbar"
-
+import Navbar from "./Components/navbar";
+import Confirm from "./views/Auth/confim";
 function App() {
   return (
     <Router>
@@ -24,12 +24,16 @@ function App() {
           <Route path="/login" component={Login} />
 
           <Route path="/about" component={About} />
-
+ 
           <Route path="/fgpass" component={Fgpass} />
-          <Route path="/steps" component={Steps} />
-          <Route path="*" component={Error} />
-        </Switch>
 
+          <Route path="/confirm" component={Confirm} />
+
+          <Route path="/steps" component={Steps} />
+
+          <Route path="*" component={Error} />
+         
+        </Switch>
       </div>
     </Router>
   );

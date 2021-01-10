@@ -27,11 +27,14 @@ function Login() {
     }
     if (username && password) {
       Axios.post('http://localhost:3001/login', { username: username, password: password })
-        .then((response) => { if (response.data.message) { Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false, }); } else { Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false, }); routeChange();} })
+      // .then((response) =>console.log(response))
+        .then((response) => 
+        { if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist") { Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false, }); } 
+        else if( response.data.message === "Please check your email") { Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false, }); }
+        else { Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false, }); routeChange();} })
     }
   };
   return (
-  
       <div className="box-form">
         <div className="left">
           <div className="overlay">
