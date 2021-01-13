@@ -24,15 +24,14 @@ function App() {
           <Route path="/login" component={Login} />
 
           <Route path="/about" component={About} />
- 
+
           <Route path="/fgpass" component={Fgpass} />
 
-          <Route path="/confirm" component={Confirm} />
+          <Route path="/confirm/:token" component={Confirm} />
 
           <Route path="/steps" component={Steps} />
 
           <Route path="*" component={Error} />
-         
         </Switch>
       </div>
     </Router>

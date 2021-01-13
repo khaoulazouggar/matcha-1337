@@ -30,13 +30,13 @@ function Register() {
 
   React.useEffect(() => {
     if (firstname && !isName(firstname) && firstname.length < 24) seterrfirstname("First name is not valide (minimum is 3 letters)");
-    else if(firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
+    else if (firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
     else seterrfirstname("");
     if (lastname && !isName(lastname) && lastname.length < 24) seterrlastname("Last Name is not valide (minimum is 3 letters)");
-    else if(lastname.length > 24) seterrlastname("Last name is too long (maximum is 24 letters)");
+    else if (lastname.length > 24) seterrlastname("Last name is too long (maximum is 24 letters)");
     else seterrlastname("");
     if (username && !isUsername(username) && username.length < 24) seterrusername("Username is not valide (minimum is 3 characters)");
-    else if(username.length > 24) seterrusername("Username is too long (maximum is 24 characters)");
+    else if (username.length > 24) seterrusername("Username is too long (maximum is 24 characters)");
     else seterrusername("");
     if (email && !isEmail(email)) seterremail("Email is not valide");
     else seterremail("");
@@ -45,8 +45,9 @@ function Register() {
         "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
       );
     else seterrpassword("");
-    if (verifypassword && password !== verifypassword) seterrverifypassword("Verify Password is not valide"); else seterrverifypassword("");
-  }, [firstname, lastname, username, email, password,verifypassword]);
+    if (verifypassword && password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    else seterrverifypassword("");
+  }, [firstname, lastname, username, email, password, verifypassword]);
 
   const handelRegister = () => {
     if (!firstname) seterrfirstname("First name should not be empty");
@@ -62,21 +63,46 @@ function Register() {
     // seterrverifypassword("");
     if (!verifypassword) seterrverifypassword("Verify Password should not be empty");
     // else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
-    if (username && firstname && lastname && email && password && verifypassword === password && !errverifypassword && !errusername && !errfirstname && !errlastname && !erremail && !errpassword && !errverifypassword) {
+    if (
+      username &&
+      firstname &&
+      lastname &&
+      email &&
+      password &&
+      verifypassword === password &&
+      !errverifypassword &&
+      !errusername &&
+      !errfirstname &&
+      !errlastname &&
+      !erremail &&
+      !errpassword &&
+      !errverifypassword
+    ) {
       Axios.post("http://localhost:3001/register", {
         firstname: firstname,
         lastname: lastname,
         username: username,
         email: email,
         password: password,
-      });
-
-      Swal.fire({
-        icon: "success",
-        text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
-        showConfirmButton: false,
-      });
-      routeChange();
+      })
+        .then((res) => {
+          // console.log(res);
+          if (res.data.message === "Email already used") {
+            Swal.fire({
+              icon: "error",
+              text: "Email already used please try with another one ",
+              showConfirmButton: false,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
+              showConfirmButton: false,
+            });
+            routeChange();
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
 
