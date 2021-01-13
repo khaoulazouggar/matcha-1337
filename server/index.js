@@ -30,34 +30,61 @@ app.post("/register", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-  require('crypto').randomBytes(48, function(err, buffer) {
-    var token = buffer.toString('hex');
- 
-  
+  require("crypto").randomBytes(48, function (err, buffer) {
+    var token = buffer.toString("hex");
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) {
+        console.log(err);
+      }
+      db.query("SELECT COUNT(*) AS count FROM `users` WHERE `username` = ? OR `email` = ? LIMIT 1;", [username, email], (error, rslt) => {
+        console.log(rslt[0].count);
 
-
-  bcrypt.hash(password, 10, (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
-    const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);";
-    db.query(sqlInsert, [firstname, lastname, username, email, hash, token], (err, result) => {
-      var mailOptions = {
-        from: "caramel1337l@gmail.com",
-        to: email,
-        subject: "Confirm account",
-        html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To activate your account please click <a href="http://localhost:3000/confirm/?token=${token}">Here</a></p></p><p>
-        <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent");
-        }
+        if (err) {
+          console.log(err);
+        } else if (rslt[0].count > 0) res.send({ message: "Email already used" });
+        else
+          db.query(
+            "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);",
+            [firstname, lastname, username, email, hash, token],
+            (err, result) => {
+              var mailOptions = {
+                from: "caramel1337l@gmail.com",
+                to: email,
+                subject: "Confirm account",
+                html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To activate your account please click <a href="http://localhost:3000/confirm/${token}">Here</a></p></p><p>
+          <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
+              };
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.send({message: "done"});
+                  console.log("Email sent");
+                }
+              });
+            }
+          );
       });
+
+      // const sqlInsert = "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);";
+      // db.query(sqlInsert, [firstname, lastname, username, email, hash, token], (err, result) => {
+      //   var mailOptions = {
+      //     from: "caramel1337l@gmail.com",
+      //     to: email,
+      //     subject: "Confirm account",
+      //     html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To activate your account please click <a href="http://localhost:3000/confirm/${token}">Here</a></p></p><p>
+      //   <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
+      //   };
+      //   transporter.sendMail(mailOptions, function (error, info) {
+      //     if (error) {
+      //       console.log(error);
+      //     } else {
+      //       res.send("DONE");
+      //       console.log("Email sent");
+      //     }
+      //   });
+      // });
     });
-  });
   });
 });
 
@@ -75,12 +102,11 @@ app.post("/login", (req, res) => {
       //console.log(result)
       bcrypt.compare(password, result[0].password, (error, rslt) => {
         // console.log(result[0].confirm)
-        if (rslt){ 
-          if(result[0].confirm === 1)     
-            res.send(rslt);
+        if (rslt) {
+          if (result[0].confirm === 1) res.send(rslt);
           else {
-              res.send({ message: "Please check your email" });
-            }
+            res.send({ message: "Please check your email" });
+          }
         } else {
           // console.log(1)
           res.send({ message: "Wrong combination!" });
@@ -89,6 +115,22 @@ app.post("/login", (req, res) => {
     } else {
       // console.log(2)
       res.send({ message: "User Dosen't exist" });
+    }
+  });
+});
+
+app.post("/confirm", (req, res) => {
+  const token = req.body.token;
+  const sqlInsert = "SELECT * FROM users WHERE token = ?";
+  db.query(sqlInsert, token, (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    }
+    if (result.length > 0) {
+      if (result[0].token === token) {
+        db.query("UPDATE users SET confirm = 1 WHERE token = ?", token);
+        res.send({ message: "Your account has been successfully verified." });
+      }
     }
   });
 });
