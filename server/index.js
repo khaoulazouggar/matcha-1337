@@ -30,6 +30,7 @@ app.post("/register", (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
+
   require("crypto").randomBytes(48, function (err, buffer) {
     var token = buffer.toString("hex");
     bcrypt.hash(password, 10, (err, hash) => {
@@ -41,7 +42,7 @@ app.post("/register", (req, res) => {
 
         if (err) {
           console.log(err);
-        } else if (rslt[0].count > 0) res.send({ message: "Email already used" });
+        } else if (rslt[0].count > 0) res.send({ message: "Email and or username are already used" });
         else
           db.query(
             "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);",
@@ -135,6 +136,37 @@ app.post("/confirm", (req, res) => {
   });
 });
 
+app.post("/fgpass", (req, res)=> {
+  require("crypto").randomBytes(48, function (err, buffer) {
+    var token = buffer.toString("hex");
+  const email = req.body.email;
+  const sqlInsert = "SELECT * FROM users WHERE email = ?";
+  db.query(sqlInsert, email, (err, result) => {
+    if(err){
+      res.send({err: err});
+    }
+    if(result.length > 0) {
+      if(result[0].email === email) {
+        var mailOptions = {
+          from: "caramel1337l@gmail.com",
+          to: email,
+          subject: "Reset password",
+          html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To recover your account please click <a href="http://localhost:3000/changepass/${token}">Here</a></p></p><p>
+    <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            res.send({message: "done"});
+            console.log("Email sent");
+          }
+        });
+      }
+    }
+  })
+})
+})
 app.listen(3001, () => {
   console.log("hello server");
 });

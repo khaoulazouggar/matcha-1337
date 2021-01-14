@@ -87,10 +87,10 @@ function Register() {
       })
         .then((res) => {
           // console.log(res);
-          if (res.data.message === "Email already used") {
+          if (res.data.message === "Email and or username are already used") {
             Swal.fire({
               icon: "error",
-              text: "Email already used please try with another one ",
+              text: "Email and or username are already used please try with another one ",
               showConfirmButton: false,
             });
           } else {

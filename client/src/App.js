@@ -11,6 +11,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
+import Changepass from "./views/Auth/changepass";
+
 function App() {
   return (
     <Router>
@@ -28,6 +30,8 @@ function App() {
           <Route path="/fgpass" component={Fgpass} />
 
           <Route path="/confirm/:token" component={Confirm} />
+
+          <Route path="/changepass" component={Changepass} />
 
           <Route path="/steps" component={Steps} />
 
