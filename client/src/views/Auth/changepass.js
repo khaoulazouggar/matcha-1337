@@ -18,15 +18,27 @@ function Changepass(props) {
         </div>
       </div>
       <div className="right">
-        <h5>Password</h5>
+        <h1>Reset Password !</h1>
+        <br />
+        <br />
         <p>
-          Don't have an account? <a href="./register">Creat Your Account</a> it takes less than a minute
+        Please Enter Your new Password
         </p>
         <div className="inputs">
           <input
             className="inpt"
             type="password"
-            placeholder="Password"
+            placeholder="New Password"
+            //   value={password}
+            //   onChange={(e) => {
+            //     setpassword(e.target.value);
+            //   }}
+          />
+          {/* <span className="errors">{errpassword}</span> */}
+          <input
+            className="inpt"
+            type="password"
+            placeholder="Confirm New Password"
             //   value={password}
             //   onChange={(e) => {
             //     setpassword(e.target.value);
@@ -36,12 +48,11 @@ function Changepass(props) {
         </div>
         <br />
         <br />
-
-        <div className="forget-password">
-          <a href="./fgpass">forget password?</a>
-        </div>
-        <br />
         <button className="btn">Change password</button>
+        <br />
+          <p>
+            Just remembered? <a href="./login">Log in</a>
+          </p>
       </div>
     </div>
   );
