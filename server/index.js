@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 var nodemailer = require("nodemailer");
+const { deepEqual } = require("assert");
 
 var transporter = nodemailer.createTransport({
   service: "gmail",
@@ -137,6 +138,8 @@ app.post("/confirm", (req, res) => {
 });
 
 app.post("/fgpass", (req, res) => {
+  require("crypto").randomBytes(48, function (err, buffer) {
+    var token = buffer.toString("hex");
   const email = req.body.email;
   const sqlInsert = "SELECT * FROM users WHERE email = ?";
   db.query(sqlInsert, email, (err, result) => {
@@ -144,12 +147,12 @@ app.post("/fgpass", (req, res) => {
       res.send({ err: err });
     }
     if (result.length > 0) {
-      if (result[0].email === email) {
+      db.query("UPDATE users SET tokenPass = ? WHERE email = ?",[token, email])
         var mailOptions = {
           from: "caramel1337l@gmail.com",
           to: email,
           subject: "Reset password",
-          html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To recover your account please click <a href="http://localhost:3000/changepass/${result[0].token}">Here</a></p></p><p>
+          html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To recover your account please click <a href="http://localhost:3000/changepass/${token}">Here</a></p></p><p>
     <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
         };
         transporter.sendMail(mailOptions, function (error, info) {
@@ -160,14 +163,15 @@ app.post("/fgpass", (req, res) => {
             console.log("Email sent");
           }
         });
-      }
+      
     }
   });
+});
 });
 
 app.post("/token", (req, res) => {
   const token = req.body.token;
-  const sqlInsert = "SELECT * FROM users WHERE token = ?";
+  const sqlInsert = "SELECT * FROM users WHERE tokenPass = ?";
   db.query(sqlInsert, token, (err, result) => {
     if (err) {
       res.send({ err: err });
@@ -178,20 +182,21 @@ app.post("/token", (req, res) => {
   });
 });
 
-app.post("/changepass", (req, res) => {
-  console.log("---------> fuck you");
-
+app.post("/changepass", (req, res) => { 
   const token = req.body.token;
   const password = req.body.password;
-  const sqlInsert = "SELECT * FROM users WHERE token = ?";
+  bcrypt.hash(password, 10, (err, hash) => {
+  const sqlInsert = "SELECT * FROM users WHERE tokenPass = ?";
   db.query(sqlInsert, token, (err, result) => {
     if (err) {
       res.send({ err: err });
     }
     if (result.length > 0) {
-        db.query("UPDATE users SET password = ? WHERE token = ?", [password, token]);
+        db.query("UPDATE users SET password = ? WHERE tokenPass = ?", [hash, token]);
+        db.query("UPDATE users SET tokenPass = NULL WHERE tokenPass = ?", [token]);
         res.send({ message: "modified" });
     } else res.send({ message: "error" });
+  });
   });
 });
 app.listen(3001, () => {
