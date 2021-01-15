@@ -1,0 +1,9 @@
+.left-pass {
+    width: 640px;
+    color: white;
+    /* overflow: hidden; */
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../photos/Authentication.gif);
+  }

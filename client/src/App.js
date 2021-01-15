@@ -31,7 +31,7 @@ function App() {
 
           <Route path="/confirm/:token" component={Confirm} />
 
-          <Route path="/changepass" component={Changepass} />
+          <Route path="/changepass/:token" component={Changepass} />
 
           <Route path="/steps" component={Steps} />
 

@@ -16,7 +16,7 @@ function Login() {
     let path = "/steps";
     history.push(path);
   };
-  const hadnleLogin = () => {
+  const handleLogin = () => {
     setErrusername("");
     if (!username) {
       setErrusername("User name should not be empty");
@@ -100,7 +100,7 @@ function Login() {
           <a href="./fgpass">forget password?</a>
         </div>
         <br />
-        <button className="btn" onClick={() => hadnleLogin()}>
+        <button className="btn" onClick={() => handleLogin()}>
           Login
         </button>
       </div>

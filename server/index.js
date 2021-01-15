@@ -59,7 +59,7 @@ app.post("/register", (req, res) => {
                 if (error) {
                   console.log(error);
                 } else {
-                  res.send({message: "done"});
+                  res.send({ message: "done" });
                   console.log("Email sent");
                 }
               });
@@ -131,42 +131,69 @@ app.post("/confirm", (req, res) => {
       if (result[0].token === token) {
         db.query("UPDATE users SET confirm = 1 WHERE token = ?", token);
         res.send({ message: "Your account has been successfully verified." });
-      }
+      } else res.send({ message: "token not found" });
     }
   });
 });
 
-app.post("/fgpass", (req, res)=> {
-  require("crypto").randomBytes(48, function (err, buffer) {
-    var token = buffer.toString("hex");
+app.post("/fgpass", (req, res) => {
   const email = req.body.email;
   const sqlInsert = "SELECT * FROM users WHERE email = ?";
   db.query(sqlInsert, email, (err, result) => {
-    if(err){
-      res.send({err: err});
+    if (err) {
+      res.send({ err: err });
     }
-    if(result.length > 0) {
-      if(result[0].email === email) {
+    if (result.length > 0) {
+      if (result[0].email === email) {
         var mailOptions = {
           from: "caramel1337l@gmail.com",
           to: email,
           subject: "Reset password",
-          html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To recover your account please click <a href="http://localhost:3000/changepass/${token}">Here</a></p></p><p>
+          html: `<html><body><p>Welcome to Matcha,<br /><br/><br/><p>To recover your account please click <a href="http://localhost:3000/changepass/${result[0].token}">Here</a></p></p><p>
     <br />--------------------------------------------------------<br />This is an automatic mail , please do not reply.</p></body></html>`,
         };
         transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
             console.log(error);
           } else {
-            res.send({message: "done"});
+            res.send({ message: "done" });
             console.log("Email sent");
           }
         });
       }
     }
-  })
-})
-})
+  });
+});
+
+app.post("/token", (req, res) => {
+  const token = req.body.token;
+  const sqlInsert = "SELECT * FROM users WHERE token = ?";
+  db.query(sqlInsert, token, (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    }
+    if (result.length === 0) {
+      res.send({ message: "token not found" });
+    } else res.send({ message: "Done" });
+  });
+});
+
+app.post("/changepass", (req, res) => {
+  console.log("---------> fuck you");
+
+  const token = req.body.token;
+  const password = req.body.password;
+  const sqlInsert = "SELECT * FROM users WHERE token = ?";
+  db.query(sqlInsert, token, (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    }
+    if (result.length > 0) {
+        db.query("UPDATE users SET password = ? WHERE token = ?", [password, token]);
+        res.send({ message: "modified" });
+    } else res.send({ message: "error" });
+  });
+});
 app.listen(3001, () => {
   console.log("hello server");
 });
