@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../css/changepass.css";
+import "../../css/changepass-confirm.css";
 import isPassword from "../../tools/isPassword";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
