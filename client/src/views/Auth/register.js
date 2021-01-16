@@ -60,9 +60,8 @@ function Register() {
 
     if (!password) seterrpassword("Password should not be empty");
 
-    // seterrverifypassword("");
     if (!verifypassword) seterrverifypassword("Verify Password should not be empty");
-    // else if (password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+
     if (
       username &&
       firstname &&
@@ -86,7 +85,6 @@ function Register() {
         password: password,
       })
         .then((res) => {
-          // console.log(res);
           if (res.data.message === "Email and or username are already used") {
             Swal.fire({
               icon: "error",
@@ -206,14 +204,6 @@ function Register() {
         <button className="btn" onClick={() => handelRegister()}>
           Register
         </button>
-        {/* {success
-            ? (Swal.fire({
-                icon: "success",
-                text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
-                showConfirmButton: false,
-              }),
-              routeChange())
-            : ""} */}
       </div>
     </div>
   );

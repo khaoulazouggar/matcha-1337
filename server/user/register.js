@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Email = require("../email");
+const send_Email = require("../send_Email");
 const bcrypt = require("bcrypt");
 const isEmail = require("../tools/isEmail");
 const isName = require("../tools/isName");
@@ -39,11 +39,18 @@ router.post("/", (req, res) => {
               "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);",
               [firstname, lastname, username, email, hash, token],
               (err, result) => {
-                if (Email(token, email)) {
+                if (
+                  send_Email(
+                    email,
+                    "Confirm account",
+                    `<p>To activate your account please click <a href="http://localhost:3000/confirm/${token}">Here</a></p>`
+                  )
+                ) {
                   res.send({ message: "done" });
                   console.log("Email sent");
+                } else {
+                  res.send({ message: "Email not send" });
                 }
-                
               }
             );
         });
@@ -51,4 +58,5 @@ router.post("/", (req, res) => {
     });
   } else res.send("error");
 });
+
 module.exports = router;

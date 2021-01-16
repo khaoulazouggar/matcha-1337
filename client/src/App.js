@@ -17,23 +17,23 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        {/* <Navbar /> */}
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/"> <Home/> <Navbar /> </Route>
 
-          <Route path="/register" component={Register} />
+          <Route path="/register"> <Register/><Navbar/> </Route>
 
-          <Route path="/login" component={Login} />
+          <Route exact path="/login"> <Login/><Navbar/> </Route>
 
-          <Route path="/about" component={About} />
+          <Route path="/about"> <About/><Navbar/> </Route>
 
-          <Route path="/fgpass" component={Fgpass} />
+          <Route path="/fgpass"> <Fgpass/><Navbar/> </Route>
 
-          <Route path="/confirm/:token" component={Confirm} />
+          <Route exact path="/confirm/:token" component={Confirm} />
 
           <Route path="/changepass/:token" component={Changepass} />
 
-          <Route path="/steps" component={Steps} />
+          <Route path="/steps"> <Steps/><Navbar/> </Route>
 
           <Route path="*" component={Error} />
         </Switch>

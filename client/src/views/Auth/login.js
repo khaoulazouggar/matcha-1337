@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
-// import isEmpty from "./isEmpty";
 import Axios from "axios";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";

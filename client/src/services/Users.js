@@ -6,7 +6,7 @@ export default {
       Axios.post("http://localhost:3001/token", { token: token }).then((res) => {
         if (res.data.message === "token not found") {
           resolve("0");
-        } else if (res.data.message === "Done") {
+        } else if (res.data.message === "token found") {
           resolve("1");
         }
       });
