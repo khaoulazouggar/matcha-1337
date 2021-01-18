@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-// const mysql = require("mysql");
 const cors = require("cors");
 const register = require("./user/register");
 const login = require("./user/login");
