@@ -186,7 +186,7 @@ function Register() {
             onChange={(e) => {
               setpassword(e.target.value);
             }}
-          />
+          required/>
           <span className="errors">{errpassword}</span> <br />
           <input
             className="inpt"

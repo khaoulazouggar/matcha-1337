@@ -21,7 +21,7 @@ function App() {
         <Switch>
           <Route exact path="/"> <Home/> <Navbar /> </Route>
 
-          <Route path="/register"> <Register/><Navbar/> </Route>
+          <Route exact path="/register"> <Register/><Navbar/> </Route>
 
           <Route exact path="/login"> <Login/><Navbar/> </Route>
 
@@ -29,7 +29,7 @@ function App() {
 
           <Route path="/fgpass"> <Fgpass/><Navbar/> </Route>
 
-          <Route exact path="/confirm/:token" component={Confirm} />
+          <Route path="/confirm/:token" component={Confirm} />
 
           <Route path="/changepass/:token" component={Changepass} />
 

@@ -10,14 +10,14 @@ function Confim(props) {
 
   useEffect(() => {
     if (validtoken === 0 && props.match.params.token)
-      Users.checktoken(props.match.params.token).then((res) => {
+      Users.checktokenpass(props.match.params.token).then((res) => {
         if (res === "1") setValidToken(1);
         else history.push("/error");
       });
 
-    // console.log(props.match.params.token);
     const token = props.match.params.token;
     Axios.post("http://localhost:3001/confirm", { token: token }).then((res) => {
+      console.log(res.data.message);
       if (res.data.message !== "Verified") {
         history.push("/error");
       }
