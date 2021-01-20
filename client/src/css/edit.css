@@ -1,0 +1,32 @@
+.edit-pic{
+    border: 3px dashed #b4adf1;
+    border-radius: 50px;
+    position: relative;
+    width: 250px;
+    margin: 40px;
+    margin-top: 80px;
+    height: 270px;
+}
+
+.file{
+    position: absolute;
+    width: 100%;
+  height: 100%;
+  outline: none;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.edit{
+  margin-left: 60px;
+  margin-top: 60px;
+  font-size: 18px;
+}
+
+.edit-child{
+cursor: pointer;
+color: #232327;
+}
+.edit-child:hover{
+  color: #7971b8;
+}

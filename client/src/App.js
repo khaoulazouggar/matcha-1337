@@ -5,6 +5,7 @@ import Login from "./views/Auth/login";
 import Register from "./views/Auth/register";
 import About from "./views/pages/about";
 import Home from "./views/pages/home";
+import Edit from "./views/pages/edit";
 import Error from "./Components/error";
 import Fgpass from "./views/Auth/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -32,6 +33,8 @@ function App() {
           <Route path="/confirm/:token" component={Confirm} />
 
           <Route path="/changepass/:token" component={Changepass} />
+
+          <Route path="/edit"> <Edit/><Navbar/> </Route>
 
           <Route path="/steps"> <Steps/><Navbar/> </Route>
 
