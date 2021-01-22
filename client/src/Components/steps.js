@@ -64,7 +64,7 @@ function Steps() {
             {inStep1 === 0 ? (
               <InStep data={{ gender, setGender }} />
             ) : inStep1 === 1 ? (
-              <textarea className="bio" type="text" placeholder="Add your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
+              <textarea className="bio" type="text" placeholder="Add Your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
             ) : inStep1 === 2 ? (
               <Tag data={{ tags, setTags }} />
             ) : (

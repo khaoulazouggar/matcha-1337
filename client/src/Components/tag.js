@@ -11,7 +11,7 @@ function Tag(props) {
   return (
     <div className="tags">
       {console.log(props.data.tags)}
-      <p>Add your Tags ...</p>
+      <p>Add Your Tags ...</p>
       <CreatableSelect isClearable isMulti defaultValue={props.data.tags} onChange={handleChange} />
     </div>
   );
