@@ -3,7 +3,8 @@ import CreatableSelect from "react-select/creatable";
 
 function Tag(props) {
   const handleChange = (newValue) => {
-    props.data.setTags([...newValue]);
+    if(newValue)
+      props.data.setTags([...newValue]);
     // console.log(newValue);
    
   };
