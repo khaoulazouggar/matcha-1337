@@ -7,10 +7,11 @@ import { Upload } from "react-feather";
 import { Edit2 } from "react-feather";
 import { Key } from "react-feather";
 import { User } from "react-feather";
+import noUser from "../../photos/noUser.png"
 
 function Edit() {
   const [Right, setRight] = useState(1);
-  const [Img, setImg] = useState([]);
+  const [Img, setImg] = useState([noUser]);
   const onDrop = (e, picture) => {
     let data = URL.createObjectURL(picture[0]);
     setImg([data, Img]);
@@ -21,6 +22,7 @@ function Edit() {
       <div className="left-edit">
         <div style={Img[0] ? { border: "none" } : {}} className="edit-pic">
           <input
+          title="Edit your profile's picture"
             className="file"
             type="file"
             accept="image/*"
