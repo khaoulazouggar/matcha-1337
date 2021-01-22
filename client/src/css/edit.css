@@ -54,6 +54,7 @@ color: #232327;
 
 .edit-tags {
   width: 385px;
+  height: 100px;
   /* margin-top: 39px; */
   overflow: auto;
   /* height: 265px; */
