@@ -1,33 +1,33 @@
-.edit-pic{
-    border: 3px dashed #b4adf1;
-    border-radius: 50px;
-    position: relative;
-    width: 250px;
-    margin: 40px;
-    margin-top: 50px;
-    height: 270px;
+.edit-pic {
+  border: 3px dashed #b4adf1;
+  border-radius: 50px;
+  position: relative;
+  width: 250px;
+  margin: 40px;
+  margin-top: 50px;
+  height: 270px;
 }
 
-.file{
-    position: absolute;
-    width: 100%;
+.file {
+  position: absolute;
+  width: 100%;
   height: 100%;
   outline: none;
   cursor: pointer;
   opacity: 0;
 }
 
-.edit{
+.edit {
   margin-left: 60px;
   margin-top: 60px;
   font-size: 18px;
 }
 
-.edit-child{
-cursor: pointer;
-color: #232327;
+.edit-child {
+  cursor: pointer;
+  color: #232327;
 }
-.edit-child:hover{
+.edit-child:hover {
   color: #7971b8;
 }
 
@@ -65,7 +65,7 @@ color: #232327;
   /* padding-right: 5px; */
 }
 
-.editRight h1{
+.editRight h1 {
   font-size: 80px;
   line-height: 1;
   font-weight: 900px;
@@ -73,11 +73,11 @@ color: #232327;
   margin-bottom: 35px;
 }
 
-.editImg{
+.editImg {
   height: 271px;
-    width: 250px;
-    border-radius: 50px;
-    border: 3px solid #e1ddfb;
-    box-shadow: 0px 4px 20px 0px #090b6f85;
-    /* margin-top: -105px; */
+  width: 250px;
+  border-radius: 50px;
+  border: 3px solid #e1ddfb;
+  box-shadow: 0px 4px 20px 0px #090b6f85;
+  /* margin-top: -105px; */
 }
