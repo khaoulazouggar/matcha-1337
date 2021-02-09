@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import isEmail from "../../tools/isEmail";
 import Axios from "axios";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 function Fgpass() {
   const [email, setemail] = useState("");
@@ -69,7 +69,7 @@ function Fgpass() {
         </button>
         <br />
         <p>
-          Just remembered? <a href="./login">Log in</a>
+          Just remembered? <Link  className="decoration" to="./login">Log in</Link>
         </p>
       </div>
     </div>

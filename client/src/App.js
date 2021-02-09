@@ -13,31 +13,24 @@ import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
+import Search from  "./views/pages/search";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
+        <Navbar />
         <Switch>
-          <Route exact path="/"> <Home/> <Navbar /> </Route>
-
-          <Route exact path="/register"> <Register/><Navbar/> </Route>
-
-          <Route exact path="/login"> <Login/><Navbar/> </Route>
-
-          <Route path="/about"> <About/><Navbar/> </Route>
-
-          <Route path="/fgpass"> <Fgpass/><Navbar/> </Route>
-
           <Route path="/confirm/:token" component={Confirm} />
-
           <Route path="/changepass/:token" component={Changepass} />
-
-          <Route path="/edit"> <Edit/><Navbar/> </Route>
-
-          <Route path="/steps"> <Steps/><Navbar/> </Route>
-
+          <Route exact path="/register"> <Register/> </Route>
+          <Route exact path="/login"> <Login/> </Route>
+          <Route path="/about"> <About/> </Route>
+          <Route path="/fgpass"> <Fgpass/> </Route>
+          <Route path="/search"> <Search/> </Route>
+          <Route path="/edit"> <Edit/> </Route>
+          <Route path="/steps"> <Steps/> </Route>
+          <Route exact path="/"> <Home/>  </Route>
           <Route path="*" component={Error} />
         </Switch>
       </div>

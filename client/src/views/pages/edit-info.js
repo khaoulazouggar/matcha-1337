@@ -4,7 +4,7 @@ import React from "react";
 function EditInfo() {
   return (
     <div className="right">
-      <h1>Edit Your Account</h1>
+      <h1>Edit Account</h1>
       <br />
       <br />
       <p>Please Enter Your New Information :</p>
@@ -33,7 +33,7 @@ function EditInfo() {
         <input
           className="inpt"
           type="text"
-          placeholder="New user name"
+          placeholder="New username"
           // value={username}
           // onChange={(e) => {
           //   setusername(e.target.value);

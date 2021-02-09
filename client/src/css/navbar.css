@@ -36,13 +36,18 @@ li{
     /* width: 100px;
     height: 100px; */
     font-size: 14px;
-    transition: all 0.5s;
+    transition: all 0.7s;
 }
 
 .nav-list a:not( :hover ){
     transition: all 0.5s;
 }
 
+.text-sz
+{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+}
 /* .nav-list a::before{
     content: "";
     

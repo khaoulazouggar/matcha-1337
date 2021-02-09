@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
 import Axios from "axios";
@@ -8,6 +8,7 @@ import isEmail from "../../tools/isEmail";
 import isUsername from "../../tools/isUsername";
 import isName from "../../tools/isName";
 import isPassword from "../../tools/isPassword";
+import {Link} from "react-router-dom";
 
 function Register() {
   const [username, setusername] = useState("");
@@ -28,7 +29,10 @@ function Register() {
     history.push(path);
   };
 
-  React.useEffect(() => {
+
+
+
+ useEffect(() => {
     if (firstname && !isName(firstname) && firstname.length < 24) seterrfirstname("First name is not valide (minimum is 3 letters)");
     else if (firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
     else seterrfirstname("");
@@ -130,9 +134,9 @@ function Register() {
       </div>
 
       <div className="right">
-        <h5>Register</h5>
+        <h5>Create Account</h5>
         <p>
-          Already have an account? <a href="./login">Log in</a>
+          Already have an account? <Link className="decoration" to="./login">Log in</Link>
         </p>
         <div className="inputs">
           <input
@@ -159,7 +163,7 @@ function Register() {
           <input
             className="inpt"
             type="text"
-            placeholder="User name"
+            placeholder="Username"
             value={username}
             onChange={(e) => {
               setusername(e.target.value);

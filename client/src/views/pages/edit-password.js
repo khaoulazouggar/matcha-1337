@@ -3,7 +3,7 @@ import React from "react";
 function EditPass() {
   return (
     <div className="right">
-      <h1>Edit Your Account</h1>
+      <h1>Edit  Account</h1>
       <br />
       <br />
       <p>Change Your Password :</p>

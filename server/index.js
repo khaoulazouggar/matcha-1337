@@ -17,6 +17,6 @@ app.use("/fgpass", fgpass);
 app.use("/changepass", changepass);
 app.use("/token", token);
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log("hello server");
 });

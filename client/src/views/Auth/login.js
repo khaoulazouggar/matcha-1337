@@ -3,7 +3,7 @@ import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
 import Axios from "axios";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 function Login() {
   const [username, setusername] = useState("");
@@ -67,13 +67,13 @@ function Login() {
       <div className="right">
         <h5>Login</h5>
         <p>
-          Don't have an account? <a href="./register">Creat Your Account</a> it takes less than a minute
+          Don't have an account? <Link className="decoration" to="./register">Create Your Account</Link> it takes less than a minute
         </p>
         <div className="inputs">
           <input
             className="inpt"
             type="text"
-            placeholder="User name"
+            placeholder="Username"
             value={username}
             onChange={(e) => {
               setusername(e.target.value);
@@ -96,7 +96,7 @@ function Login() {
         <br />
 
         <div className="forget-password">
-          <a href="./fgpass">forget password?</a>
+          <Link className="decoration" to="./fgpass">Forget password?</Link>
         </div>
         <br />
         <button className="btn" onClick={() => handleLogin()}>

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link, NavLink} from "react-router-dom";
 import "../css/navbar.css"
 import lo1 from "../photos/speech.png"
 
@@ -7,22 +8,19 @@ function Navbar() {
       <div className="navigation">
         <img alt="" className="lo1" src={lo1} />
         <div className="brand">
-          <a href="/">Matcha</a>
+          <NavLink exact className="text-sz" to="/">Matcha</NavLink>
         </div>
         <nav>
-          <div className="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+          <div className="nav-mobile"><NavLink id="nav-toggle" to="#!"><span></span></NavLink></div>
           <ul className="nav-list">
             <li>
-              <a href="/">Home</a>
+              <NavLink className="text-sz" to="/about">About</NavLink>
             </li>
             <li>
-              <a href="/about">About</a>
+              <NavLink  className="text-sz" to="/login">Login</NavLink>
             </li>
             <li>
-              <a href="/login">Login</a>
-            </li>
-            <li>
-              <a href="/register">Register</a>
+              <NavLink  className="text-sz" to="/register">Register</NavLink>
             </li>
           </ul>
         </nav>

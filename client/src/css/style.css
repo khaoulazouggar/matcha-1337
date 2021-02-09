@@ -74,7 +74,7 @@ h1 {
   font-size: 80px;
   line-height: 1;
   font-weight: 900px;
-  margin-top: 40px;
+  margin-top: 46px;
   margin-bottom: 20px;
 }
 
@@ -122,7 +122,7 @@ button.media {
 }
 
 h5 {
-  font-size: 90px;
+  font-size: 40px;
   line-height: 0;
 }
 
@@ -162,12 +162,16 @@ input.inpt {
   width: 100%;
   padding: 10px;
   margin-top: 25px;
-  font-size: 16px;
+  font-size: 15px;
   border: none;
   outline: none;
-  border-bottom: 2px solid #b0b3b9;
+  border: 2px solid rgb(240, 240, 240)  ;
+  border-radius: 12px;
 }
-
+::placeholder
+{
+  color: #d0d0d5;
+}
 .errors{
   color: #fa1010;
 }

@@ -12,7 +12,7 @@ function EditProfile() {
 
   return (
     <div className="right">
-      <h1>Edit Your Account</h1>
+      <h1>Edit  Account</h1>
 
       <div>
         <div className="In">
