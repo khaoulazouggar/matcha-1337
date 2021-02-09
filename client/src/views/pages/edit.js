@@ -75,7 +75,7 @@ function Edit() {
           <span
             className="edit-child"
             onClick={() => setRight(3)}
-            style={Right === 3 ? { color: "#7971b8" } : {}}
+            style={Right === 3 ? { color: "#797b8" } : {}}
           >
             <Key
               style={
