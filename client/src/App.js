@@ -21,8 +21,8 @@ function App() {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route path="/confirm/:token" component={Confirm} />
-          <Route path="/changepass/:token" component={Changepass} />
+          <Route path="/confirm" component={Confirm} />
+          <Route path="/changepass" component={Changepass} />
           <Route exact path="/register"> <Register/> </Route>
           <Route exact path="/login"> <Login/> </Route>
           <Route path="/about"> <About/> </Route>

@@ -14,13 +14,13 @@ function Navbar() {
           <div className="nav-mobile"><NavLink id="nav-toggle" to="#!"><span></span></NavLink></div>
           <ul className="nav-list">
             <li>
-              <NavLink className="text-sz" to="/about">About</NavLink>
+              <NavLink className="text-s" to="/about">About</NavLink>
             </li>
             <li>
-              <NavLink  className="text-sz" to="/login">Login</NavLink>
+              <NavLink  className="text-s" to="/login">Login</NavLink>
             </li>
             <li>
-              <NavLink  className="text-sz" to="/register">Register</NavLink>
+              <button className="navbtn"><NavLink className="text-sz"  to="/register">Register</NavLink></button>
             </li>
           </ul>
         </nav>

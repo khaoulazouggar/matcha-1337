@@ -11,7 +11,7 @@ function About() {
     history.push(path);
   }
   return (
-      <div className="box-form–Abt">
+      <div className="box-form">
         <div className="left">
           <div className="overlay">
             <h1>Get to Know More</h1>
@@ -35,7 +35,7 @@ function About() {
           </div>
         </div>
 
-        <div className="right-about">
+        <div className="right">
           <h1 className="soulmate">Best Ways to Find Your True Soulmate</h1>
           <br />
           <br />
