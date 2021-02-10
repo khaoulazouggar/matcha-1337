@@ -109,8 +109,8 @@ function Register() {
   };
 
   return (
-    <div className="box-form–Reg">
-      <div className="left-register">
+    <div className="box-form">
+      <div className="left">
         <div className="overlay">
           <h1>Find Your Perfect Match</h1>
           <br />

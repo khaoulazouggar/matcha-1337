@@ -45,7 +45,7 @@ function Fgpass() {
         </div>
       </div>
 
-      <div className="right">
+      <div className="right-fgp">
         <br />
         <br />
         <p>Enter the email address you used when you joined and we’ll send you instructions to reset your password.</p>

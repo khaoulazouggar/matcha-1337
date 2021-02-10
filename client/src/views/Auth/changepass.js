@@ -59,7 +59,8 @@ function Changepass(props) {
 
   return (
     <div className="box-form">
-      <div className="left-pass"></div>
+      <div className="left" id ="left-pass"><div className="overlay"></div></div>
+      
       <div className="right">
         <h1>Reset Password !</h1>
         <br />

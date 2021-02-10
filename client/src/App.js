@@ -13,7 +13,7 @@ import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
-import Search from  "./views/pages/search";
+
 
 function App() {
   return (
@@ -21,13 +21,12 @@ function App() {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route path="/confirm/:token" component={Confirm} />
-          <Route path="/changepass/:token" component={Changepass} />
+          <Route path="/confirm" component={Confirm} />
+          <Route path="/changepass" component={Changepass} />
           <Route exact path="/register"> <Register/> </Route>
           <Route exact path="/login"> <Login/> </Route>
           <Route path="/about"> <About/> </Route>
           <Route path="/fgpass"> <Fgpass/> </Route>
-          <Route path="/search"> <Search/> </Route>
           <Route path="/edit"> <Edit/> </Route>
           <Route path="/steps"> <Steps/> </Route>
           <Route exact path="/"> <Home/>  </Route>
