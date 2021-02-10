@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/steps.css";
 import hc from "../photos/hc.png";
 import write from "../photos/write.gif";
@@ -22,7 +22,7 @@ let handleImg = (nbrStep) => {
   else srcImg = upload;
   return srcImg;
 };
-function Steps() {
+function Steps(props) {
   const [notes, setNotes] = useState("");
   const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [img, setImg] = useState([]);
@@ -30,7 +30,7 @@ function Steps() {
 
   const handleRemoveItem = (e) => {
     // console.log(e);
-    setImg(img.filter((item, i) => i !== e)); 
+    setImg(img.filter((item, i) => i !== e));
   };
 
   const history = useHistory();
@@ -39,6 +39,9 @@ function Steps() {
     history.push(path);
   };
   const [inStep1, setInStep] = useState(0);
+  useEffect(() => {
+    props.changeColor("#f6f6f6"); // eslint-disable-next-line
+  }, []);
   return (
     <div className="steps">
       <div className="progressbar">
@@ -50,11 +53,17 @@ function Steps() {
           2
         </div>
         <div style={inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(2)} style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(2)}
+          style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+        >
           3
         </div>
         <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(3)} style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(3)}
+          style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+        >
           4
         </div>
       </div>
@@ -76,7 +85,7 @@ function Steps() {
               <div className="upload-image">
                 {img.map((p, i) => (
                   <div style={{ width: "155px" }} className="test" key={i}>
-                    <img className="file-upload-image" src={p} alt={p}/>
+                    <img className="file-upload-image" src={p} alt={p} />
                     <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i)}>
                       <Trash2 size={20} />
                     </button>
