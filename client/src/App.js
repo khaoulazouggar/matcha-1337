@@ -51,7 +51,7 @@ function App() {
           <Route exact path="/">
             
             <Navbar />
-            <Home />
+            <Home changeColor={changeColor}/>
           </Route>
           <Route path="*" component={Error} />
         </Switch>

@@ -139,8 +139,8 @@ button.previous {
 
 .bio {
   outline: none;
-  width: 240px;
-  height: 195px;
+  width: 365px;
+  height: 255px;
   margin-top: 40px;
   resize: none;
   border-color: #62626485;
@@ -159,7 +159,7 @@ button.previous {
 }
 
 .tags {
-  width: 245px;
+  width: 400px;
   margin-top: 39px;
   overflow: auto;
   height: 265px;
@@ -177,32 +177,40 @@ button.previous {
 .tags::-webkit-scrollbar {
   display: none;
 }
-
-.photo {
-  /* width: 370px;
+.instep{
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row; */
+  align-items: center;
+  height: 438px;
+}
+.photo {
   overflow: auto;
-  height: 345px;
+  height: 450px;
   text-align: center;
-  width: 354px;
+  display: flex;
+  width: 450px;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }
 .photo::-webkit-scrollbar {
   display: none;
 }
-@media only screen and (max-width: 700px) {
-  .photo {
-    display: none;
-  }
+@media only screen and (max-width: 1200px) {
+.all{
+  width: 60%;
+}
   .In {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: -125px;
   }
   .step {
-    width: 400px;
-    height: 410px;
+    /* width: 400px; */
+    height: 1000px;
+    flex-direction: column-reverse;
+    padding-top: 0px;
+    align-items: center;
   }
   button.next {
     margin-left: 0px;
@@ -214,6 +222,13 @@ button.previous {
   }
   .bio {
     margin-left: 0px;
+    margin-top: -140px;
+  }
+  .tags{
+    margin-top: -140px;
+  }
+  .upload{
+    margin-top: -140px;
   }
   button.previous {
     margin-right: 20px;

@@ -6,14 +6,12 @@
 }
 
 .file-upload {
-  /* background-color: #ffffff; */
-  width: 250px;
-  margin: 40px;
-  height: 300px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  /* padding: 20px; */
+
+    width: 350px;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 65px;
 }
 
 .file-upload::-webkit-scrollbar {
@@ -71,6 +69,7 @@
 .upload-image {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .remove-image {
   max-width: 165px;

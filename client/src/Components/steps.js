@@ -96,7 +96,7 @@ function Steps(props) {
                 ))}
               </div>
             ) : (
-              <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} />
+              <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "415px" } : { width: "500px", marginTop:"40px" }} />
             )}
             {/* <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} /> */}
           </div>
