@@ -2,7 +2,7 @@ import React from "react";
 
 function EditPass() {
   return (
-    <div className="right">
+    <div className="rightE">
       <h1>Edit  Account</h1>
       <br />
       <br />

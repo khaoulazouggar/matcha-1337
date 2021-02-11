@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/edit.css";
 import EditInfo from "./edit-info";
 import EditProfile from "./edit-profile";
@@ -9,7 +9,7 @@ import { Key } from "react-feather";
 import { User } from "react-feather";
 import noUser from "../../photos/noUser.png"
 
-function Edit() {
+function Edit(props) {
   const [Right, setRight] = useState(1);
   const [Img, setImg] = useState([noUser]);
   const onDrop = (e, picture) => {
@@ -17,8 +17,12 @@ function Edit() {
     setImg([data, Img]);
     e.target.value = "";
   };
+  useEffect(() => {
+    props.changeColor("#f6f6f6"); // eslint-disable-next-line
+  }, []);
   return (
-    <div className="box-form">
+    <div className="box-formE">
+      <div className="editing">
       <div className="left-edit">
         <div style={Img[0] ? { border: "none" } : {}} className="edit-pic">
           <input
@@ -88,7 +92,7 @@ function Edit() {
           </span>
         </div>
       </div>
-      <div className="editRight" style={{ height: "850px" }}>
+      <div className="editRight" style={{ height: "850px", width:"100%" }}>
         {Right === 1 ? (
           <EditInfo />
         ) : Right === 2 ? (
@@ -97,6 +101,7 @@ function Edit() {
           <EditPass />
         )}
       </div>
+    </div>
     </div>
   );
 }

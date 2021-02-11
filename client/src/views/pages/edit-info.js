@@ -3,7 +3,7 @@ import React from "react";
 
 function EditInfo() {
   return (
-    <div className="right">
+    <div className="rightE">
       <h1>Edit Account</h1>
       <br />
       <br />

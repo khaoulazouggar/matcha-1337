@@ -11,11 +11,12 @@ function EditProfile() {
   const [genderLoking, setGenderLoking] = useState("");
 
   return (
-    <div className="right">
+    <div className="rightE">
       <h1>Edit  Account</h1>
 
       <div>
-        <div className="In">
+        <div className="In-edit">
+          <div>
           <p>
             <FontAwesomeIcon
               icon={faTransgender}
@@ -82,6 +83,8 @@ function EditProfile() {
               both
             </button>
           </span>
+          </div>
+          <div>
           <p>
             <FontAwesomeIcon
               icon={faBiohazard}
@@ -102,7 +105,7 @@ function EditProfile() {
             <CreatableSelect isClearable isMulti />
           </div>
         </div>
-
+        </div>
         <br />
         <br />
         <button className="btn">Edit</button>

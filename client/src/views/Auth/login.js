@@ -48,7 +48,7 @@ function Login() {
           <br />
           <p>
             We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
-            love.
+            love.<br/><br/>Get to know more<Link className="about" to= "/about"> &nbsp;About&nbsp; </Link>us.
           </p>
 
           <span>
