@@ -5,8 +5,10 @@ import Login from "./views/Auth/login";
 import Register from "./views/Auth/register";
 import About from "./views/pages/about";
 import Home from "./views/pages/home";
+import Research from "./views/pages/research";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
+import Footer from "./Components/footer";
 import Fgpass from "./views/Auth/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Steps from "./Components/steps";
@@ -18,9 +20,10 @@ import Changepass from "./views/Auth/changepass";
 function App() {
   return (
     <Router>
+      <Navbar />
       <div className="App">
-        <Navbar />
         <Switch>
+          <Route path="/research" component={Research} />
           <Route path="/confirm" component={Confirm} />
           <Route path="/changepass" component={Changepass} />
           <Route exact path="/register"> <Register/> </Route>
@@ -33,6 +36,7 @@ function App() {
           <Route path="*" component={Error} />
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 }

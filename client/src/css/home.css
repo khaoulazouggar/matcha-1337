@@ -1,39 +1,96 @@
-.cards{
+.home
+{
     display: flex;
     flex-direction: row;
-    
+    justify-content: space-between;
+    align-items: center;
+}
+.image
+{
+    flex-basis: 45%;
+}
+.center
+{
+   width: 80%;
+   margin: 0 auto;
+}
+.started
+{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 45%;
+
+}
+.started h3
+{
+    max-width: 280px;
+    font-size: xx-large;
+}
+.started p
+{
+    max-width: 80%;
+}
+.chat_image
+{
+    max-width: 100%;
 }
 
-
-.card{
-    background-color: rgba(53, 71, 125, 0.38);
-   /* background: #ffffff; */
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: 0 0 20px 6px #090b6f85;
-  width: 317px;
-  height: 450px;
-  margin: 20px;
+a
+{
+    text-decoration: none;
+}
+.cards
+{
+    display: flex;
+    margin-top: 120px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.card
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-basis: 20%;
+    background-color: white;
+    height: 200px;
+    border-radius: 12px;
+}
+.icons
+{
+    font-size: 2.5rem;
+    color: #5961f9ad;
 }
 
-.card-img{
-    width: 224px;
-    height: 250px;
-    border-radius: 10px;
-}
-
-.card-name{
-    font-size: 30px;
-    padding-top:10px
-}
-
-.card-icon{
-    width: 60px;
-    padding-top: 20px;
-    padding-right: 35px;
-    padding-left: 35px;
-    cursor: pointer;
-}
+.card h3:nth-child(3) {
+    margin: 0;
+  }
+  @media only screen and (max-width: 768px) {
+    .chat_image
+    {
+        display: none;
+    }
+    .center
+    {
+        width: 100%;
+    }
+    .started
+    {
+        flex-basis: 100%;
+        align-items: center;
+        margin-left: 150px;
+    }
+    .cards
+    {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .card
+    {
+        width: 219px;
+        margin-top: 20px;
+        flex-basis: 155px;
+    }
+  }
