@@ -10,6 +10,9 @@ import { User } from "react-feather";
 import noUser from "../../photos/noUser.png"
 
 function Edit(props) {
+  const [tags, setTags] = useState([]);
+  const [notes, setNotes] = useState("");
+  const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [Right, setRight] = useState(1);
   const [Img, setImg] = useState([noUser]);
   const onDrop = (e, picture) => {
@@ -96,7 +99,7 @@ function Edit(props) {
         {Right === 1 ? (
           <EditInfo />
         ) : Right === 2 ? (
-          <EditProfile />
+          <EditProfile data={{ gender, setGender }} data1={{ tags, setTags }} data2={{ notes, setNotes }}/>
         ) : (
           <EditPass />
         )}

@@ -12,6 +12,7 @@ body{
 body::-webkit-scrollbar {
   display: none;
 }
+
 /* body {
   background: linear-gradient(135deg, #fab2ff 10%, #1904e5 100%);
   background-size: cover;

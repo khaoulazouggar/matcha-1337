@@ -25,15 +25,19 @@ function Login() {
       setErrpassword("Password should not be empty");
     }
     if (username && password) {
-      Axios.post("http://localhost:3001/login", { username: username, password: password })
+      Axios.post("http://localhost:3001/login", { username: username, password: password }, {})
         // .then((response) =>console.log(response))
         .then((response) => {
-          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist") {
-            Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false });
+          console.log(response.data)
+          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist" ||  response.data.message === "error") {
+            Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false ,heightAuto: false});
           } else if (response.data.message === "Please check your email") {
-            Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false });
+            Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false ,heightAuto: false});
           } else {
-            Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false });
+            // Axios.get("http://localhost:3001/login", { username: username, password: password })
+            // .then((response) => {}
+            localStorage.setItem('token', response.data.token);
+            Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false , heightAuto: false});
             routeChange();
           }
         })

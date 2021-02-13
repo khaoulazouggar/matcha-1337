@@ -2,8 +2,27 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const isPassword = require("../tools/isPassword");
 const isUsername = require("../tools/isUsername");
+const jwt_secret = "this is a jsonwebtoken secret";
+
+// router.get("/", (req, res) => {
+//   const { username, password } = req.body;
+//   let token = jwt.sign({ username, password }, jwt_secret, { expiresIn: "1h" });
+//   res.send({ token: token, username, password });
+// });
+
+// router.post("/", (req, res) => {
+//   let token = req.header("Authorization");
+//   // console.log(token)
+//   try {
+//     let data = jwt.verify(token, jwt_secret);
+//     res.send(data)
+//   } catch (err) {
+//     res.send({ user: false });
+//   }
+// });
 
 router.post("/", (req, res) => {
   const { username, password } = req.body;
@@ -18,8 +37,10 @@ router.post("/", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, rslt) => {
           // console.log(result[0].confirm)
           if (rslt) {
-            if (result[0].confirm === 1) res.send(rslt);
-            else {
+            if (result[0].confirm === 1) {
+              let token = jwt.sign({ username, password }, jwt_secret, { expiresIn: "1h" });
+              res.send({token: token});
+            } else {
               res.send({ message: "Please check your email" });
             }
           } else {
@@ -33,7 +54,7 @@ router.post("/", (req, res) => {
       }
     });
   } else {
-    res.send("error");
+    res.send({ message: "error" });
   }
 });
 

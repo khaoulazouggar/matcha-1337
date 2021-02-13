@@ -36,7 +36,7 @@ function App() {
           </Route>
           <Route path="/edit">
             <Navbar />
-            <Edit changeColor={changeColor}/>
+            <Edit changeColor={changeColor} />
           </Route>
           <Route path="/steps">
             <Navbar />

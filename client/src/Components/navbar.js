@@ -9,7 +9,7 @@ function Navbar() {
         <a href="/" ><img alt="" className="lo1" src={lo1} /></a>
         
         <div className="brand">
-          <a exact className="text-s" href="/">Matcha</a>
+          <a className="text-s" href="/">Matcha</a>
         </div>
         <nav>
           <div className="nav-mobile"><a id="nav-hrefggle" href="#!"><span></span></a></div>
@@ -21,7 +21,7 @@ function Navbar() {
               <a  className="text-s" href="/login">Login</a>
             </li>
             <li>
-              <buthrefn className="navbtn"><a className="text-sz"  href="/register">Register</a></buthrefn>
+              <button className="navbtn"><a className="text-sz"  href="/register">Register</a></button>
             </li>
           </ul>
         </nav>

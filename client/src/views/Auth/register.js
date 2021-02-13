@@ -73,7 +73,6 @@ function Register() {
       email &&
       password &&
       verifypassword === password &&
-      !errverifypassword &&
       !errusername &&
       !errfirstname &&
       !errlastname &&

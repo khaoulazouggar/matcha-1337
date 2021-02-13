@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import Alert from "./alert";
 import { Trash2 } from "react-feather";
 import { User } from "react-feather";
+import axios from "axios";
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -42,6 +43,13 @@ function Steps(props) {
   useEffect(() => {
     props.changeColor("#f6f6f6"); // eslint-disable-next-line
   }, []);
+
+  const handelSteps = () =>{
+    axios.post("http://localhost:3001/steps",{
+      ...gender,notes,img,tags
+    }).then(console.log("done"))
+console.log({...gender,notes,img,tags})
+  }
   return (
     <div className="steps">
       <div className="progressbar">
@@ -119,7 +127,7 @@ function Steps(props) {
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && notes && tags.length) routeChange();
+                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && notes && tags.length) {routeChange(); handelSteps()}
                 else {
                   Alert();
                 }
