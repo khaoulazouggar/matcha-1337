@@ -13,6 +13,7 @@ import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
+import Profile from "./views/pages/profile";
 
 function App() {
   const [color, changeColor] = useState("white");
@@ -30,6 +31,10 @@ function App() {
           </Route>
           <Route path="/about">
             <About />
+          </Route>
+          <Route path="/profile" >
+          <Navbar />
+            <Profile changeColor={changeColor}/>
           </Route>
           <Route path="/fgpass">
             <Fgpass />

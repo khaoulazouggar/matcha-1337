@@ -1,59 +1,30 @@
-import 'date-fns';
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import React, { useEffect } from "react";
+import "../../css/profile.css";
+import Rating from "@material-ui/lab/Rating";
 
-export default function MaterialUIPickers() {
-  // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
+function Profile(props) {
+  useEffect(() => {
+    props.changeColor("#f6f6f6"); // eslint-disable-next-line
+  }, []);
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <KeyboardTimePicker
-          margin="normal"
-          id="time-picker"
-          label="Time picker"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change time',
-          }}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
+    <div className="profile">
+      <div className="p1">
+        <div className="top">
+          <div className="pic"></div>
+          <br/><br/>
+          <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+          <p className="title">User Name</p>
+        </div>
+        <div className="info"></div>
+      </div>
+      <div className="p2">
+          <div className="bioghraphie"></div>
+          <div className="stickers"></div>
+      </div>
+      <div className="p3">
+          {/* <div className= "gallery"></div> */}
+      </div>
+    </div>
   );
 }
+export default Profile;
