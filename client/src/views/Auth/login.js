@@ -34,8 +34,6 @@ function Login() {
           } else if (response.data.message === "Please check your email") {
             Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false ,heightAuto: false});
           } else {
-            // Axios.get("http://localhost:3001/login", { username: username, password: password })
-            // .then((response) => {}
             localStorage.setItem('token', response.data.token);
             Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false , heightAuto: false});
             routeChange();

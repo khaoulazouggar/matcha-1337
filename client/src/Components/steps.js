@@ -14,6 +14,7 @@ import Alert from "./alert";
 import { Trash2 } from "react-feather";
 import { User } from "react-feather";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -25,7 +26,7 @@ let handleImg = (nbrStep) => {
 };
 function Steps(props) {
   const [notes, setNotes] = useState("");
-  const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
+  const [gender, setGender] = useState({ yourGender: "", genderLooking: "", birthday: "" });
   const [img, setImg] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -127,11 +128,13 @@ console.log({...gender,notes,img,tags})
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && notes && tags.length) {routeChange(); handelSteps()}
+                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && gender.birthday && notes && tags.length) {routeChange(); handelSteps()}
                 else {
                   Alert();
                 }
-              } else setInStep(inStep1 + 1);
+              } else if (inStep1 === 0 && gender.birthday >= "2019-12-31") {Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false ,heightAuto: false})}
+              else
+              setInStep(inStep1 + 1);
             }}
           >
             {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />

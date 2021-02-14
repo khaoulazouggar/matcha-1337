@@ -2,26 +2,27 @@ import React from "react";
 // import {a} from "react-router-dom";
 import "../css/navbar.css"
 import lo1 from "../photos/speech.png"
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
       <div className="navigation">
-        <a href="/" ><img alt="" className="lo1" src={lo1} /></a>
+        <Link to="/" ><img alt="" className="lo1" src={lo1} /></Link>
         
         <div className="brand">
-          <a className="text-s" href="/">Matcha</a>
+          <Link className="text-s" to="/">Matcha</Link>
         </div>
         <nav>
-          <div className="nav-mobile"><a id="nav-hrefggle" href="#!"><span></span></a></div>
+          <div className="nav-mobile"><Link id="nav-hrefggle" to="#!"><span></span></Link></div>
           <ul className="nav-list">
             <li>
-              <a className="text-s" href="/about">About</a>
+              <Link className="text-s" to={!localStorage.getItem('token')? "/about":"/edit"}>{!localStorage.getItem('token')? "About": "Edit"}</Link>
             </li>
             <li>
-              <a  className="text-s" href="/login">Login</a>
+              <Link  className="text-s" to={!localStorage.getItem('token')? "/login":"/"}>{!localStorage.getItem('token')? "Login": "Profile"}</Link>
             </li>
             <li>
-              <button className="navbtn"><a className="text-sz"  href="/register">Register</a></button>
+              <button className="navbtn"><Link className="text-sz"  to={!localStorage.getItem('token')? "/register":"/"}>{!localStorage.getItem('token')? "Register": "Log out"}</Link></button>
             </li>
           </ul>
         </nav>
