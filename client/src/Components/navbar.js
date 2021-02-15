@@ -19,7 +19,7 @@ function Navbar() {
               <Link className="text-s" to={!localStorage.getItem('token')? "/about":"/edit"}>{!localStorage.getItem('token')? "About": "Edit"}</Link>
             </li>
             <li>
-              <Link  className="text-s" to={!localStorage.getItem('token')? "/login":"/"}>{!localStorage.getItem('token')? "Login": "Profile"}</Link>
+              <Link  className="text-s" to={!localStorage.getItem('token')? "/login":"/profile"}>{!localStorage.getItem('token')? "Login": "Profile"}</Link>
             </li>
             <li>
               <button className="navbtn"><Link className="text-sz"  to={!localStorage.getItem('token')? "/register":"/"}>{!localStorage.getItem('token')? "Register": "Log out"}</Link></button>

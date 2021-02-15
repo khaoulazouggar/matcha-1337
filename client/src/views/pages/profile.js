@@ -15,13 +15,14 @@ function Profile(props) {
           <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
           <p className="title">User Name</p>
         </div>
-        <div className="info"></div>
+        <div className="info"> Information :</div>
       </div>
       <div className="p2">
-          <div className="bioghraphie"></div>
-          <div className="stickers"></div>
+          <div className="bioghraphie">Bioghraphie :</div>
+          <div className="stickers">Tags :</div>
       </div>
       <div className="p3">
+      Gallery :
           {/* <div className= "gallery"></div> */}
       </div>
     </div>

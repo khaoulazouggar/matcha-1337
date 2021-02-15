@@ -7,6 +7,8 @@ import { Upload } from "react-feather";
 import { Edit2 } from "react-feather";
 import { Key } from "react-feather";
 import { User } from "react-feather";
+import { Aperture } from "react-feather";
+import { MapPin } from "react-feather";
 import noUser from "../../photos/noUser.png"
 
 function Edit(props) {
@@ -93,6 +95,36 @@ function Edit(props) {
             />
             Change your password
           </span>
+          <br /> <br />
+          <span
+            className="edit-child"
+            onClick={() => setRight(4)}
+            style={Right === 4 ? { color: "#7971b8" } : {}}
+          >
+            <Aperture
+              style={
+                Right === 4
+                  ? { color: "#7971b8", marginRight: "10px" }
+                  : { marginRight: "10px" }
+              }
+            />
+            Gallery
+          </span>
+          <br /> <br />
+          <span
+            className="edit-child"
+            onClick={() => setRight(5)}
+            style={Right === 5 ? { color: "#7971b8" } : {}}
+          >
+            <MapPin
+              style={
+                Right === 5
+                  ? { color: "#7971b8", marginRight: "10px" }
+                  : { marginRight: "10px" }
+              }
+            />
+            Localisation
+          </span>
         </div>
       </div>
       <div className="editRight" style={{ height: "850px", width:"100%" }}>
@@ -100,9 +132,9 @@ function Edit(props) {
           <EditInfo />
         ) : Right === 2 ? (
           <EditProfile data={{ gender, setGender }} data1={{ tags, setTags }} data2={{ notes, setNotes }}/>
-        ) : (
+        ) : Right === 3 ?(
           <EditPass />
-        )}
+        ): Right === 4 ? "": ""}
       </div>
     </div>
     </div>

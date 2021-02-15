@@ -1,30 +1,29 @@
-.box-formE{
+.box-formE {
   display: flex;
   height: 80%;
   justify-content: center;
   align-items: center;
 }
-.editing{
+.editing {
   border: 3px dashed #b4adf1;
-    display: flex;
-    width: 50%;
-    height: 70%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 12px 3px #090b6f85;
+  display: flex;
+  width: 80%;
+  height: 70%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px 3px #090b6f85;
+  overflow: hidden;
 }
-.rightE{
-
+.rightE {
   width: 85%;
   margin-top: 69px;
   margin-left: 60px;
-
 }
-.In-edit{
+.In-edit {
   display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 435px;
+  align-items: center;
+  justify-content: space-between;
+  height: 435px;
 }
 .edit-pic {
   border: 3px dashed #b4adf1;
@@ -111,20 +110,11 @@
 }
 
 @media only screen and (max-width: 1800px) {
-
-  .editing{
-    border: none;
-    
-    box-shadow: none;
-      width: 100%;
-      height: 100%;
-      background-color:white;
+  .inp {
+    width: 90%;
   }
-
-  .box-formE{
-    flex-direction: column;
-  }
-  .In-edit{
-    display: inline;  
+  .editing {
+    /* flex-direction: column; */
+    width: 88%;
   }
 }
