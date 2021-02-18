@@ -105,6 +105,7 @@ function EditInfo() {
         Edit
       </button>
       <br />
+      {/* <br /> */}
     </div>
   );
 }

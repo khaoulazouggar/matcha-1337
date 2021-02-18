@@ -127,7 +127,7 @@ function Edit(props) {
           </span>
         </div>
       </div>
-      <div className="editRight" style={{ height: "850px", width:"100%" }}>
+      <div className="editRight">
         {Right === 1 ? (
           <EditInfo />
         ) : Right === 2 ? (

@@ -69,6 +69,7 @@ function EditPass() {
       <br />
       <br />
       <button className="btn" onClick={() => handelEditPassword() }>Edit</button>
+      <br />
     </div>
   );
 }

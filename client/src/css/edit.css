@@ -3,6 +3,7 @@
   height: 80%;
   justify-content: center;
   align-items: center;
+  margin-top: 70px;
 }
 .editing {
   border: 3px dashed #b4adf1;
@@ -12,10 +13,15 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 12px 3px #090b6f85;
-  overflow: hidden;
+  overflow: scroll;
+  /* padding: 70px; */
+  box-sizing: border-box;
+}
+.editing::-webkit-scrollbar {
+  display: none;
 }
 .rightE {
-  width: 85%;
+  width: 80%;
   margin-top: 69px;
   margin-left: 60px;
 }
@@ -48,6 +54,7 @@
   margin-left: 60px;
   margin-top: 60px;
   font-size: 18px;
+  margin-bottom: 30px;
 }
 
 .edit-child {
@@ -99,6 +106,9 @@
   margin-top: 7px;
   margin-bottom: 35px;
 }
+.editRight{
+  width: 95%;
+}
 
 .editImg {
   height: 271px;
@@ -109,12 +119,19 @@
   /* margin-top: -105px; */
 }
 
-@media only screen and (max-width: 1800px) {
+@media only screen and (max-width: 1020px) {
   .inp {
     width: 90%;
   }
   .editing {
-    /* flex-direction: column; */
-    width: 88%;
+    flex-direction: column;
+    width: 87%;
+    height: 100%;
+    overflow: scroll;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+  }
+  .left-edit{
+    display: flex;
   }
 }
