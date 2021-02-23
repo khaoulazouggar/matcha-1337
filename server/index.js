@@ -12,6 +12,7 @@ const steps = require("./user/steps");
 const editProfile = require("./user/editProfile");
 const editPassword = require("./user/editPassword");
 const editInfo = require("./user/editInfo");
+const getData = require("./user/getData");
 
 app.use(cors());
 app.use(express.json());
@@ -25,7 +26,7 @@ app.use("/steps", steps);
 app.use("/editProfile", editProfile);
 app.use("/editPassword", editPassword);
 app.use("/edit", editInfo);
-app.use("/edit-info", editInfo);
+app.use("/getData", getData);
 app.use("/isUserAuth", isUserAuth);
 
 app.listen(3001, () => {

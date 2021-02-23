@@ -1,42 +1,70 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTransgender } from "@fortawesome/free-solid-svg-icons";
 import { faTransgenderAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 import { faBiohazard } from "@fortawesome/free-solid-svg-icons";
+import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { TextField } from "@material-ui/core";
+import moment from "moment";
 
 function EditProfile(props) {
   const history = useHistory();
-
   const handelEditProfile = () => {
     let gender = props.data.gender;
     let tags = props.data1.tags;
     let notes = props.data2.notes;
     axios
-      .post("http://localhost:3001/editProfile", {
-        ...gender,
-        tags,
-        notes,
-      },
-      { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .post(
+        "http://localhost:3001/editProfile",
+        {
+          ...gender,
+          tags,
+          notes,
+        },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
       .then((res) => {
-          if ((res.data === "U failed to authenticate")|| (res.data === "we need a token") ) {
-            localStorage.removeItem("token");
-            history.push("/login");
-          }else{
-            console.log(res.data)
-          }
-        });
-    console.log({ ...gender, tags, notes });
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(res.data);
+        }
+      });
+    // console.log({ ...gender, tags, notes });
   };
+
+  const getdata = () => {
+    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        localStorage.removeItem("token");
+        history.push("/login");
+      } else {
+        // console.log(res.data);
+        let data = props.data.gender;
+        data.yourGender = res.data[0].gender;
+        data.genderLooking = res.data[0].genderLooking;
+        data.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
+        props.data.setGender({ ...data });
+        props.data2.setNotes(res.data[0].bio);
+        props.data1.setTags(JSON.parse(res.data[0].tags));
+      }
+    });
+  };
+
+  useEffect(() => {
+    getdata(); // eslint-disable-next-line
+  }, []);
 
   const handleChange = (newValue) => {
     if (newValue) props.data1.setTags([...newValue]);
+    else props.data1.setTags([]);
+    console.log(props.data1);
   };
-  console.log(props.data.gender);
   return (
     <div className="rightE">
       <h1>Edit Account</h1>
@@ -111,14 +139,38 @@ function EditProfile(props) {
                 both
               </button>
             </span>
+            <p>
+              <FontAwesomeIcon icon={faBirthdayCake} style={{ marginRight: "10px" }} />
+              Your birthday :
+            </p>
+            <span>
+              <form noValidate>
+                <TextField
+                  id="date"
+                  type="date"
+                  InputProps={{ inputProps: { min: "1900-05-01", max: "2020-02-14" } }}
+                  // value={props.data.gender.birthday}
+                  value={props.data.gender.birthday ? props.data.gender.birthday : ""}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    let data = props.data.gender;
+                    data.birthday = e.target.value;
+                    props.data.setGender({ ...data });
+                  }}
+                  InputLabelProps={{
+                    shrink: false,
+                  }}
+                />
+              </form>
+            </span>
           </div>
-          <div>
+          <div style={{ marginLeft: "15px" }}>
             <p>
               <FontAwesomeIcon icon={faBiohazard} style={{ marginRight: "10px" }} />
               Change Your Bio :
             </p>
             <textarea
-              maxlength="100"
+              maxLength="100"
               className="edit-bio"
               type="text"
               placeholder="Change Your Bio"
@@ -130,7 +182,7 @@ function EditProfile(props) {
                 <FontAwesomeIcon icon={faTags} style={{ marginRight: "10px" }} />
                 Change Your Tags ...
               </p>
-              <CreatableSelect isClearable isMulti defaultValue={props.data1.tags} onChange={handleChange} />
+              <CreatableSelect isMulti isClearable value={props.data1.tags} onChange={handleChange} />
             </div>
           </div>
         </div>

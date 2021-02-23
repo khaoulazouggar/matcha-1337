@@ -73,7 +73,7 @@ function EditInfo() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3001/edit-info", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
       if (res.data === "U failed to authenticate" || res.data === "we need a token") {
         localStorage.removeItem("token");
         history.push("/login");

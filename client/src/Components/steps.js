@@ -47,8 +47,6 @@ function Steps(props) {
         console.log("Latitude is :", successHandler.coords.latitude);
         console.log("Longitude is :", successHandler.coords.longitude);
         console.log(errorHandler);
-      } else {
-        console.log("errorHandler");
       }
     });
   }, []);

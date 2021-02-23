@@ -34,17 +34,17 @@ router.post("/", isUserAuth, (req, res) => {
   console.log(req.body);
 });
 
-router.get("/", isUserAuth, (req, res) => {
-  const id = req.userId;
-  const sqlInsert = "SELECT * FROM users WHERE id = ?";
-  db.query(sqlInsert, id, (err, result) => {
-    if (err) {
-      res.send({ err: err });
-    }
-    if (result.length > 0) {
-      res.send(result);
-      console.log(result);
-    }
-  });
-});
+// router.get("/", isUserAuth, (req, res) => {
+//   const id = req.userId;
+//   const sqlInsert = "SELECT * FROM users WHERE id = ?";
+//   db.query(sqlInsert, id, (err, result) => {
+//     if (err) {
+//       res.send({ err: err });
+//     }
+//     if (result.length > 0) {
+//       res.send(result);
+//       console.log(result);
+//     }
+//   });
+// });
 module.exports = router;
