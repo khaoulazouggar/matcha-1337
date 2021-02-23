@@ -5,7 +5,9 @@ import Login from "./views/Auth/login";
 import Register from "./views/Auth/register";
 import About from "./views/pages/about";
 import Home from "./views/pages/home";
+import Chat from "./views/pages/chat";
 import Research from "./views/pages/research";
+import Browsing from "./views/pages/browsing";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
 import Footer from "./Components/footer";
@@ -24,7 +26,9 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/research" component={Research} />
+          <Route path="/browsing" component={Browsing} />
           <Route path="/confirm" component={Confirm} />
+          <Route path="/chat" component={Chat} />
           <Route path="/changepass" component={Changepass} />
           <Route exact path="/register"> <Register/> </Route>
           <Route exact path="/login"> <Login/> </Route>

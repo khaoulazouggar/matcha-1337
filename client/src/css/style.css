@@ -3,7 +3,8 @@
   font-family: "Noto Sans";
 }
 html ,body, #root, .App {
-  min-height: calc(100vh - 12vh);
+  /* min-height: calc(100vh - 12vh); */
+  min-height: 75vh;
 }
 body{
   background-color :#FBF9F9;

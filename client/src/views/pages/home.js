@@ -1,11 +1,21 @@
-import React from "react"
+import React, { useState , useEffect} from "react"
 import "../../css/home.css"
 import chat from "../../photos/home.svg"
 import Button from '@material-ui/core/Button';
 import {Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserFriends, faEye} from '@fortawesome/free-solid-svg-icons';
+import countapi from 'countapi-js';
+
+
+
 function Home() {
+    const [visit, setVisits] = useState();
+    useEffect( () => {
+         countapi.visits().then((result) => {
+            setVisits(result.value);
+        });
+      },[]);
     return (
         <div className="center">
         <div className="home">
@@ -39,13 +49,15 @@ function Home() {
             </div>
             <div className="card">
             <FontAwesomeIcon icon={faUserFriends} className="icons" />
-                <h3>9532</h3>
+                <h3>5</h3>
                 <h3>Users Online</h3>
             </div>
             <div className="card">
             <FontAwesomeIcon icon={faEye} className="icons" />
-                <h3>10005</h3>
-                <h3>Visits Per Day</h3>
+                <h3>
+                {visit}
+                </h3>
+                <h3>Total Visits</h3>
             </div>
             <div className="card">
             <FontAwesomeIcon icon={faUsers} className="icons" />
@@ -56,5 +68,4 @@ function Home() {
         </div>
     );
 }
-
 export default Home

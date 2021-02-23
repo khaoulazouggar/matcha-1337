@@ -12,7 +12,10 @@
 .center
 {
    width: 80%;
-   margin: 0 auto;
+   margin: 60px auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
 }
 .started
 {
@@ -42,8 +45,8 @@ a
 .cards
 {
     display: flex;
-    margin-top: 120px;
     flex-direction: row;
+    margin-top: 130px;
     justify-content: space-between;
 }
 .card

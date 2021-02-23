@@ -1,0 +1,164 @@
+.chat
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #f6f6f6;
+    border-radius: 12px;
+    height: 900px;
+}
+.center-chat
+{
+    width: 90%;
+    margin: 60px auto;
+    overflow: hidden;
+    display: flex;
+}
+.messages
+{
+    flex-basis: 35%;
+    background: #EEEEF6;
+    border-radius: 12px;
+    height: 100%;
+}
+.messages .title
+{
+    display: flex;
+    flex-direction: row;
+    margin-left: 12px;
+}
+
+.conversation
+{
+    flex-basis: 65%;
+    height: 100%;
+}
+.conversation h3
+{
+    margin-left: 12px;
+}
+.conver
+{
+    height: 83%;
+    overflow: auto;
+    margin: 20px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
+.conversation div:nth-child(3)
+{
+    display: flex;
+    flex-direction: row;
+}
+.users_chat
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    cursor: pointer;
+    overflow: auto;
+    margin: 30px 0 20px 0;
+}
+.personal
+{
+    overflow: auto;
+    height: 780px;
+    scrollbar-color: yellow blue;
+}
+.profile_img
+{
+    flex-basis: 90%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    height: 61px;
+}
+.profile_img img
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 90%;
+}
+.profile_img div
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0 15px;
+}
+.profile_img div h4
+{
+    margin: 0;
+}
+.profile_img p
+{
+    font-size: small;
+    margin : 0;
+    display:inline-block;
+
+}
+.chat h4
+{
+    margin-left: 12px;
+}
+.me
+{
+    max-width: 40%;
+    align-self: flex-end;
+    display: flex;
+    word-wrap: break-word;
+    background-color: #B4B6CB;
+    margin-right: 10px ;
+    border-radius: 12px;
+    margin: 10px;
+
+}
+.you
+{
+    max-width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    align-items: center;
+    margin: 10px;
+}
+.you img
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 90%;
+}
+.you p 
+{
+    color: #FFFF;
+    margin: 15px;
+}
+.you div
+{
+    word-wrap: break-word;
+    margin-left: 10px ;
+    background-color: #13145C;
+    border-radius: 12px;
+}
+.me p
+{
+
+    margin: 15px;
+}
+@media only screen and (max-width : 768px)
+{
+    .conversation
+    {
+        display: none;
+    }
+    .messages{
+        flex-basis:  100%;
+    }
+    .chat
+    {
+        margin: auto;
+        width: 80%;
+    }
+}

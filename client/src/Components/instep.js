@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 
 function Instep(props) {
+
+  useEffect (() => {
+      navigator.geolocation.getCurrentPosition(function(successHandler, errorHandler) {
+      console.log("Latitude is :", successHandler.coords.latitude);
+      console.log("Longitude is :", successHandler.coords.longitude);
+    })
+    
+});
+
   console.log(props.data.gender);
   return (
     <div className="In">
