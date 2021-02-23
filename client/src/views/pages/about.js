@@ -14,7 +14,7 @@ function About() {
       <div className="box-form">
         <div className="left">
           <div className="overlay">
-            <h1>Get to Know More</h1>
+            <h1 className="fgp">Get to Know More</h1>
             <br />
             <h2>About us</h2>
             <br />

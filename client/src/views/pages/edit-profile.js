@@ -6,19 +6,33 @@ import { faTags } from "@fortawesome/free-solid-svg-icons";
 import { faBiohazard } from "@fortawesome/free-solid-svg-icons";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function EditProfile(props) {
+  const history = useHistory();
 
-  const handelEditProfile = () =>{
+  const handelEditProfile = () => {
     let gender = props.data.gender;
     let tags = props.data1.tags;
-    let notes = props.data2.notes
-    axios.post("http://localhost:3001/edit",{
-      ...gender,tags,notes
-    }).then(console.log("done"))
-     console.log({...gender,tags,notes})
-  }
- 
+    let notes = props.data2.notes;
+    axios
+      .post("http://localhost:3001/editProfile", {
+        ...gender,
+        tags,
+        notes,
+      },
+      { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+          if ((res.data === "U failed to authenticate")|| (res.data === "we need a token") ) {
+            localStorage.removeItem("token");
+            history.push("/login");
+          }else{
+            console.log(res.data)
+          }
+        });
+    console.log({ ...gender, tags, notes });
+  };
+
   const handleChange = (newValue) => {
     if (newValue) props.data1.setTags([...newValue]);
   };
@@ -104,6 +118,7 @@ function EditProfile(props) {
               Change Your Bio :
             </p>
             <textarea
+              maxlength="100"
               className="edit-bio"
               type="text"
               placeholder="Change Your Bio"
@@ -121,7 +136,11 @@ function EditProfile(props) {
         </div>
         <br />
         <br />
-        <button className="btn" onClick={() => handelEditProfile()}>Edit</button>
+        <div style={{ marginRight: "15px" }}>
+          <button className="btn" onClick={() => handelEditProfile()}>
+            Edit
+          </button>
+        </div>
         <br />
       </div>
     </div>

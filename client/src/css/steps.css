@@ -54,10 +54,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  /* background-color: #f6f6f6; */
 }
 
 .para {
-  font-size: 23px;
+  font-size: 24px;
 }
 .genre {
   width: 100px;
@@ -133,7 +135,7 @@ button.previous {
 }
 
 .all {
-  width: 60%;
+  width: 90%;
   display: flex;
   flex-direction: column;
 }
@@ -184,38 +186,79 @@ button.previous {
   height: 438px;
 }
 .photo {
-  overflow: auto;
+  
   height: 450px;
-  text-align: center;
+  
   display: flex;
   width: 450px;
   align-items: center;
   justify-content: center;
-  justify-items: center;
+  
 }
 .photo::-webkit-scrollbar {
   display: none;
 }
-@media only screen and (max-width: 1200px) {
-
+.image{
+/* width: 480px; */
+width: 440px;
+margin-right: 28px;
+}
+@media only screen and (max-width: 950px) {
+.all{
+  width: 85%;
+}
   .In {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 75px;
     /* margin-top: -125px; */
   }
   .step {
     flex-direction: column-reverse;
-    height: 1200px;
+    height: 900px;
     margin-bottom: 50px;
     padding-top: 0px;
     padding-left: 0px;
     align-items: center;
+    overflow: hidden;
+  }
+  .photo{
+    width: 320px;
+    margin-top: -42px;
+    height: 360px;
   }
   .divv {
     margin-top: -130px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
   .instep{
-    margin-top: -90px;
+    width: 92%;
+    justify-content: center;
   }
+  .progressbar{
+    width: 85%;
+    justify-content: center;
+  }
+
+  .image{
+    width: 80%;
+    margin-right: unset;
+  }
+  .bio{
+    margin-left: unset;
+  }
+  .para{
+    font-size: 20px;
+  }
+  .gender{
+    text-align: center;
+  }
+}
+@media screen and (min-width: 1600px){
+  .all{
+    width: 60%;
+  }
+
 }

@@ -7,22 +7,22 @@ const isPassword = require("../tools/isPassword");
 const isUsername = require("../tools/isUsername");
 const jwt_secret = "this is a jsonwebtoken secret";
 
-// router.get("/", (req, res) => {
-//   const { username, password } = req.body;
-//   let token = jwt.sign({ username, password }, jwt_secret, { expiresIn: "1h" });
-//   res.send({ token: token, username, password });
-// });
-
-// router.post("/", (req, res) => {
-//   let token = req.header("Authorization");
-//   // console.log(token)
-//   try {
-//     let data = jwt.verify(token, jwt_secret);
-//     res.send(data)
-//   } catch (err) {
-//     res.send({ user: false });
+// const verifyJWT = (req, res) =>{
+// const token = req.headers["Authorization"]
+// if (!token)
+// res.send("we need a token")
+// else{
+// jwt.verify(token, jwt_secret,(err, decoded)=> {
+//   if(err){
+//     res.send({auth: false, message: "U failed to authenticate"})
+//   }else{
+//     req.userId= decoded.id;
+//     next();
 //   }
-// });
+// })
+// }
+// }
+
 
 router.post("/", (req, res) => {
   const { username, password } = req.body;
@@ -38,7 +38,8 @@ router.post("/", (req, res) => {
           // console.log(result[0].confirm)
           if (rslt) {
             if (result[0].confirm === 1) {
-              let token = jwt.sign({ username, password }, jwt_secret, { expiresIn: "1h" });
+              const id = result[0].id;
+              let token = jwt.sign({id}, jwt_secret);
               res.send({token: token});
             } else {
               res.send({ message: "Please check your email" });

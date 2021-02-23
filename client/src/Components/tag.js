@@ -9,7 +9,7 @@ function Tag(props) {
 
   return (
     <div className="tags">
-      {console.log(props.data.tags)}
+      {/* {console.log(props.data.tags)} */}
       <p>Add Your Tags ...</p>
       <CreatableSelect
         isClearable

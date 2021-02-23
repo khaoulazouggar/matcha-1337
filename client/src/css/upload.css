@@ -58,6 +58,7 @@
   max-width: 155px;
   /* margin: auto; */
   padding: 11px;
+  box-sizing: border-box;
   background-size: contain;
 }
 
@@ -67,9 +68,14 @@
 } */
 
 .upload-image {
+  height: 400px;
+  overflow: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.upload-image::-webkit-scrollbar {
+  display: none;
 }
 .remove-image {
   max-width: 165px;
@@ -117,4 +123,15 @@
 
 .test:hover .default-image {
   opacity: 1;
+}
+@media only screen and (max-width: 700px) {
+  .file-upload{
+    width: unset;
+  }
+  .upload-image{
+    overflow: auto;
+    margin-top: 46px;
+    height: 320px;
+    margin-right: 20px;
+  }
 }

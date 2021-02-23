@@ -2,8 +2,7 @@ import React from "react";
 import { TextField } from "@material-ui/core";
 
 function Instep(props) {
-  console.log(props.data.gender);
-
+  // console.log(props.data.gender);
   return (
     <div className="In">
       <p className="para">What is your gender ?</p>
@@ -82,7 +81,7 @@ function Instep(props) {
               }
               }
             InputLabelProps={{
-              shrink: true,
+              shrink:false,
             }}
           />
         </form>

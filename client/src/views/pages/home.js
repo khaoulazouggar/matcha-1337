@@ -1,4 +1,4 @@
-import React,{useEffect} from "react"
+import React from "react"
 import "../../css/home.css"
 import test from "../../photos/test.jpeg"
 import checked from "../../photos/checked.svg"
@@ -6,9 +6,9 @@ import cancel from "../../photos/cancel.svg"
 
 
 function Home(props) {
-    useEffect(() => {
-        props.changeColor("#f6f6f6"); // eslint-disable-next-line
-      }, []);
+    // useEffect(() => {
+    //     props.changeColor("#f6f6f6"); // eslint-disable-next-line
+    //   }, []);
     return (
         <div className="cards">
             <div className="card">

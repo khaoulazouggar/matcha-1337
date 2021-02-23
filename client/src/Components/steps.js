@@ -42,15 +42,38 @@ function Steps(props) {
   };
   const [inStep1, setInStep] = useState(0);
   useEffect(() => {
-    props.changeColor("#f6f6f6"); // eslint-disable-next-line
+    navigator.geolocation.getCurrentPosition(function (successHandler, errorHandler) {
+      if (successHandler) {
+        console.log("Latitude is :", successHandler.coords.latitude);
+        console.log("Longitude is :", successHandler.coords.longitude);
+        console.log(errorHandler);
+      } else {
+        console.log("errorHandler");
+      }
+    });
   }, []);
 
-  const handelSteps = () =>{
-    axios.post("http://localhost:3001/steps",{
-      ...gender,notes,img,tags
-    }).then(console.log("done"))
-console.log({...gender,notes,img,tags})
-  }
+  const handelSteps = () => {
+    axios
+      .post(
+        "http://localhost:3001/steps",
+        {
+          ...gender,
+          notes,
+          img,
+          tags,
+        },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(res);
+        }
+      });
+  };
   return (
     <div className="steps">
       <div className="progressbar">
@@ -93,7 +116,7 @@ console.log({...gender,notes,img,tags})
             {inStep1 === 3 && img.length ? (
               <div className="upload-image">
                 {img.map((p, i) => (
-                  <div style={{ width: "155px" }} className="test" key={i}>
+                  <div style={{ width: "155px", height: "155px" }} className="test" key={i}>
                     <img className="file-upload-image" src={p} alt={p} />
                     <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i)}>
                       <Trash2 size={20} />
@@ -105,11 +128,12 @@ console.log({...gender,notes,img,tags})
                 ))}
               </div>
             ) : (
-              <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "415px" } : { width: "500px", marginTop:"40px" }} />
+              <img alt="" className="image" src={handleImg(inStep1)} />
             )}
             {/* <img alt="" src={handleImg(inStep1)} style={inStep1 === 0 ? { width: "275px" } : { width: "350px" }} /> */}
           </div>
         </div>
+
         <div className="divv">
           {inStep1 !== 0 ? (
             <button
@@ -128,13 +152,23 @@ console.log({...gender,notes,img,tags})
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (img.length <= 5 && img.length !== 0 && gender.yourGender && gender.genderLooking && gender.birthday && notes && tags.length) {routeChange(); handelSteps()}
-                else {
+                if (
+                  img.length <= 5 &&
+                  img.length !== 0 &&
+                  gender.yourGender &&
+                  gender.genderLooking &&
+                  gender.birthday &&
+                  notes &&
+                  tags.length
+                ) {
+                  routeChange();
+                  handelSteps();
+                } else {
                   Alert();
                 }
-              } else if (inStep1 === 0 && gender.birthday >= "2019-12-31") {Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false ,heightAuto: false})}
-              else
-              setInStep(inStep1 + 1);
+              } else if (inStep1 === 0 && gender.birthday >= "2010-12-31") {
+                Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false, heightAuto: false });
+              } else setInStep(inStep1 + 1);
             }}
           >
             {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />

@@ -62,7 +62,7 @@ function Changepass(props) {
       <div className="left" id ="left-pass"><div className="overlay"></div></div>
       
       <div className="right">
-        <h1>Reset Password !</h1>
+        <h1 className="fgp">Reset Password !</h1>
         <br />
         <br />
         <p>Please Enter Your new Password :</p>
@@ -93,7 +93,7 @@ function Changepass(props) {
         <button className="btn" onClick={() => handlePass()}>
           Change Password
         </button>
-        <br />
+        <br /><br /><br />
         <p>
           Just remembered? <a href="./login">Log in</a>
         </p>
