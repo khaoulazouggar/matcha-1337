@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./css/style.css";
 import "./css/App.css";
 import Login from "./views/Auth/login";
@@ -17,30 +17,60 @@ import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
-
+import Profile from "./views/pages/profile";
 
 function App() {
+  const [color, changeColor] = useState("white");
   return (
     <Router>
-      <Navbar />
-      <div className="App">
+      <div className="App" style={{ "--color-step": color }}>
         <Switch>
-          <Route path="/research" component={Research} />
-          <Route path="/browsing" component={Browsing} />
-          <Route path="/confirm" component={Confirm} />
-          <Route path="/chat" component={Chat} />
-          <Route path="/changepass" component={Changepass} />
-          <Route exact path="/register"> <Register/> </Route>
-          <Route exact path="/login"> <Login/> </Route>
-          <Route path="/about"> <About/> </Route>
-          <Route path="/fgpass"> <Fgpass/> </Route>
-          <Route path="/edit"> <Edit/> </Route>
-          <Route path="/steps"> <Steps/> </Route>
-          <Route exact path="/"> <Home/>  </Route>
+          <Route path="/confirm/:token" component={Confirm} />
+          <Route path="/changepass/:token" component={Changepass} />
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/chat">
+          <Navbar />
+            <Chat />
+          </Route>
+          <Route path="/research">
+          <Navbar />
+            <Research />
+          </Route>
+          {/* <Route path="/browsing">
+          <Navbar />
+            <Browsing />
+          </Route> */}
+          <Route path="/profile" >
+          <Navbar />
+            <Profile changeColor={changeColor}/>
+          </Route>
+          <Route path="/fgpass">
+            <Fgpass />
+          </Route>
+          <Route path="/edit">
+            <Navbar />
+            <Edit changeColor={changeColor} />
+          </Route>
+          <Route path="/steps">
+            <Navbar />
+            <Steps changeColor={changeColor} />
+          </Route>
+          <Route exact path="/">
+            <Navbar />
+            <Home changeColor={changeColor} />
+          </Route>
           <Route path="*" component={Error} />
         </Switch>
+        <Footer />
       </div>
-      <Footer />
     </Router>
   );
 }

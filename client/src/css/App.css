@@ -1,16 +1,27 @@
-/* .App{
-  height: 1000px;
-  display: flex;
+.App {
+  /* height: 1000px; */
+  /* display: flex;
   align-items: center;
-  justify-content: center;
-} */
-.decoration
-{
+  justify-content: center; */
+}
+.decoration {
   text-decoration: none;
-  color: #7367F0;
-  font-family: Sans-serif	;
+  color: #7367f0;
+  font-family: Sans-serif;
+}
+.about {
+  text-decoration: none;
+  color: #33323d;
+  font-family: Sans-serif;
+  text-transform: capitalize;
+  font-size: larger;
+      color: #32367d;
 }
 .active {
   /* font-weight: 900; */
   color: black!important;
+  
+} */
+.App {
+  background-color: var(--color-step);
 }

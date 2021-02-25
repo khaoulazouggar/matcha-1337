@@ -1,11 +1,14 @@
 .div {
   text-align: center;
-  /* margin-top: 275px; */
+  /* height: 100%; */
+  /* width: 100%; */
+  padding: 20px;
+    box-sizing: border-box;
 }
 
-/* img.error {
-  width: 100%;
-} */
+img.error {
+  width: 55%;
+}
 
 button.bth {
   color: #fff;

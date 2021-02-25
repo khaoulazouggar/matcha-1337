@@ -2,6 +2,7 @@
   height: 65px;
   display: flex;
   align-items: center;
+  margin-top:6%;
 }
 .progressbar div:nth-of-type(1),
 .progressbar div:nth-of-type(3),
@@ -15,6 +16,7 @@
   justify-content: center;
   border-radius: 16px;
   cursor: pointer;
+  box-shadow: 0 0 3px 2px #090b6f85;
 }
 
 .progressbar div:nth-of-type(1):hover,
@@ -33,16 +35,18 @@
   width: 95px;
   height: 5px;
   background-color: white;
+  box-shadow: inset 0 0 3px 2px #090b6f85;
 }
 
 .step {
-  width: 760px;
-  height: 445px;
+  /* width: 760px; */
+  height: 600px;
   background: #ffffff;
   border-radius: 10px;
   display: flex;
   margin-top: 30px;
   padding-top: 50px;
+  padding-left: 15px;
   justify-content: space-evenly;
   box-shadow: 0 0 20px 6px #090b6f85;
 }
@@ -50,10 +54,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  /* background-color: #f6f6f6; */
 }
 
 .para {
-  font-size: 23px;
+  font-size: 24px;
 }
 .genre {
   width: 100px;
@@ -129,14 +135,15 @@ button.previous {
 }
 
 .all {
+  width: 90%;
   display: flex;
   flex-direction: column;
 }
 
 .bio {
   outline: none;
-  width: 240px;
-  height: 195px;
+  width: 365px;
+  height: 255px;
   margin-top: 40px;
   resize: none;
   border-color: #62626485;
@@ -155,7 +162,7 @@ button.previous {
 }
 
 .tags {
-  width: 245px;
+  width: 400px;
   margin-top: 39px;
   overflow: auto;
   height: 265px;
@@ -173,45 +180,85 @@ button.previous {
 .tags::-webkit-scrollbar {
   display: none;
 }
-
-.photo {
-  /* width: 370px;
+.instep{
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row; */
-  overflow: auto;
-  height: 345px;
-  text-align: center;
-  width: 354px;
+  align-items: center;
+  height: 438px;
+}
+.photo {
+  
+  height: 450px;
+  
+  display: flex;
+  width: 450px;
+  align-items: center;
+  justify-content: center;
+  
 }
 .photo::-webkit-scrollbar {
   display: none;
 }
-@media only screen and (max-width: 700px) {
-  .photo {
-    display: none;
-  }
+.image{
+/* width: 480px; */
+width: 440px;
+margin-right: 28px;
+}
+@media only screen and (max-width: 950px) {
+.all{
+  width: 85%;
+}
   .In {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 75px;
+    /* margin-top: -125px; */
   }
   .step {
-    width: 400px;
-    height: 410px;
+    flex-direction: column-reverse;
+    height: 900px;
+    margin-bottom: 50px;
+    padding-top: 0px;
+    padding-left: 0px;
+    align-items: center;
+    overflow: hidden;
   }
-  button.next {
-    margin-left: 0px;
+  .photo{
+    width: 320px;
+    margin-top: -42px;
+    height: 360px;
   }
-  .progressbar div:nth-of-type(2),
-  .progressbar div:nth-of-type(4),
-  .progressbar div:nth-of-type(6) {
-    width: 35px;
+  .divv {
+    margin-top: -130px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
-  .bio {
-    margin-left: 0px;
+  .instep{
+    width: 92%;
+    justify-content: center;
   }
-  button.previous {
-    margin-right: 20px;
+  .progressbar{
+    width: 85%;
+    justify-content: center;
   }
+
+  .image{
+    width: 80%;
+    margin-right: unset;
+  }
+  .bio{
+    margin-left: unset;
+  }
+  .para{
+    font-size: 20px;
+  }
+  .gender{
+    text-align: center;
+  }
+}
+@media screen and (min-width: 1600px){
+  .all{
+    width: 60%;
+  }
+
 }

@@ -3,16 +3,16 @@
   font-family: "Noto Sans";
 }
 html ,body, #root, .App {
-  /* min-height: calc(100vh - 12vh); */
-  min-height: 75vh;
+  height: 100%;
 }
 body{
-  background-color :#FBF9F9;
+  
   margin: 0px;
 }
 body::-webkit-scrollbar {
   display: none;
 }
+
 /* body {
   background: linear-gradient(135deg, #fab2ff 10%, #1904e5 100%);
   background-size: cover;
@@ -56,6 +56,13 @@ body::-webkit-scrollbar {
 
 
 h1 {
+  font-size: 80px;
+  line-height: 1;
+  font-weight: 900px;
+  margin-top: 46px;
+  margin-bottom: 20px;
+}
+.fgp {
   font-size: 80px;
   line-height: 1;
   font-weight: 900px;
@@ -154,15 +161,28 @@ button.btn:hover:after {
 }
 
 input.inpt {
+  box-sizing: border-box;
   width: 100%;
   padding: 10px;
   margin-top: 25px;
   font-size: 15px;
   border: none;
   outline: none;
+  background-color: rgb(243, 243, 243);
   border: 2px solid rgb(240, 240, 240)  ;
   border-radius: 12px;
 }
+input.inpt:hover{
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 7px 1px #848bfd;
+}
+
+input.inpt:focus{
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 7px 1px #848bfd;
+}
+
 ::placeholder
 {
   color: #d0d0d5;
@@ -176,28 +196,37 @@ input.inpt {
     flex-direction: column;
   }
   .right{
-    width:80%;
+    width:75%;
   }
   .right-fgp{
-    width:80%;
+    width:75%;
   }
 
   .right-confirm{
-    width:80%;
+    width:75%;
   }
   .left{
+    height: 580px;
     width:100%;
-    height: 100%;
+    /* height: 100%; */
   }
   .overlay{
+    padding: 10px;
+    width: 100%;
     height: 100%;
+    overflow: auto;
   }
-  /* .overlay {
-    border-radius: 10px 10px 0 0;
-    padding-bottom: 70px;
-  }
+  .overlay button:nth-of-type(1) {
+    width: 220px;
+    margin-bottom: 15px;
+}
+.fgp {
+  font-size: 55px;
+
+}
+
   h5 {
-    margin-top: 54px;
-    margin-bottom: 105px;
-  } */
+    margin-top: 0;
+  }
+
 }

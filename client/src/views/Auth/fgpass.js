@@ -39,7 +39,7 @@ function Fgpass() {
     <div className="box-form">
       <div className="left">
         <div className="overlay">
-          <h1>Forgotten Your Password?</h1>
+          <h1 className="fgp">Forgotten Your Password?</h1>
 
           <p>For security reasons, we do NOT store your password. So rest assured that we will never send your password via email.</p>
         </div>
@@ -67,7 +67,7 @@ function Fgpass() {
         <button className="btn" onClick={() => handleFgpass()}>
           Send Reset Instructions
         </button>
-        <br />
+        <br /><br /><br /><br />
         <p>
           Just remembered? <Link  className="decoration" to="./login">Log in</Link>
         </p>

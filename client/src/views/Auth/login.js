@@ -10,6 +10,7 @@ function Login() {
   const [errusername, setErrusername] = useState("");
   const [password, setpassword] = useState("");
   const [errpassword, setErrpassword] = useState("");
+
   const history = useHistory();
   const routeChange = () => {
     let path = "/steps";
@@ -25,15 +26,17 @@ function Login() {
       setErrpassword("Password should not be empty");
     }
     if (username && password) {
-      Axios.post("http://localhost:3001/login", { username: username, password: password })
+      Axios.post("http://localhost:3001/login", { username: username, password: password }, {})
         // .then((response) =>console.log(response))
         .then((response) => {
-          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist") {
-            Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false });
+          console.log(response.data)
+          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist" ||  response.data.message === "error") {
+            Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false ,heightAuto: false});
           } else if (response.data.message === "Please check your email") {
-            Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false });
+            Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false ,heightAuto: false});
           } else {
-            Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false });
+            localStorage.setItem('token', response.data.token);
+            Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false , heightAuto: false});
             routeChange();
           }
         })
@@ -44,11 +47,11 @@ function Login() {
     <div className="box-form">
       <div className="left">
         <div className="overlay">
-          <h1>Find Your Perfect Match</h1>
+          <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
             We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
-            love.
+            love.<br/><br/>Get to know more<Link className="about" to= "/about"> &nbsp;About&nbsp; </Link>us.
           </p>
 
           <span>

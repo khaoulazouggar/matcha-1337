@@ -1,3 +1,36 @@
+.box-formE {
+  display: flex;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+}
+.editing {
+  border: 3px dashed #b4adf1;
+  display: flex;
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 12px 3px #090b6f85;
+  overflow: scroll;
+  /* padding: 70px; */
+  box-sizing: border-box;
+}
+.editing::-webkit-scrollbar {
+  display: none;
+}
+.rightE {
+  width: 80%;
+  margin-top: 40px;
+  margin-left: 60px;
+}
+.In-edit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 435px;
+}
 .edit-pic {
   border: 3px dashed #b4adf1;
   border-radius: 50px;
@@ -21,6 +54,7 @@
   margin-left: 60px;
   margin-top: 60px;
   font-size: 18px;
+  margin-bottom: 30px;
 }
 
 .edit-child {
@@ -54,15 +88,18 @@
 
 .edit-tags {
   width: 385px;
-  height: 100px;
+  /* height: 150px; */
   /* margin-top: 39px; */
-  overflow: auto;
+  /* overflow: auto; */
   /* height: 265px; */
   display: flex;
   /* justify-content: center; */
   flex-direction: column;
   /* padding-left: 5px; */
   /* padding-right: 5px; */
+}
+.edit-tags::-webkit-scrollbar {
+  display: none;
 }
 
 .editRight h1 {
@@ -72,6 +109,9 @@
   margin-top: 7px;
   margin-bottom: 35px;
 }
+.editRight{
+  width: 95%;
+}
 
 .editImg {
   height: 271px;
@@ -80,4 +120,97 @@
   border: 3px solid #e1ddfb;
   box-shadow: 0px 4px 20px 0px #090b6f85;
   /* margin-top: -105px; */
+}
+
+.edit-label{
+  display: flex;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: rgb(121, 113, 184);
+  border-bottom: 1px solid;
+  margin-top: 25px;
+}
+
+input.inptE {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  /* margin-top: 25px; */
+  font-size: 15px;
+  border: none;
+  outline: none;
+  background-color: rgb(243, 243, 243);
+  border: 2px solid rgb(240, 240, 240)  ;
+  border-radius: 12px;
+}
+input.inptE:hover{
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 7px 1px #848bfd;
+}
+
+input.inptE:focus{
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 7px 1px #848bfd;
+}
+  
+
+@media only screen and (max-width: 1140px) {
+  .box-formE{
+    height: 100%;
+    margin-top: unset;
+  }
+  .inp {
+    width: 90%;
+  }
+  .editing {
+    border: unset;
+    box-shadow: unset;
+    flex-direction: column;
+    width: 100%;
+    height: 90%;
+    overflow: unset;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    padding-top: 50px;
+  }
+  .editRight h1 {
+    font-size: 47px;
+  }
+  .edit-pic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: unset;
+  }
+  .edit{
+    margin-left: 20px;
+  }
+  .rightE{
+    width: 100%;
+    height: 100%;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .In-edit{
+    display: unset;
+    height: unset;
+  }
+  .edit-bio{
+    width: 80%;
+  }
+  .edit-tags{
+    width: 88%;
+    height: 200px;
+  }
+  .left-edit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

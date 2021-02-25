@@ -1,4 +1,5 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
+import axios from "axios";
 import {Link} from 'react-router-dom';
 import "../../css/research.css"
 import search from "../../photos/search.svg"
@@ -25,6 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -93,6 +95,8 @@ function Research(){
   const [tags, setTags] = useState([0, 5]);
   const [rating, setRating] = useState(5);
   const [sort, setSort] = useState('age');
+  const history = useHistory();
+  const [users, setUsers] = useState([]);
   // const [dis, setDis] = useState([]);
 
   function computeDistance([prevLat, prevLong], [lat, long]) {
@@ -171,6 +175,23 @@ function Research(){
   const ratingChange = (event, newRating) => {
     setRating(newRating);
   };
+  function calcAge(dateString) {
+    var birthday = +new Date(dateString);
+    return ~~((Date.now() - birthday) / (31557600000));
+  }
+  // console.log(calcAge(users[68].birthday))
+  useEffect(() => {
+    axios.get("http://localhost:3001/getusers", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        localStorage.removeItem("token");
+        history.push("/login");
+      } else {
+        setUsers(res.data);
+          // console.log(res);
+      }
+    });
+  }, []);
+
   return(
     <div className="filter">
       <div className="undraw-div">
@@ -264,7 +285,7 @@ function Research(){
       </div>
       <div className="resulte">
       {
-        people.filter(person => person.age >= age[0] && person.age <= age[1] && person.location >= location[0] && person.location <= location[1] && person.tags >= tags[0] && person.tags <= tags[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        users.filter(person => calcAge(person.birthday) >= age[0] && calcAge(person.birthday) <= age[1] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -274,17 +295,17 @@ function Research(){
                         <img
                           alt = "profile"
                           className="research_image"
-                          src={filterPerson.img}
+                          src={abdellah}
                         />
                         <CardContent
                         className={classes.CardContent}
                         >
                           <Typography gutterBottom variant="h5" component="h2">
-                            {filterPerson.name}
+                            {filterPerson.firstname}
                             <br></br>
                             {filterPerson.location.toString().substr(0,2)}Km
                           </Typography>
-                          <p>{filterPerson.age} years old</p>
+                          <p>{calcAge(filterPerson.birthday)} years old</p>
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                           <Rating name="read-only" value={filterPerson.rating}  precision={0.5} readOnly />
@@ -300,7 +321,7 @@ function Research(){
                     </div>
                     <CardActions className={classes.cnt}>
                       <Button variant="outlined" color="primary">
-                        <Link to="/edit">Visit</Link> 
+                        <Link to={`/profile/${filterPerson.username}`}>Visit</Link> 
                       </Button>
                     </CardActions>
                   </Card>

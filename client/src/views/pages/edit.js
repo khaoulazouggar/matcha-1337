@@ -7,9 +7,14 @@ import { Upload } from "react-feather";
 import { Edit2 } from "react-feather";
 import { Key } from "react-feather";
 import { User } from "react-feather";
-import noUser from "../../photos/noUser.png"
+import { Aperture } from "react-feather";
+import { MapPin } from "react-feather";
+import noUser from "../../photos/noUser.png";
 
-function Edit() {
+function Edit(props) {
+  const [tags, setTags] = useState([]);
+  const [notes, setNotes] = useState("");
+  const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [Right, setRight] = useState(1);
   const [Img, setImg] = useState([noUser]);
   const onDrop = (e, picture) => {
@@ -17,85 +22,68 @@ function Edit() {
     setImg([data, Img]);
     e.target.value = "";
   };
+  // useEffect(() => {
+  //   props.changeColor("#f6f6f6"); // eslint-disable-next-line
+  // }, []);
   return (
-    <div className="box-form">
-      <div className="left-edit">
-        <div style={Img[0] ? { border: "none" } : {}} className="edit-pic">
-          <input
-          title="Edit your profile's picture"
-            className="file"
-            type="file"
-            accept="image/*"
-            onChange={(e) => onDrop(e, e.target.files)}
-          />
-          <div style={Img[0] ? { display: "none" } : {}} className="drag-text">
-            <Upload style={{ paddingTop: "50px" }} size={40} />
-            <h3> Edit your profile's picture</h3>
-          </div>
+    <div className="box-formE">
+      <div className="editing">
+        <div className="left-edit">
+          <div style={Img[0] ? { border: "none" } : {}} className="edit-pic">
+            <input
+              title="Edit your profile's picture"
+              className="file"
+              type="file"
+              accept="image/*"
+              onChange={(e) => onDrop(e, e.target.files)}
+            />
+            <div style={Img[0] ? { display: "none" } : {}} className="drag-text">
+              <Upload style={{ paddingTop: "50px" }} size={40} />
+              <h3> Edit your profile's picture</h3>
+            </div>
 
-          <img
-            className="editImg"
-            style={Img[0] ? {} : { display: "none" }}
-            src={Img[0]}
-            alt={Img}
-            key={Img}
-          />
+            <img className="editImg" style={Img[0] ? {} : { display: "none" }} src={Img[0]} alt={Img} key={Img} />
+          </div>
+          <div className="edit">
+            <span className="edit-child" onClick={() => setRight(1)} style={Right === 1 ? { color: "#7971b8" } : {}}>
+              <Edit2 style={Right === 1 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
+              Edit your information
+            </span>
+            <br /> <br />
+            <span className="edit-child" onClick={() => setRight(2)} style={Right === 2 ? { color: "#7971b8" } : {}}>
+              <User style={Right === 2 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
+              Edit your profile
+            </span>
+            <br /> <br />
+            <span className="edit-child" onClick={() => setRight(3)} style={Right === 3 ? { color: "#7971b8" } : {}}>
+              <Key style={Right === 3 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
+              Change your password
+            </span>
+            <br /> <br />
+            <span className="edit-child" onClick={() => setRight(4)} style={Right === 4 ? { color: "#7971b8" } : {}}>
+              <Aperture style={Right === 4 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
+              Gallery
+            </span>
+            <br /> <br />
+            <span className="edit-child" onClick={() => setRight(5)} style={Right === 5 ? { color: "#7971b8" } : {}}>
+              <MapPin style={Right === 5 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
+              Localisation
+            </span>
+          </div>
         </div>
-        <div className="edit">
-          <span
-            className="edit-child"
-            onClick={() => setRight(1)}
-            style={Right === 1 ? { color: "#7971b8" } : {}}
-          >
-            <Edit2
-              style={
-                Right === 1
-                  ? { color: "#7971b8", marginRight: "10px" }
-                  : { marginRight: "10px" }
-              }
-            />
-            Edit your information
-          </span>
-          <br /> <br />
-          <span
-            className="edit-child"
-            onClick={() => setRight(2)}
-            style={Right === 2 ? { color: "#7971b8" } : {}}
-          >
-            <User
-              style={
-                Right === 2
-                  ? { color: "#7971b8", marginRight: "10px" }
-                  : { marginRight: "10px" }
-              }
-            />
-            Edit your profile
-          </span>
-          <br /> <br />
-          <span
-            className="edit-child"
-            onClick={() => setRight(3)}
-            style={Right === 3 ? { color: "#797b8" } : {}}
-          >
-            <Key
-              style={
-                Right === 3
-                  ? { color: "#7971b8", marginRight: "10px" }
-                  : { marginRight: "10px" }
-              }
-            />
-            Change your password
-          </span>
+        <div className="editRight">
+          {Right === 1 ? (
+            <EditInfo />
+          ) : Right === 2 ? (
+            <EditProfile data={{ gender, setGender }} data1={{ tags, setTags }} data2={{ notes, setNotes }} />
+          ) : Right === 3 ? (
+            <EditPass />
+          ) : Right === 4 ? (
+            ""
+          ) : (
+            ""
+          )}
         </div>
-      </div>
-      <div className="editRight" style={{ height: "850px" }}>
-        {Right === 1 ? (
-          <EditInfo />
-        ) : Right === 2 ? (
-          <EditProfile />
-        ) : (
-          <EditPass />
-        )}
       </div>
     </div>
   );

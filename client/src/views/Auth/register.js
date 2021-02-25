@@ -73,7 +73,6 @@ function Register() {
       email &&
       password &&
       verifypassword === password &&
-      !errverifypassword &&
       !errusername &&
       !errfirstname &&
       !errlastname &&
@@ -112,11 +111,11 @@ function Register() {
     <div className="box-form">
       <div className="left">
         <div className="overlay">
-          <h1>Find Your Perfect Match</h1>
+          <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
             We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
-            love.
+            love.<br/><br/>Get to know more<Link className="about" to= "/about"> &nbsp;About&nbsp; </Link>us.
           </p>
 
           <span>

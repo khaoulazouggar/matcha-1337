@@ -5,6 +5,7 @@ function Alert() {
     icon: "error",
     text: "You have to complete all the steps first!",
     showConfirmButton: false,
+    heightAuto: false
   });
 }
 export default Alert;
