@@ -29,7 +29,7 @@ function Login() {
       Axios.post("http://localhost:3001/login", { username: username, password: password }, {})
         // .then((response) =>console.log(response))
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist" ||  response.data.message === "error") {
             Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false ,heightAuto: false});
           } else if (response.data.message === "Please check your email") {

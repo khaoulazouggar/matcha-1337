@@ -3,10 +3,19 @@ import "../css/upload.css";
 import {Upload} from "react-feather"
 
 function Uploader(props) {
-  const onDrop = (e, picture) => {
-    let data = URL.createObjectURL(picture[0]);
-    props.data.setImg([data, ...props.data.img]);
-    e.target.value = "";
+  const handleFile = function()  {
+    const content = this.result;
+    props.data.setImg([content, ...props.data.img]);
+    console.log('file content',  content)
+  }
+  const onDrop = (e, file) => {
+    // let data = URL.createObjectURL(picture[0]);
+    // props.data.setImg([data, ...props.data.img]);
+    // e.target.value = "";
+
+    let fileData = new FileReader();
+    fileData.onloadend = handleFile;
+    fileData.readAsDataURL(file[0]);
   };
   return (
     <div className="upload">

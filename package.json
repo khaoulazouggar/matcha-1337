@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "kill-port": "^1.6.1",
     "moment": "^2.29.1"
   }
 }

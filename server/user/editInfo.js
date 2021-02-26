@@ -7,7 +7,6 @@ const isName = require("../tools/isName");
 const isUsername = require("../tools/isUsername");
 
 router.post("/", isUserAuth, (req, res) => {
-  console.log("enter");
   const id = req.userId;
   const sqlInsert = "SELECT * FROM users WHERE id = ?";
   const { Nfirstname, Nlastname, Nusername, Nemail } = req.body;
@@ -16,7 +15,11 @@ router.post("/", isUserAuth, (req, res) => {
       res.send({ err: err });
     }
     if (result.length > 0) {
-      if ((isName(Nfirstname), isName(Nlastname), isUsername(Nusername), isEmail(Nemail))) {
+      if(result[0].firstname === Nfirstname && result[0].lastname === Nlastname && result[0].username === Nusername && result[0].email === Nemail){
+        res.send("nothing changed")
+        console.log("nothing changed")
+      }
+      else if ((isName(Nfirstname), isName(Nlastname), isUsername(Nusername), isEmail(Nemail))) {
         db.query("UPDATE users SET firstname = ?, lastname = ?, username= ?, email= ? WHERE id = ?", [
           Nfirstname,
           Nlastname,

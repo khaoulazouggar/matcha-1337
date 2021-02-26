@@ -1,11 +1,22 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "../../css/profile.css";
 import Rating from "@material-ui/lab/Rating";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function Profile(props) {
-  // useEffect(() => {
-  //   props.changeColor("#f6f6f6"); // eslint-disable-next-line
-  // }, []);
+function Profile() {
+  const history = useHistory();
+  useEffect(() => {
+    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        localStorage.removeItem("token");
+        history.push("/login");
+      } else {
+      console.log(res.data)
+      }
+    });
+  }, [history]);
+
   return (
     <div className="profile">
       <div className="p1">

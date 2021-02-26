@@ -49,6 +49,7 @@ function Changepass(props) {
               icon: "success",
               text: "Your password has been successfully modified.",
               showConfirmButton: false,
+              heightAuto: false
             });
             history.push("/login");
           }

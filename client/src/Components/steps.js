@@ -68,7 +68,7 @@ function Steps(props) {
           localStorage.removeItem("token");
           history.push("/login");
         } else {
-          console.log(res);
+          console.log(res.data);
         }
       });
   };
@@ -79,20 +79,41 @@ function Steps(props) {
           1
         </div>
         <div style={inStep1 === 0 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(1)} style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(1)}
+          style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+        >
           2
         </div>
-        <div style={inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div
+          style={
+            inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }
+          }
+        ></div>
         <div
           onClick={() => setInStep(2)}
-          style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+          style={
+            inStep1 === 0 || inStep1 === 1
+              ? { background: "" }
+              : { background: "#646bfaad", color: "white" }
+          }
         >
           3
         </div>
-        <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div
+          style={
+            inStep1 === 0 || inStep1 === 1 || inStep1 === 2
+              ? { background: "white" }
+              : { background: "#646bfaad" }
+          }
+        ></div>
         <div
           onClick={() => setInStep(3)}
-          style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+          style={
+            inStep1 === 0 || inStep1 === 1 || inStep1 === 2
+              ? { background: "" }
+              : { background: "#646bfaad", color: "white" }
+          }
         >
           4
         </div>
@@ -103,7 +124,13 @@ function Steps(props) {
             {inStep1 === 0 ? (
               <InStep data={{ gender, setGender }} />
             ) : inStep1 === 1 ? (
-              <textarea className="bio" type="text" placeholder="Add Your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
+              <textarea
+                className="bio"
+                type="text"
+                placeholder="Add Your Bio"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
             ) : inStep1 === 2 ? (
               <Tag data={{ tags, setTags }} />
             ) : (
@@ -116,7 +143,11 @@ function Steps(props) {
                 {img.map((p, i) => (
                   <div style={{ width: "155px", height: "155px" }} className="test" key={i}>
                     <img className="file-upload-image" src={p} alt={p} />
-                    <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i)}>
+                    <button
+                      className="remove-image"
+                      title="remove-image"
+                      onClick={() => handleRemoveItem(i)}
+                    >
                       <Trash2 size={20} />
                     </button>
                     <button className="default-image" title="default-image">
@@ -140,7 +171,10 @@ function Steps(props) {
                 setInStep(inStep1 - 1);
               }}
             >
-              <ArrowLeft style={{ marginRight: 9, display: "flex", float: "left", marginTop: 2 }} size={20} />
+              <ArrowLeft
+                style={{ marginRight: 9, display: "flex", float: "left", marginTop: 2 }}
+                size={20}
+              />
               Previous
             </button>
           ) : (
@@ -165,11 +199,17 @@ function Steps(props) {
                   Alert();
                 }
               } else if (inStep1 === 0 && gender.birthday >= "2010-12-31") {
-                Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false, heightAuto: false });
+                Swal.fire({
+                  icon: "error",
+                  text: "Please enter a valid birthday",
+                  showConfirmButton: false,
+                  heightAuto: false,
+                });
               } else setInStep(inStep1 + 1);
             }}
           >
-            {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
+            {inStep1 === 3 ? "Finish" : "Next"}{" "}
+            <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
           </button>
         </div>
       </div>

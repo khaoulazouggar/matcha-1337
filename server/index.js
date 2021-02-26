@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require('body-parser')
 const cors = require("cors");
 const register = require("./user/register");
 const login = require("./user/login");
@@ -15,7 +16,8 @@ const editInfo = require("./user/editInfo");
 const getData = require("./user/getData");
 
 app.use(cors());
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use("/register", register);
 app.use("/login", login);
 app.use("/confirm", confirm);

@@ -4,6 +4,7 @@ import isUsername from "../../tools/isUsername";
 import isName from "../../tools/isName";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function EditInfo() {
   const [Nfirstname, setNfirstname] = useState("");
@@ -66,10 +67,13 @@ function EditInfo() {
             localStorage.removeItem("token");
             history.push("/login");
           } else {
-            console.log(res);
+            if (res.data === "nothing changed") {
+              Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
+            }else if (res.data === "updated") {
+              Swal.fire({ icon: "success", text: "Your informations have been successfully modified.", showConfirmButton: false ,heightAuto: false});}
+            // console.log(res.data);
           }
         });
-    console.log({ Nfirstname, Nlastname, Nusername, Nemail });
   };
 
   useEffect(() => {
