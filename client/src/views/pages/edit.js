@@ -3,6 +3,7 @@ import "../../css/edit.css";
 import EditInfo from "./edit-info";
 import EditProfile from "./edit-profile";
 import EditPass from "./edit-password";
+import EditGallery from "./edit-gallery";
 import { Upload } from "react-feather";
 import { Edit2 } from "react-feather";
 import { Key } from "react-feather";
@@ -79,7 +80,7 @@ function Edit(props) {
           ) : Right === 3 ? (
             <EditPass />
           ) : Right === 4 ? (
-            ""
+            <EditGallery />
           ) : (
             ""
           )}

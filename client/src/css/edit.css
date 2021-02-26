@@ -153,7 +153,19 @@ input.inptE:focus{
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 0px 7px 1px #848bfd;
 }
-  
+
+.gallery{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.gallery-img{
+  max-width: 225px;
+    padding: 11px;
+    box-sizing: border-box;
+    background-size: contain;
+}
 
 @media only screen and (max-width: 1140px) {
   .box-formE{

@@ -195,16 +195,16 @@ function Steps(props) {
                 ) {
                   routeChange();
                   handelSteps();
+                } else if (gender.birthday >= "2010-12-31") {
+                  Swal.fire({
+                    icon: "error",
+                    text: "Please enter a valid birthday",
+                    showConfirmButton: false,
+                    heightAuto: false,
+                  });
                 } else {
                   Alert();
                 }
-              } else if (inStep1 === 0 && gender.birthday >= "2010-12-31") {
-                Swal.fire({
-                  icon: "error",
-                  text: "Please enter a valid birthday",
-                  showConfirmButton: false,
-                  heightAuto: false,
-                });
               } else setInStep(inStep1 + 1);
             }}
           >
