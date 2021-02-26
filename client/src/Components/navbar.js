@@ -4,6 +4,8 @@ import "../css/navbar.css";
 import lo1 from "../photos/speech.png";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MenuIcon from '@material-ui/icons/Menu';
 
 function Navbar() {
   const history = useHistory();
@@ -11,7 +13,8 @@ function Navbar() {
   useEffect(() => {
     setToken(localStorage.getItem("token"));
   }, [token]);
-
+  function Notification (){
+  }
   const click = () =>{
     setToken("")
     if (token) localStorage.removeItem("token")
@@ -30,12 +33,26 @@ function Navbar() {
         </Link>
       </div>
       <nav>
-        <div className="nav-mobile">
+        {/* <div className="nav-mobile">
           <Link id="nav-hrefggle" to="#!">
             <span></span>
           </Link>
-        </div>
+        </div> */}
+        <ul className="nav-mobile">
+          <li>
+              {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
+          </li>
+          <MenuIcon/>
+        </ul>
         <ul className="nav-list">
+          <li>
+              {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
+          </li>
+          <li>
+            <Link className="text-s" to={!token ? "" : "/chat"}>
+              {!token ? "" : "Chat"}
+            </Link>
+          </li>
           <li>
             <Link className="text-s" to={!token ? "/about" : "/edit"}>
               {!token ? "About" : "Edit"}

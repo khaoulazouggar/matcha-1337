@@ -7,7 +7,7 @@ import About from "./views/pages/about";
 import Home from "./views/pages/home";
 import Chat from "./views/pages/chat";
 import Research from "./views/pages/research";
-import Browsing from "./views/pages/browsing";
+// import Browsing from "./views/pages/browsing";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
 import Footer from "./Components/footer";

@@ -12,12 +12,14 @@
     box-shadow: 0px -2px 7px 0px black; */
 }
 
-
+.notification
+{
+    cursor: pointer;
+}
 
 li{
     display: inline;
-    padding: 15px; 
- 
+    padding: 0 10px;
 }
 .text-sz{
     text-decoration: none;
@@ -37,7 +39,10 @@ li{
     margin: auto;
     margin-left: 5px;
 }
-
+.nav-list{
+    display: flex;
+    align-items: center;
+}
 .nav-list a:hover{
     color : #c79ecf;
     /* width: 100px;
@@ -49,7 +54,10 @@ li{
 .nav-list a:not(:hover){
     transition: all 0.5s;
 }
-
+.nav-mobile
+{
+    display: none;
+}
 .navbtn{
     color: #fff;
     font-size: 16px;
@@ -71,3 +79,13 @@ li{
     background-color: white;
     height: 2px;
 } */
+@media only screen and (max-width: 768px) {
+    .nav-list {
+        display: none;
+    }
+    .nav-mobile
+    {
+        margin-right: 10px;
+        display: inline;
+    }
+}

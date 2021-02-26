@@ -15,7 +15,12 @@ const editInfo = require("./user/editInfo");
 const getData = require("./user/getData");
 const chat = require("./user/chat");
 const getusers = require("./user/getusers");
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
+io.on('connection', socket => {
+  console.log('new.user');
+});
 app.use(cors());
 app.use(express.json());
 app.use("/register", register);
@@ -33,6 +38,6 @@ app.use("/edit", editInfo);
 app.use("/getData", getData);
 app.use("/isUserAuth", isUserAuth);
 
-app.listen(3001, () => {
+http.listen(3001, () => {
   console.log("hello server");
 });

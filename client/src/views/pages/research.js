@@ -4,10 +4,6 @@ import {Link} from 'react-router-dom';
 import "../../css/research.css"
 import search from "../../photos/search.svg"
 import abdellah from "../../photos/abdellah.jpg"
-import upload from "../../photos/upload.gif";
-import verified from "../../photos/verified.gif";
-import write from "../../photos/write.gif";
-import test from "../../photos/test.jpeg";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -97,6 +93,7 @@ function Research(){
   const [sort, setSort] = useState('age');
   const history = useHistory();
   const [users, setUsers] = useState([]);
+  const [me, setMe] = useState('');
   // const [dis, setDis] = useState([]);
 
   function computeDistance([prevLat, prevLong], [lat, long]) {
@@ -118,48 +115,7 @@ function Research(){
   function toRad(angle) {
     return (angle * Math.PI) / 180;
   }
-  const people = [
-    {
-      name: 'James',
-      age: 96,
-      location : computeDistance([33.57384481713102, -7.587149686558293], [33.454767083471516, -7.517111844805549]),
-      rating : 3,
-      tags : 5,
-      img : test,
-    },
-    {
-      name: 'John',
-      age: 45,
-      location : computeDistance([33.57498899958384, -7.588522977573053], [32.95262543780583, -6.846945829602815]),
-      rating : 4.5,
-      tags : 2,
-      img : upload,
-    },
-    {
-      name: 'Paul',
-      age: 65,
-      location : computeDistance([32.952951115826366, -6.825746399716012], [32.95120753720113, -6.846598696347603]),
-      rating : 5,
-      tags : 4,
-      img : verified,
-    },
-    {
-      name: 'Ringo',
-      age: 49,
-      location : computeDistance([32.86797764991025, -6.913888918961159], [33.18947165375718, -6.656963771824534]),
-      rating : 2.5,
-      tags : 3,
-      img : write,
-    },
-    {
-      name: 'George',
-      age: 100,
-      location : computeDistance([32.86797764991025, -6.913888918961159], [33.25444464691913, -6.878030717351149]),
-      rating : 2.5,
-      tags : 0,
-      img : abdellah,
-    }
-  ];
+  
   const sortChange = (event) => {
     setSort(event.target.value);
   };
@@ -179,7 +135,6 @@ function Research(){
     var birthday = +new Date(dateString);
     return ~~((Date.now() - birthday) / (31557600000));
   }
-  // console.log(calcAge(users[68].birthday))
   useEffect(() => {
     axios.get("http://localhost:3001/getusers", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
       if (res.data === "U failed to authenticate" || res.data === "we need a token") {
@@ -190,8 +145,16 @@ function Research(){
           // console.log(res);
       }
     });
+    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        localStorage.removeItem("token");
+        history.push("/login");
+      } else {
+        setMe(res.data);
+          // console.log(res);
+      }
+    });
   }, []);
-
   return(
     <div className="filter">
       <div className="undraw-div">
@@ -285,7 +248,7 @@ function Research(){
       </div>
       <div className="resulte">
       {
-        users.filter(person => calcAge(person.birthday) >= age[0] && calcAge(person.birthday) <= age[1] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        users.filter(person => calcAge(person.birthday) >= age[0] && calcAge(person.birthday) <= age[1] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) >= location[0] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -301,9 +264,9 @@ function Research(){
                         className={classes.CardContent}
                         >
                           <Typography gutterBottom variant="h5" component="h2">
-                            {filterPerson.firstname}
+                            {filterPerson.username}
                             <br></br>
-                            {filterPerson.location.toString().substr(0,2)}Km
+                            {computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km
                           </Typography>
                           <p>{calcAge(filterPerson.birthday)} years old</p>
                         </CardContent>
