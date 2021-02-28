@@ -14,9 +14,12 @@ function Navbar() {
 
   const click = () =>{
     setToken("")
-    if (token) localStorage.removeItem("token")
+    if (token) {
+      
+      localStorage.removeItem("token")
+      history.push("/")
+    }
     else (setToken("")) 
-    history.push("/")
   }
   return (
     <div className="navigation">

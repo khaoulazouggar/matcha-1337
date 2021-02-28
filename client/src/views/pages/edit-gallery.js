@@ -4,19 +4,107 @@ import { useHistory } from "react-router-dom";
 import { Trash2 } from "react-feather";
 import { User } from "react-feather";
 import { Upload } from "react-feather";
+import Swal from "sweetalert2";
 
-function EditGallery() {
+function EditGallery(props) {
   const [Img, setImg] = useState([]);
   const [img, setimg] = useState([]);
-
+  // const [profileImg, setProfileImg] = useState([]);
   const history = useHistory();
 
-  const handleRemoveItem = (e) => {
-    // console.log(e);
-    setImg(Img.filter((item, i) => i !== e));
+  const handelEditGallery = () => {
+    console.log("enter");
+    axios
+      .post(
+        "http://localhost:3001/editGallery",
+        {
+          Img,
+          img,
+        },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          if (res.data === "nothing changed") {
+            Swal.fire({
+              icon: "error",
+              text: "Nothing Added",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          } else if (res.data === "more than 5") {
+            Swal.fire({
+              icon: "error",
+              text: "You added more than five pictures",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          } else if (res.data === "updated") {
+            Swal.fire({
+              icon: "success",
+              text: "Your picture has been successfully added.",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+            window.location.href = "/edit";
+            // history.push("/login");
+            // setImg([...img]);
+            // setimg([]);
+          }
+        }
+        console.log(res.data);
+      });
   };
 
-  
+  const handleRemoveItem = (e, image, auto) => {
+    console.log(e);
+    setImg(Img.filter((item, i) => i !== e));
+    // Img.splice(1);
+    axios
+      .post(
+        "http://localhost:3001/removeimage",
+        { auto, image },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(res.data);
+        }
+        console.log(res.data);
+      });
+  };
+  const handleDefaultItems = (e, image, auto) => {
+    console.log("-----------", e, "---------", Img);
+    props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
+    console.log(props.data);
+    // axios
+    //   .post(
+    //     "http://localhost:3001/removeimage",
+    //     { auto, image },
+    //     { headers: { "x-auth-token": localStorage.getItem("token") } }
+    //   )
+    //   .then((res) => {
+    //     if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+    //       localStorage.removeItem("token");
+    //       history.push("/login");
+    //     } else {
+    //       console.log(res.data);
+    //     }
+    //     console.log(res.data);
+    //   });
+  };
+
+  const handleRemoveItems = (e) => {
+    // console.log(e);
+    setimg(img.filter((item, i) => i !== e));
+  };
+
   const handleFile = function () {
     const content = this.result;
     setimg([content, ...img]);
@@ -27,6 +115,7 @@ function EditGallery() {
     let fileData = new FileReader();
     fileData.onloadend = handleFile;
     fileData.readAsDataURL(file[0]);
+    e.target.value = "";
   };
 
   useEffect(() => {
@@ -40,6 +129,7 @@ function EditGallery() {
           history.push("/login");
         } else {
           setImg(res.data);
+          // console.log(res.data);
         }
       });
   }, [history]);
@@ -48,40 +138,73 @@ function EditGallery() {
       <h1>Edit Account</h1>
       <br />
       <br />
-      <div className="fileUpload">
-        <div className="image-upload-wrap">
-          <input
-            className="file-upload-input"
-            type="file"
-            accept="image/*"
-            onChange={(e) => onDrop(e, e.target.files)}
-          />
-          <div className="drag-text">
-            <Upload style={{ paddingTop: "50px" }} size={40} />
-            <h3> Drag And Drop At Most Five Images Here</h3>
+      <div>
+        <div className="fileUpload">
+          <div className="image-upload-wrap">
+            <input
+              className="file-upload-input"
+              type="file"
+              accept="image/*"
+              onChange={(e) => onDrop(e, e.target.files)}
+            />
+            <div className="drag-text">
+              <Upload style={{ paddingTop: "50px" }} size={40} />
+              <h3> Drag And Drop At Most Five Images Here</h3>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <div className="gallery">
-        {img.map((p) => (
-          <img className="file-upload-image" src={p} alt={p} key={p} />
-        ))}   
-        {Img.map((p, i) => (
-          <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
-            <img className="gallery-img" src={"http://localhost:3001/images/" + p.image} alt={p} />
-            <button
-              className="remove-image"
-              title="remove-image"
-              onClick={() => handleRemoveItem(i)}
-            >
-              <Trash2 size={20} />
-            </button>
-            <button className="default-image" title="default-image">
-              <User size={20} />
-            </button>
-          </div>
-        ))}
+
+        <div className="gallery">
+          {img.map((p, i) => (
+            <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
+              <img className="gallery-img" src={p} alt={p} key={p} />
+              <button
+                className="remove-image"
+                title="remove-image"
+                onClick={() => handleRemoveItems(i)}
+              >
+                <Trash2 size={20} />
+              </button>
+              <button
+                className="default-image"
+                title="default-image"
+                onClick={() => handleDefaultItems(i)}
+              >
+                <User size={20} />
+              </button>
+            </div>
+          ))}
+          {Img.map((p, i) => (
+            <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
+              <img
+                className="gallery-img"
+                src={"http://localhost:3001/images/" + p.image}
+                alt={p}
+              />
+              <button
+                className="remove-image"
+                title="remove-image"
+                onClick={() => handleRemoveItem(i, p.image, p.auto)}
+              >
+                <Trash2 size={20} />
+              </button>
+              <button
+                className="default-image"
+                title="default-image"
+                onClick={() => handleDefaultItems(i)}
+              >
+                <User size={20} />
+              </button>
+            </div>
+          ))}
+        </div>
+        <br />
+        <br />
+        <div style={{ marginRight: "15px", height: "100px" }}>
+          <button className="btn" onClick={() => handelEditGallery()}>
+            Edit
+          </button>
+        </div>
       </div>
     </div>
   );

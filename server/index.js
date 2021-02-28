@@ -15,10 +15,13 @@ const editPassword = require("./user/editPassword");
 const editInfo = require("./user/editInfo");
 const getData = require("./user/getData");
 const getImages = require("./user/getImages");
+const editGallery = require("./user/editGallery");
+const removeimage = require("./user/removeimage");
 
 app.use(cors());
 // app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
+app.use("/images", express.static("./images"));
 app.use("/register", register);
 app.use("/login", login);
 app.use("/confirm", confirm);
@@ -32,10 +35,8 @@ app.use("/edit", editInfo);
 app.use("/getData", getData);
 app.use("/getImages", getImages);
 app.use("/isUserAuth", isUserAuth);
-
-app.get("/images/:path", (req, res) => {
-  res.sendFile(__dirname + "/images/" + req.params.path);
-});
+app.use("/editGallery", editGallery);
+app.use("/removeimage", removeimage);
 
 app.listen(3001, () => {
   console.log("hello server");
