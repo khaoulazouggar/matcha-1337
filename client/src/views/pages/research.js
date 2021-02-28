@@ -154,7 +154,19 @@ function Research(){
           // console.log(res);
       }
     });
+    
   }, []);
+  const items = [...users];
+  var people = items.map(usr => {
+      usr.age = calcAge(usr.birthday);
+      return usr;
+  });
+  function removeInSearch(id)
+  {
+      people = people.filter(items => items.id !== id);
+      setUsers(people);
+    
+  }
   return(
     <div className="filter">
       <div className="undraw-div">
@@ -248,7 +260,7 @@ function Research(){
       </div>
       <div className="resulte">
       {
-        users.filter(person => calcAge(person.birthday) >= age[0] && calcAge(person.birthday) <= age[1] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) >= location[0] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        people.filter(person => person.age >= age[0] && person.age <= age[1] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) >= location[0] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -264,11 +276,11 @@ function Research(){
                         className={classes.CardContent}
                         >
                           <Typography gutterBottom variant="h5" component="h2">
-                            {filterPerson.username}
+                          {filterPerson.firstname}{" "}{filterPerson.lastname}
                             <br></br>
                             {computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km
                           </Typography>
-                          <p>{calcAge(filterPerson.birthday)} years old</p>
+                          <p>{filterPerson.age} years old</p>
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                           <Rating name="read-only" value={filterPerson.rating}  precision={0.5} readOnly />
@@ -280,6 +292,7 @@ function Research(){
                       />
                       <HighlightOffIcon
                         className={classes.FavoriteIcon}
+                        onClick={() => removeInSearch(filterPerson.id)}
                       />
                     </div>
                     <CardActions className={classes.cnt}>

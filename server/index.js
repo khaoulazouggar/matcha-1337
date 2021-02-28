@@ -14,6 +14,8 @@ const editPassword = require("./user/editPassword");
 const editInfo = require("./user/editInfo");
 const getData = require("./user/getData");
 const chat = require("./user/chat");
+const unblockUser = require("./user/unblockUsers");
+const getusersBlocked = require("./user/getUsersBlocked");
 const getusers = require("./user/getusers");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
@@ -24,6 +26,8 @@ io.on('connection', socket => {
 app.use(cors());
 app.use(express.json());
 app.use("/register", register);
+app.use("/unblock", unblockUser);
+app.use("/getusersblocked", getusersBlocked);
 app.use("/login", login);
 app.use("/confirm", confirm);
 app.use("/fgpass", fgpass);

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
+import ChatIcon from '@material-ui/icons/Chat';
 
 function Navbar() {
   const history = useHistory();
@@ -49,9 +50,10 @@ function Navbar() {
               {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
           </li>
           <li>
-            <Link className="text-s" to={!token ? "" : "/chat"}>
-              {!token ? "" : "Chat"}
-            </Link>
+            {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">
+              <ChatIcon >
+              </ChatIcon>
+            </Link>}
           </li>
           <li>
             <Link className="text-s" to={!token ? "/about" : "/edit"}>

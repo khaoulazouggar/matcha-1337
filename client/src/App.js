@@ -6,8 +6,9 @@ import Register from "./views/Auth/register";
 import About from "./views/pages/about";
 import Home from "./views/pages/home";
 import Chat from "./views/pages/chat";
+import Unblock from "./views/pages/block";
 import Research from "./views/pages/research";
-// import Browsing from "./views/pages/browsing";
+import Browsing from "./views/pages/browsing";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
 import Footer from "./Components/footer";
@@ -44,10 +45,14 @@ function App() {
           <Navbar />
             <Research />
           </Route>
-          {/* <Route path="/browsing">
+          <Route path="/unblock">
+          <Navbar />
+            <Unblock />
+          </Route>
+          <Route path="/browsing">
           <Navbar />
             <Browsing />
-          </Route> */}
+          </Route>
           <Route path="/profile" >
           <Navbar />
             <Profile changeColor={changeColor}/>
