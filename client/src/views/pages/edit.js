@@ -115,7 +115,7 @@ function Edit(props) {
         </div>
         <div className="editRight">
           {Right === 1 ? (
-            <EditInfo />
+            <EditInfo data={{ ProfileImg, setProfileImg }}/>
           ) : Right === 2 ? (
             <EditProfile
               data={{ gender, setGender }}

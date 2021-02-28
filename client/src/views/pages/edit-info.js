@@ -6,7 +6,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function EditInfo() {
+function EditInfo(props) {
   const [Nfirstname, setNfirstname] = useState("");
   const [errNfirstname, seterrNfirstname] = useState("");
   const [Nlastname, setNlastname] = useState("");
@@ -86,9 +86,12 @@ function EditInfo() {
         setNlastname(res.data[0].lastname);
         setNusername(res.data[0].username);
         setNemail(res.data[0].email);
+        console.log(res.data);
+        
+        props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
       }
     });
-  }, [history]);
+  }, [history, props.data]);
 
   return (
     <div className="rightE">
