@@ -17,6 +17,8 @@ const getData = require("./user/getData");
 const getImages = require("./user/getImages");
 const editGallery = require("./user/editGallery");
 const removeimage = require("./user/removeimage");
+const defaultimage = require("./user/defaultimage");
+const removeProfilePic = require("./user/removeProfilePic");
 
 app.use(cors());
 // app.use(express.json());
@@ -37,6 +39,8 @@ app.use("/getImages", getImages);
 app.use("/isUserAuth", isUserAuth);
 app.use("/editGallery", editGallery);
 app.use("/removeimage", removeimage);
+app.use("/defaultimage", defaultimage);
+app.use("/removeProfilePic", removeProfilePic);
 
 app.listen(3001, () => {
   console.log("hello server");

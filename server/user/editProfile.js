@@ -4,12 +4,6 @@ const isUserAuth = require("./isUserAuth");
 const db = require("../db");
 const moment =require("moment");
 
-function calcAge(dateString) {
-  var birthday = +new Date(dateString);
-  return ~~((Date.now() - birthday) / (31557600000));
-}
-
-
 router.post("/", isUserAuth, (req, res) => {
   const id = req.userId;
   const sqlInsert = "SELECT * FROM users WHERE id = ?";
@@ -30,8 +24,8 @@ router.post("/", isUserAuth, (req, res) => {
         console.log("nothing changed");
       } else {
         db.query(
-          "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?, age=?, bio= ?, tags= ? WHERE id = ?",
-          [yourGender, genderLooking, birthday, calcAge(birthday),notes, JSON.stringify(tags), id]
+          "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ? WHERE id = ?",
+          [yourGender, genderLooking, birthday,notes, JSON.stringify(tags), id]
         );
         res.send("updated");
         console.log("updated");
