@@ -5,6 +5,7 @@ import isName from "../../tools/isName";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import noUser from "../../photos/noUser.png";
 
 function EditInfo(props) {
   const [Nfirstname, setNfirstname] = useState("");
@@ -17,29 +18,23 @@ function EditInfo(props) {
   const [errNemail, seterrNemail] = useState("");
   const history = useHistory();
   useEffect(() => {
-    if (Nfirstname && !isName(Nfirstname) && Nfirstname.length < 24) seterrNfirstname("First name is not valide (minimum is 3 letters)");
-    else if (Nfirstname.length > 24) seterrNfirstname("First name is too long (maximum is 24 letters)");
+    if (Nfirstname && !isName(Nfirstname) && Nfirstname.length < 24)
+      seterrNfirstname("First name is not valide (minimum is 3 letters)");
+    else if (Nfirstname.length > 24)
+      seterrNfirstname("First name is too long (maximum is 24 letters)");
     else seterrNfirstname("");
-    if (Nlastname && !isName(Nlastname) && Nlastname.length < 24) seterrNlastname("Last Name is not valide (minimum is 3 letters)");
-    else if (Nlastname.length > 24) seterrNlastname("Last name is too long (maximum is 24 letters)");
+    if (Nlastname && !isName(Nlastname) && Nlastname.length < 24)
+      seterrNlastname("Last Name is not valide (minimum is 3 letters)");
+    else if (Nlastname.length > 24)
+      seterrNlastname("Last name is too long (maximum is 24 letters)");
     else seterrNlastname("");
-    if (Nusername && !isUsername(Nusername) && Nusername.length < 24) seterrNusername("Username is not valide (minimum is 3 characters)");
-    else if (Nusername.length > 24) seterrNusername("Username is too long (maximum is 24 characters)");
+    if (Nusername && !isUsername(Nusername) && Nusername.length < 24)
+      seterrNusername("Username is not valide (minimum is 3 characters)");
+    else if (Nusername.length > 24)
+      seterrNusername("Username is too long (maximum is 24 characters)");
     else seterrNusername("");
     if (Nemail && !isEmail(Nemail)) seterrNemail("Email is not valide");
     else seterrNemail("");
-
-    // axios.get("http://localhost:3001/edit-info", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-    //   if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-    //     localStorage.removeItem("token");
-    //     history.push("/login");
-    //   } else {
-    //     setNfirstname(res.data[0].firstname);
-    //     setNlastname(res.data[0].lastname);
-    //     setNusername(res.data[0].username);
-    //     setNemail(res.data[0].email);
-    //   }
-    // });
   }, [Nfirstname, Nlastname, Nusername, Nemail]);
 
   const handelEdit = () => {
@@ -50,7 +45,16 @@ function EditInfo(props) {
     if (!Nusername) seterrNusername("Username should not be empty");
 
     if (!Nemail) seterrNemail("Email should not be empty");
-    if (Nusername && Nfirstname && Nlastname && Nemail && !errNusername && !errNfirstname && !errNlastname && !errNemail)
+    if (
+      Nusername &&
+      Nfirstname &&
+      Nlastname &&
+      Nemail &&
+      !errNusername &&
+      !errNfirstname &&
+      !errNlastname &&
+      !errNemail
+    )
       axios
         .post(
           "http://localhost:3001/edit",
@@ -68,30 +72,46 @@ function EditInfo(props) {
             history.push("/login");
           } else {
             if (res.data === "nothing changed") {
-              Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
-            }else if (res.data === "updated") {
-              Swal.fire({ icon: "success", text: "Your informations have been successfully modified.", showConfirmButton: false ,heightAuto: false});}
+              Swal.fire({
+                icon: "error",
+                text: "Nothing Changed",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
+            } else if (res.data === "updated") {
+              Swal.fire({
+                icon: "success",
+                text: "Your informations have been successfully modified.",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
+            }
             // console.log(res.data);
           }
         });
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else {
-        setNfirstname(res.data[0].firstname);
-        setNlastname(res.data[0].lastname);
-        setNusername(res.data[0].username);
-        setNemail(res.data[0].email);
-        console.log(res.data);
-        
-        props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
-      }
-    });
-  }, [history, props.data]);
+    axios
+      .get("http://localhost:3001/getData", {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          setNfirstname(res.data[0].firstname);
+          setNlastname(res.data[0].lastname);
+          setNusername(res.data[0].username);
+          setNemail(res.data[0].email);
+          console.log(res.data);
+          if (res.data[0].profilePic)
+            props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+          else props.data.setProfileImg([noUser]);
+        }
+      });// eslint-disable-next-line 
+  }, [history]);
 
   return (
     <div className="rightE">

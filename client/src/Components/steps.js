@@ -41,21 +41,6 @@ function Steps(props) {
     setProfileImg(e)
     console.log(e)
     console.log(img[e])
-    // axios
-    //   .post(
-    //     "http://localhost:3001/removeimage",
-    //     { auto, image },
-    //     { headers: { "x-auth-token": localStorage.getItem("token") } }
-    //   )
-    //   .then((res) => {
-    //     if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-    //       localStorage.removeItem("token");
-    //       history.push("/login");
-    //     } else {
-    //       console.log(res.data);
-    //     }
-    //     console.log(res.data);
-    //   });
   };
 
   const history = useHistory();

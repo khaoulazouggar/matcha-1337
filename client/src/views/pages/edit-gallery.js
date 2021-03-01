@@ -5,6 +5,7 @@ import { Trash2 } from "react-feather";
 import { User } from "react-feather";
 import { Upload } from "react-feather";
 import Swal from "sweetalert2";
+// import noUser from "../../photos/noUser.png";
 
 function EditGallery(props) {
   const [Img, setImg] = useState([]);
@@ -61,8 +62,23 @@ function EditGallery(props) {
 
   const handleRemoveItem = (e, image, auto) => {
     console.log(e);
+    if(props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image){
+      axios
+      .post(
+        "http://localhost:3001/removeProfilePic",
+        { Img,e },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          console.log(res.data);
+        }
+      });
+    }
     setImg(Img.filter((item, i) => i !== e));
-    // Img.splice(1);
     axios
       .post(
         "http://localhost:3001/removeimage",
@@ -76,28 +92,34 @@ function EditGallery(props) {
         } else {
           console.log(res.data);
         }
-        console.log(res.data);
       });
   };
-  const handleDefaultItems = (e, image, auto) => {
+  const handleDefaultItems = (e) => {
     console.log("-----------", e, "---------", Img);
     props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
     console.log(props.data);
-    // axios
-    //   .post(
-    //     "http://localhost:3001/removeimage",
-    //     { auto, image },
-    //     { headers: { "x-auth-token": localStorage.getItem("token") } }
-    //   )
-    //   .then((res) => {
-    //     if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-    //       localStorage.removeItem("token");
-    //       history.push("/login");
-    //     } else {
-    //       console.log(res.data);
-    //     }
-    //     console.log(res.data);
-    //   });
+
+    axios
+      .post(
+        "http://localhost:3001/defaultimage",
+        {Img,e},
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {if(res.data === "done"){
+          console.log(res.data);
+          Swal.fire({
+            icon: "success",
+            text: "Your profile picture has been successfully modified.",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
+        }
+        }
+      });
   };
 
   const handleRemoveItems = (e) => {
@@ -165,13 +187,13 @@ function EditGallery(props) {
               >
                 <Trash2 size={20} />
               </button>
-              <button
+              {/* <button
                 className="default-image"
                 title="default-image"
                 onClick={() => handleDefaultItems(i)}
               >
                 <User size={20} />
-              </button>
+              </button> */}
             </div>
           ))}
           {Img.map((p, i) => (
