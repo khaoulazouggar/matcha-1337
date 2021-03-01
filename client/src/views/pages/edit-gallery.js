@@ -5,16 +5,15 @@ import { Trash2 } from "react-feather";
 import { User } from "react-feather";
 import { Upload } from "react-feather";
 import Swal from "sweetalert2";
-// import noUser from "../../photos/noUser.png";
+import noUser from "../../photos/noUser.png";
 
 function EditGallery(props) {
   const [Img, setImg] = useState([]);
   const [img, setimg] = useState([]);
-  // const [profileImg, setProfileImg] = useState([]);
   const history = useHistory();
 
   const handelEditGallery = () => {
-    console.log("enter");
+    // console.log("enter");
     axios
       .post(
         "http://localhost:3001/editGallery",
@@ -51,53 +50,71 @@ function EditGallery(props) {
               heightAuto: false,
             });
             window.location.href = "/edit";
-            // history.push("/login");
-            // setImg([...img]);
-            // setimg([]);
           }
         }
-        console.log(res.data);
+        // console.log(res.data);
       });
   };
 
   const handleRemoveItem = (e, image, auto) => {
-    console.log(e);
-    if(props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image){
-      axios
-      .post(
-        "http://localhost:3001/removeProfilePic",
-        { Img,e },
-        { headers: { "x-auth-token": localStorage.getItem("token") } }
-      )
-      .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          console.log(res.data);
+    Swal.fire({
+      icon: "warning",
+      text: 'Do you really want to delete this picture ?',
+      confirmButtonText: `Delete`,    
+      showCancelButton: true,
+      confirmButtonColor: "#cd4535",
+      heightAuto: false,
+      showLoaderOnConfirm: true,
+      iconColor: "#cd4535",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // console.log(e);
+        if(props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image){
+          props.data.setProfileImg([noUser])
+          axios
+          .post(
+            "http://localhost:3001/removeProfilePic",
+            { Img,e },
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              // console.log(res.data);
+            }
+          });
         }
-      });
-    }
-    setImg(Img.filter((item, i) => i !== e));
-    axios
-      .post(
-        "http://localhost:3001/removeimage",
-        { auto, image },
-        { headers: { "x-auth-token": localStorage.getItem("token") } }
-      )
-      .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          console.log(res.data);
-        }
-      });
+        setImg(Img.filter((item, i) => i !== e));
+        axios
+          .post(
+            "http://localhost:3001/removeimage",
+            { auto, image },
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              // console.log(res.data);
+            }
+          });
+          Swal.fire({
+            icon: "success",
+            text: "Your picture has been successfully deleted.",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
+      } 
+    })
+    
   };
   const handleDefaultItems = (e) => {
-    console.log("-----------", e, "---------", Img);
+    // console.log("-----------", e, "---------", Img);
     props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
-    console.log(props.data);
+    // console.log(props.data);
 
     axios
       .post(
@@ -110,7 +127,7 @@ function EditGallery(props) {
           localStorage.removeItem("token");
           history.push("/login");
         } else {if(res.data === "done"){
-          console.log(res.data);
+          // console.log(res.data);
           Swal.fire({
             icon: "success",
             text: "Your profile picture has been successfully modified.",
@@ -130,7 +147,7 @@ function EditGallery(props) {
   const handleFile = function () {
     const content = this.result;
     setimg([content, ...img]);
-    console.log("file content", content);
+    // console.log("file content", content);
   };
 
   const onDrop = (e, file) => {

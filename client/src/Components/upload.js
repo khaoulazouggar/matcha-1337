@@ -10,14 +10,11 @@ function Uploader(props) {
   };
 
   const onDrop = (e, file) => {
-    // let data = URL.createObjectURL(picture[0]);
-    // props.data.setImg([data, ...props.data.img]);
-    // e.target.value = "";
-    // console.log(file[0]);
-    // console.log(props.data);
     let fileData = new FileReader();
     fileData.onloadend = handleFile;
     fileData.readAsDataURL(file[0]);
+    e.target.value = "";
+
   };
   return (
     <div className="upload">

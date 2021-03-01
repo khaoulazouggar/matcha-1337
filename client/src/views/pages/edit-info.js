@@ -5,7 +5,6 @@ import isName from "../../tools/isName";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import noUser from "../../photos/noUser.png";
 
 function EditInfo(props) {
   const [Nfirstname, setNfirstname] = useState("");
@@ -105,10 +104,9 @@ function EditInfo(props) {
           setNlastname(res.data[0].lastname);
           setNusername(res.data[0].username);
           setNemail(res.data[0].email);
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data[0].profilePic)
             props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
-          else props.data.setProfileImg([noUser]);
         }
       });// eslint-disable-next-line 
   }, [history]);

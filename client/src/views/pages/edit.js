@@ -15,29 +15,15 @@ import noUser from "../../photos/noUser.png";
 function Edit(props) {
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
-  const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
+  const [gender, setGender] = useState({ yourGender: "", genderLooking: ""});
   const [Right, setRight] = useState(1);
   const [ProfileImg, setProfileImg] = useState([noUser]);
-  // const onDrop = (e, picture) => {
-  //   let data = URL.createObjectURL(picture[0]);
-  //   setImg([data, Img]);
-  //   e.target.value = "";
-  // };
-  // useEffect(() => {
-  //   props.changeColor("#f6f6f6"); // eslint-disable-next-line
-  // }, []);
+
   return (
     <div className="box-formE">
       <div className="editing">
         <div className="left-edit">
           <div style={ProfileImg[0] ? { border: "none" } : {}} className="edit-pic">
-            {/* <input
-              title="Edit your profile's picture"
-              className="file"
-              type="file"
-              accept="image/*"
-              onChange={(e) => onDrop(e, e.target.files)}
-            /> */}
             <img
               className="editImg"
               style={ProfileImg[0] ? {} : { display: "none" }}

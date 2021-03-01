@@ -167,6 +167,8 @@ input.inptE:focus {
   background-size: contain;
 }
 
+
+
 @media only screen and (max-width: 1140px) {
   .box-formE {
     height: 100%;
