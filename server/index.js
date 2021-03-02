@@ -14,18 +14,28 @@ const editPassword = require("./user/editPassword");
 const editInfo = require("./user/editInfo");
 const getData = require("./user/getData");
 const chat = require("./user/chat");
+const ussocket = require("./user/socket");
 const unblockUser = require("./user/unblockUsers");
+const subscribers = require("./user/subscribers");
 const getusersBlocked = require("./user/getUsersBlocked");
 const getusers = require("./user/getusers");
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-
-io.on('connection', socket => {
-  console.log('new.user');
+const http = require("http");
+const socketIo = require("socket.io");
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+      origin: "*",
+    }
 });
+io.on("connection", (socket) => {
+    console.log("new users connected");
+})
+
 app.use(cors());
 app.use(express.json());
 app.use("/register", register);
+app.use("/subscribers", subscribers);
+app.use("/ussocket", ussocket);
 app.use("/unblock", unblockUser);
 app.use("/getusersblocked", getusersBlocked);
 app.use("/login", login);
@@ -42,6 +52,6 @@ app.use("/edit", editInfo);
 app.use("/getData", getData);
 app.use("/isUserAuth", isUserAuth);
 
-http.listen(3001, () => {
+server.listen(3001, () => {
   console.log("hello server");
 });

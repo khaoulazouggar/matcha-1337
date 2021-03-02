@@ -35,6 +35,9 @@ const useStyles = makeStyles({
     marginBottom: '40px',
 
   },
+  CardContent:{
+    textAlign: "center",
+  },
   FavoriteIcon: {
     color: '#5961f9ad',
     cursor: 'pointer',
@@ -86,10 +89,10 @@ function valuetext(value) {
 function Research(){
 
   const classes = useStyles();
-  const [age, setAge] = useState([18, 100]);
-  const [location, setLocation] = useState([0, 200]);
+  const [age, setAge] = useState([0, 0]);
+  const [location, setLocation] = useState([0, 0]);
   const [tags, setTags] = useState([0, 5]);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
   const [sort, setSort] = useState('age');
   const history = useHistory();
   const [users, setUsers] = useState([]);
@@ -278,8 +281,8 @@ function Research(){
                           <Typography gutterBottom variant="h5" component="h2">
                           {filterPerson.firstname}{" "}{filterPerson.lastname}
                             <br></br>
-                            {computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km
                           </Typography>
+                          <p>{computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km</p>
                           <p>{filterPerson.age} years old</p>
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">

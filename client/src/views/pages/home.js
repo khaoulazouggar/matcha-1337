@@ -6,15 +6,21 @@ import {Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserFriends, faEye} from '@fortawesome/free-solid-svg-icons';
 import countapi from 'countapi-js';
+import axios from "axios";
+import socketIOClient from "socket.io-client";
 
-
-
+const endpoint = "http://localhost:3001";
 function Home() {
     const [visit, setVisits] = useState();
+    const [subscribers, setSubscribers] = useState([]);
     useEffect( () => {
          countapi.visits().then((result) => {
             setVisits(result.value);
         });
+        axios.get("http://localhost:3001/subscribers").then((res) => {
+            setSubscribers(res.data);
+          });
+          const socket = socketIOClient(endpoint);
       },[]);
     return (
         <div className="center">
@@ -44,7 +50,7 @@ function Home() {
         <div className="cards">
             <div className="card">
                 <FontAwesomeIcon icon={faUsers} className="icons" />
-                <h3>10005</h3>
+                <h3>{subscribers[0]?.sub}</h3>
                 <h3>Subscribers</h3>
             </div>
             <div className="card">
