@@ -86,10 +86,10 @@ function valuetext(value) {
 function Research(){
 
   const classes = useStyles();
-  const [age, setAge] = useState([18, 100]);
-  const [location, setLocation] = useState([0, 200]);
+  const [age, setAge] = useState([]);
+  const [location, setLocation] = useState([0, 80]);
   const [tags, setTags] = useState([0, 5]);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
   const [sort, setSort] = useState('age');
   const history = useHistory();
   const [users, setUsers] = useState([]);
@@ -151,7 +151,8 @@ function Research(){
         history.push("/login");
       } else {
         setMe(res.data);
-          // console.log(res);
+        setAge([calcAge(res.data[0]?.birthday ) - 5, calcAge(res.data[0]?.birthday ) + 15]);
+        setRating(res.data[0]?.rating + 1);
       }
     });
   }, []);

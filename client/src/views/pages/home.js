@@ -7,9 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserFriends, faEye} from '@fortawesome/free-solid-svg-icons';
 import countapi from 'countapi-js';
 import axios from "axios";
-import socketIOClient from "socket.io-client";
+// import  socketIOClient  from "socket.io-client";
 
-const endpoint = "http://localhost:3001";
+// const URL = "http://localhost:3001";
+// const socket = socketIOClient(URL);
+// socket.on('ikhan', function(ikhan){
+//     console.log('number :'+  ikhan + '         ' + 'socket.id: ' +  socket.id);
+// })
+// socket.on("connect", () => {
+//     console.log(socket.id);
+// });
 function Home() {
     const [visit, setVisits] = useState();
     const [subscribers, setSubscribers] = useState([]);
@@ -20,7 +27,6 @@ function Home() {
         axios.get("http://localhost:3001/subscribers").then((res) => {
             setSubscribers(res.data);
           });
-          const socket = socketIOClient(endpoint);
       },[]);
     return (
         <div className="center">

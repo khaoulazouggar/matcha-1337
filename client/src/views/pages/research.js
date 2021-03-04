@@ -23,6 +23,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useHistory } from "react-router-dom";
+import { set } from 'countapi-js';
 
 const useStyles = makeStyles({
   root: {
@@ -89,7 +90,7 @@ function valuetext(value) {
 function Research(){
 
   const classes = useStyles();
-  const [age, setAge] = useState([0, 0]);
+  const [age, setAge] = useState([]);
   const [location, setLocation] = useState([0, 0]);
   const [tags, setTags] = useState([0, 5]);
   const [rating, setRating] = useState(0);
@@ -154,14 +155,16 @@ function Research(){
         history.push("/login");
       } else {
         setMe(res.data);
-          // console.log(res);
+        setAge([calcAge(res.data[0].birthday ) - 5, calcAge(res.data[0].birthday ) + 15]);
+            // console.log(res);
       }
     });
     
   }, []);
+  
   const items = [...users];
   var people = items.map(usr => {
-      usr.age = calcAge(usr.birthday);
+      usr.age = calcAge(usr.birthday);   
       return usr;
   });
   function removeInSearch(id)
