@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import "../../css/chat.css";
-import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
-import SendIcon from '@material-ui/icons/Send';
 import Profile from "../../photos/test.jpeg";
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
+import {useHistory, Link} from 'react-router-dom';
+import ScrollableFeed from 'react-scrollable-feed'
+import Moment from 'react-moment';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 
+import  socketIOClient  from "socket.io-client";
 
 const useStyles = makeStyles({
 chat: {
@@ -25,18 +30,19 @@ chat: {
 },
 form: {
     flexBasis: '125%',
+    display: 'flex',
 },
 icon: {
     color: '#5961f9ad',
 },
 send:{
-    background: '#B4B6CB',
     display: 'flex',
     flexBasis: '10%',
     borderRadius: '33px',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: '15px',
+    marginLeft : '10px',
     height: '52px',
     cursor: 'pointer',
 },
@@ -48,18 +54,38 @@ border:{
 });
 
 function Chat (){
+    const history = useHistory();
     const classes = useStyles();
+    const[to, setTo] = useState();
     const [msg, setMsg] = useState();
+    const [me, setMe] = useState();
     const [chat, setChat] = useState();
+    const [matched, setMatch] = useState();
+    const [tousername, setTousername] = useState();
+    const [classStatus, setclassStatus] = useState(0)
     const handleChange = (e) => setMsg(
 		e.target.value
     )
     function insetMsg(from, to) {
-        axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg})
+        document.getElementById('outlined-basic').value = '';
+        if (msg?.trim() === '')
+        {
+            
+        }
+        else {
+        axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date()})
         .then((response) => {
             if (response.data.sendMsg === 'done')
             {
                 console.log('msg is done');
+                let newValue = {content: msg,
+                    from: from,
+                    msgtime: new Date(),
+                    to: to,
+                    vu: 0,
+                }
+                let push = chat.concat(newValue);
+                setChat(push);
             }
             else
             {
@@ -67,68 +93,132 @@ function Chat (){
             }
         });
     }
+    }
+    function viewfreinds (){
+        setclassStatus(0);
+    }
+    function getmsg (firstuser, lastuser, username)
+    {
+        axios.post('http://localhost:3001/getmsg', {firstuser: firstuser, lastuser:lastuser})
+        .then((response) => {
+            if(response.data)
+            {
+                setChat(response.data);
+                setTo(lastuser);
+                setTousername(username);
+                setclassStatus(1)
+            }
+            else if(response.data.status === false)
+            {
+                setTo(lastuser);
+                setTousername(username);
+                
+            }
+            
+        });
+        // const URL = "http://localhost:3001";
+        // const socket = socketIOClient(URL);
+        // socket.emit('user_online', tousername);
+        // socket.on("connect", () => {
+        //     console.log(socket.id + tousername);
+        // });
+    }
     useEffect(() => {
-            axios.get("http://localhost:3001/getmsg", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                localStorage.removeItem("token");
-            } else {
-                setChat(res.data);
+    
+        axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+        } else {
+                setMe(res.data[0]?.id)
+      }
+    });
+    
+    axios.get("http://localhost:3001/getmatcheduser", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+        } else {
+            setMatch(res.data);
       }
     });
     }, []);
-    console.log(chat);
+    const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">
             <div className="chat">
-                <div className="messages">
+                <div className={`messages ${(classStatus === 1) ? 'inactive' : 'active'}`}>
                     <div className="title">
-                        <h3>Messages</h3>
+                        <h3><Link to='/chat'>Messages</Link></h3>
                         <div className={classes.chat}>
-                            <Badge badgeContent={20} color="error">
-                            </Badge>
                         </div>
                     </div>
                     <div>
                         <h4>All Conversation</h4>
                     </div>
                     <div className="personal">
-                    <Box borderBottom={1} className={classes.border} />
-                        <div className="users_chat">
-                            <div className="profile_img">
-                                <img
-                                alt=""
-                                src={Profile}
-                                />
-                                <div>
-                                    <h4>Rihana</h4>
-                                    <p>Salam cava dad ...</p>
+                    {
+                        matched?.map((listmatched, index) => (
+                            <div key={index}>
+                                <Box borderBottom={1} className={classes.border} />
+                                <div className="users_chat" id={listmatched.id} onClick={() => getmsg(me, listmatched.id, listmatched.username)}>
+                                    <div className="profile_img">
+                                        <img
+                                        alt=""
+                                        src={Profile}
+                                        />
+                                        <div>
+                                             <h4>{listmatched.firstname} {listmatched.lastname}</h4>
+                                             <p>@{listmatched.username}</p>
+                                            {listmatched.id === to  && lasTtime?.content.length > 0 ? 
+                                            <div className="lastseen">
+                                                <h3 className={lasTtime?.vu === 1 ? 'lastmg' : ''}>{me === lasTtime?.from ? 'You : ' : ''}{lasTtime?.content.length < 7 ? lasTtime?.content : lasTtime?.content.substr(0,7) + '...'}</h3>
+                                                    <Moment className='lastmg' fromNow>{lasTtime?.msgtime}</Moment>
+                                            </div>
+                                            :
+                                            ''
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                            </div>
-                        </div>
+                        ))}
+                            <Box borderBottom={1} className={classes.border} />
                     </div>
                     </div>
-                <div className="conversation">
-                    <h3>Conversation</h3>
+                <div className={`conversation ${(classStatus === 1) ? 'active' : 'inactive'}`}>
+                    {tousername != null ?
+                    <div className="chatDiv">
+                        <ArrowBackIcon className="backbutton" onClick={() => viewfreinds()}></ArrowBackIcon>
+                        <img
+                        className="chatprofileImg"
+                        alt=''
+                        src={Profile}
+                        />
+                    <h3><Link className='username' to={`/profile/${tousername}`}>@{tousername}</Link></h3>
+                    </div> : ''
+                    }
                     <div className="conver">
-                    {
-                            chat?.map(chatmsg => (
-                                <>
+                        <ScrollableFeed className="te">
+                            {
+                            chat?.map((chatmsg, index) => (
+                                <div className={chatmsg?.from === me ? 'me' : '' } key={index}>
                                 {
-                                    (chatmsg.from === 101)  ?  <div className="me"><p>{chatmsg.content}</p></div> :
+                                    (chatmsg?.from === me)  ?  <div ><p>{chatmsg?.content}</p></div> :
                                     <div className="you">
                                         <img
                                             alt=""
                                             src={Profile}
                                         />
-                                        <div><p>{chatmsg.content}</p></div>
+                                        <div><p>{chatmsg?.content}</p></div>
                                     </div>
                                 }
-                            </>
-                        ))}
+                                </div>
+                            ))}
+                        </ScrollableFeed>
                     </div>
-                    <div>
+                    {to != null ?
+                        <div>
                             <form className={classes.form} noValidate autoComplete="off">
                                 <TextField
                                 className={classes.area}
@@ -143,15 +233,18 @@ function Chat (){
                                     className: classes.input
                                 }}
                                 />
-                            </form>
-                            <div className={classes.send}
-                                onClick={() => insetMsg(101, 180)}
-                            >
-                                <SendIcon 
+                                 <div className={classes.send}
+                                onClick={() => insetMsg(me, to)}
+                                    >
+                                <FontAwesomeIcon 
+                                icon={faPaperPlane}
+                                size="2x"
                                 className={classes.icon}
                                 />
-                            </div>
-                    </div>
+                                </div>
+                            </form>
+                    </div> : ''
+                    }
                 </div>
             </div>
         </div>

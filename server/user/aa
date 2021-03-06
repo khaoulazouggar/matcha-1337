@@ -1,0 +1,21 @@
+ var count = 0;
+      if (result.length > 0) {
+        while(count < result.length)
+        {
+          const sqllastmsg = "SELECT * FROM `chat` WHERE (`from` = ? AND `to` = ? OR `from` = ? AND `to` = ?) ORDER BY chat_id DESC LIMIT 1";
+          // res.send(result);
+          db.query(sqllastmsg,[id, result[count]?.id, result[count]?.id, id],((err, rows) => {
+            if (rows.length > 0)
+            {
+              res.send(rows);
+            }
+            if (err)
+            {
+              res.send({err : err})
+            }
+          }));
+          // console.log(result[count].id);
+          count++;
+        }
+
+    }

@@ -19,6 +19,7 @@ const subscribers = require("./user/subscribers");
 const getusersBlocked = require("./user/getUsersBlocked");
 const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
+const getmatchedusr = require("./user/getmacheduser");
 const getmsg = require("./user/getmsg");
 const http = require("http");
 const socketIo = require("socket.io");
@@ -29,19 +30,18 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
-var count = 0;
 io.on("connection", function(socket)  {
-  count++;
-    io.emit('ikhan', count);
-    socket.on('disconnect', function(ikhan){
-      count--;
-      io.emit('ikhan', count);
-    })
+  var users = []
+    io.emit('user_onlime', function(username)  {
+      users[username] = socket.id;
+      io.emit('user_onlime', username);
+    });
 })
 
 app.use(cors());
 app.use(express.json());
 app.use("/register", register);
+app.use("/getmatcheduser", getmatchedusr);
 app.use("/getmsg", getmsg);
 app.use("/insertmsg", insertmsg);
 app.use("/subscribers", subscribers);

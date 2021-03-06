@@ -23,7 +23,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useHistory } from "react-router-dom";
-import { set } from 'countapi-js';
 
 const useStyles = makeStyles({
   root: {
@@ -164,7 +163,7 @@ function Research(){
   
   const items = [...users];
   var people = items.map(usr => {
-      usr.age = calcAge(usr.birthday);   
+      usr.age = calcAge(usr.birthday);
       return usr;
   });
   function removeInSearch(id)
