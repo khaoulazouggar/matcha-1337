@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
           "SELECT COUNT(*) AS count FROM `users` WHERE `username` = ? OR `email` = ? LIMIT 1;",
           [username, email],
           (error, rslt) => {
-            console.log(rslt[0].count);
+            // console.log(rslt[0].count);
 
             if (err) {
               console.log(err);
@@ -43,17 +43,22 @@ router.post("/", (req, res) => {
                 "INSERT INTO users(firstname,lastname,username,email,password,token) VALUES (?,?,?,?,?,?);",
                 [firstname, lastname, username, email, hash, token],
                 (err, result) => {
-                  if (
-                    send_Email(
-                      email,
-                      "Confirm account",
-                      `<p>To activate your account please click <a href="http://localhost:3000/confirm/${token}">Here</a></p>`
-                    )
-                  ) {
-                    res.send({ message: "done" });
-                    console.log("Email sent");
-                  } else {
-                    res.send({ message: "Email not send" });
+                  if (err) {
+                    console.log(err);
+                  }
+                  else {
+                    if (
+                      send_Email(
+                        email,
+                        "Confirm account",
+                        `<p>To activate your account please click <a href="http://localhost:3000/confirm/${token}">Here</a></p>`
+                      )
+                    ) {
+                      res.send({ message: "done" });
+                      // console.log("Email sent");
+                    } else {
+                      res.send({ message: "Email not send" });
+                    }
                   }
                 }
               );

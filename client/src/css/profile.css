@@ -39,6 +39,10 @@
   /* justify-content: center; */
   padding: 35px;
   box-sizing: border-box;
+  overflow: auto;
+}
+.p3::-webkit-scrollbar {
+  display: none;
 }
 .info {
   width: 85%;
@@ -81,6 +85,22 @@
   border-radius: 20px;
   padding: 35px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  overflow: auto;
+}
+.bioghraphie::-webkit-scrollbar {
+  display: none;
+}
+.icons{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.icon:hover{
+cursor: pointer;
 }
 
 .stickers {
@@ -90,6 +110,10 @@
   border-radius: 20px;
   padding: 35px;
   box-sizing: border-box;
+  overflow: auto;
+}
+.stickers::-webkit-scrollbar {
+  display: none;
 }
 .profileH3 {
   border-bottom: 1px solid;
@@ -113,6 +137,7 @@
 @media only screen and (max-width: 1200px) {
   .profile {
     flex-direction: column;
+    height: unset;
   }
   .p1,
   .p2,
@@ -121,6 +146,10 @@
     width: 100%;
   }
   .pic {
+    width: 200px;
+    height: 200px;
+  }
+  .Inpic {
     width: 200px;
     height: 200px;
   }

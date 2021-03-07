@@ -96,7 +96,7 @@ function Changepass(props) {
         </button>
         <br /><br /><br />
         <p>
-          Just remembered? <a href="./login">Log in</a>
+          Just remembered? <a href="/login">Log in</a>
         </p>
       </div>
     </div>

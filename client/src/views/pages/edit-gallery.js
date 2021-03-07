@@ -6,6 +6,7 @@ import { User } from "react-feather";
 import { Upload } from "react-feather";
 import Swal from "sweetalert2";
 import noUser from "../../photos/noUser.png";
+import jimp from "jimp";
 
 function EditGallery(props) {
   const [Img, setImg] = useState([]);
@@ -146,8 +147,15 @@ function EditGallery(props) {
 
   const handleFile = function () {
     const content = this.result;
-    setimg([content, ...img]);
-    // console.log("file content", content);
+    // setimg([content, ...img]);
+    const base64Data = content ? content.replace(/^data:image\/\w+;base64,/, "") : "";
+    const buffer = Buffer.from(base64Data, "base64");
+    jimp.read(buffer, (err, rslt) => {
+      if (!err) {
+        // console.log("rslt");
+        setimg([content, ...img]);
+      }
+    });
   };
 
   const onDrop = (e, file) => {

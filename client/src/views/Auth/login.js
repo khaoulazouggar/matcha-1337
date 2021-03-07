@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import fb from "../../photos/fb.png";
 import google from "../../photos/google.png";
 import Axios from "axios";
@@ -10,12 +10,15 @@ function Login() {
   const [errusername, setErrusername] = useState("");
   const [password, setpassword] = useState("");
   const [errpassword, setErrpassword] = useState("");
-
   const history = useHistory();
-  const routeChange = () => {
-    let path = "/steps";
-    history.push(path);
-  };
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+    if (token) history.push("/");
+    // eslint-disable-next-line
+  }, [token]);
+
   const handleLogin = () => {
     setErrusername("");
     if (!username) {
@@ -30,14 +33,33 @@ function Login() {
         // .then((response) =>console.log(response))
         .then((response) => {
           // console.log(response.data)
-          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist" ||  response.data.message === "error") {
-            Swal.fire({ icon: "error", text: "Wrong Username Or Password", showConfirmButton: false ,heightAuto: false});
+          if (
+            response.data.message === "Wrong combination!" ||
+            response.data.message === "User Dosen't exist" ||
+            response.data.message === "error"
+          ) {
+            Swal.fire({
+              icon: "error",
+              text: "Wrong Username Or Password",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
           } else if (response.data.message === "Please check your email") {
-            Swal.fire({ icon: "error", text: "Please check your email", showConfirmButton: false ,heightAuto: false});
+            Swal.fire({
+              icon: "error",
+              text: "Please check your email",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
           } else {
-            localStorage.setItem('token', response.data.token);
-            Swal.fire({ icon: "success", text: "You are now logged in ", showConfirmButton: false , heightAuto: false});
-            routeChange();
+            localStorage.setItem("token", response.data.token);
+            Swal.fire({
+              icon: "success",
+              text: "You are now logged in ",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+            history.push("/steps");
           }
         })
         .catch((err) => console.log(err));
@@ -50,8 +72,16 @@ function Login() {
           <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
-            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
-            love.<br/><br/>Get to know more<Link className="about" to= "/about"> &nbsp;About&nbsp; </Link>us.
+            We are here to build emotion, connect people and create happy stories. Online dating
+            sites are the way to go for people seeking love.
+            <br />
+            <br />
+            Get to know more
+            <Link className="about" to="/about">
+              {" "}
+              &nbsp;About&nbsp;{" "}
+            </Link>
+            us.
           </p>
 
           <span>
@@ -70,7 +100,11 @@ function Login() {
       <div className="right">
         <h5>Login</h5>
         <p>
-          Don't have an account? <Link className="decoration" to="./register">Create Your Account</Link> it takes less than a minute
+          Don't have an account?{" "}
+          <Link className="decoration" to="/register">
+            Create Your Account
+          </Link>{" "}
+          it takes less than a minute
         </p>
         <div className="inputs">
           <input
@@ -99,7 +133,9 @@ function Login() {
         <br />
 
         <div className="forget-password">
-          <Link className="decoration" to="./fgpass">Forget password?</Link>
+          <Link className="decoration" to="/fgpass">
+            Forget password?
+          </Link>
         </div>
         <br />
         <button className="btn" onClick={() => handleLogin()}>

@@ -9,7 +9,7 @@ router.post("/", isUserAuth, (req, res) => {
   const id = req.userId;
   const image = req.body.Img;
   const e = req.body.e;
-  console.log(image[e].image);
+  // console.log(image[e].image);
 const profilePic = image[e].image
   const sqlInsert = "UPDATE users SET profilePic = ? WHERE id = ?";
   db.query(sqlInsert, [profilePic , id], (err, result) => {

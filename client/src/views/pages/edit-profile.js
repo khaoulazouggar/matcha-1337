@@ -37,7 +37,10 @@ function EditProfile(props) {
             Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
           }else if (res.data === "updated") {
             Swal.fire({ icon: "success", text: "Your profile has been successfully modified.", showConfirmButton: false ,heightAuto: false});}
-          // console.log(res.data);
+          else if(res.data === "data too long"){
+            Swal.fire({ icon: "error", text: "data too long", showConfirmButton: false ,heightAuto: false});
+          }
+            // console.log(res.data);
         }
       });
   };
@@ -155,7 +158,7 @@ function EditProfile(props) {
                   type="date"
                   InputProps={{ inputProps: { min: "1900-05-01", max: "2020-02-14" } }}
                   // value={props.data.gender.birthday}
-                  value={props.data.gender.birthday ? props.data.gender.birthday : ""}
+                  value={props.data.gender.birthday ? props.data.gender.birthday : ''}
                   onChange={(e) => {
                     // console.log(e.target.value);
                     let data = props.data.gender;
@@ -179,7 +182,7 @@ function EditProfile(props) {
               className="edit-bio"
               type="text"
               placeholder="Change Your Bio"
-              value={props.data2.notes}
+              value={props.data2.notes ? props.data2.notes : ""}
               onChange={(e) => props.data2.setNotes(e.target.value)}
             />
             <div className="edit-tags">

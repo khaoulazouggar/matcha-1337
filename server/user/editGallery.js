@@ -4,15 +4,29 @@ const isUserAuth = require("./isUserAuth");
 const db = require("../db");
 const fs = require("fs");
 const md5 = require("md5");
+const jimp = require("jimp");
 
 saveImage = (image, folder, i) => {
   return new Promise((resolve, reject) => {
     const imgName = md5(new Date().getTime() + i) + ".jpg";
     const imgDest = `${folder}/${imgName}`;
-    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-    fs.writeFile(imgDest, base64Data, "base64", function (err) {
-      if (err) reject("fgfgfgfgfgf");
-      else resolve(imgName);
+    const base64Data = image ? image.replace(/^data:image\/\w+;base64,/, "") : "";
+    const buffer = Buffer.from(base64Data, "base64");
+    jimp.read(buffer, (err, rslt) => {
+      if (err) {
+        console.log({ err: err });
+      } else {
+        console.log("rslt");
+        fs.writeFile(imgDest, base64Data, "base64", function (err) {
+          if (err) {
+            console.log(err);
+
+            reject("error_1");
+          } else {
+            resolve(imgName);
+          }
+        });
+      }
     });
   });
 };

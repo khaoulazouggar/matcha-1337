@@ -22,6 +22,11 @@ router.post("/", isUserAuth, (req, res) => {
       ) {
         res.send("nothing changed");
         console.log("nothing changed");
+      } else if(JSON.stringify(tags).length + result[0].tags.length > 300 || result[0].bio.length + notes.length > 100){
+        // console.log(JSON.stringify(tags).length + result[0].tags.length);
+        // console.log(result[0].bio.length + notes.length);
+        // console.log("data too long")
+        res.send("data too long");
       } else {
         db.query(
           "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ? WHERE id = ?",

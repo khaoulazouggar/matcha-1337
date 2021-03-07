@@ -1,7 +1,13 @@
 {
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "google-maps-react": "^2.0.6",
     "kill-port": "^1.6.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "react-google-maps": "^9.4.5",
+    "react-hook-google-maps": "^0.0.3"
+  },
+  "devDependencies": {
+    "@ubilabs/google-maps-react-hooks": "^1.4.7"
   }
 }

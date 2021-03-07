@@ -10,11 +10,11 @@ import upload from "../photos/upload.gif";
 import Tag from "./tag";
 import Uploader from "./upload";
 import { useHistory } from "react-router-dom";
-import Alert from "./alert";
 import { Trash2 } from "react-feather";
 import { User } from "react-feather";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { split } from "lodash";
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -26,11 +26,17 @@ let handleImg = (nbrStep) => {
 };
 function Steps(props) {
   const [notes, setNotes] = useState("");
-  const [gender, setGender] = useState({ yourGender: "", genderLooking: "", birthday: "" });
+  const [city, setCity] = useState("");
+  const [gender, setGender] = useState({
+    yourGender: "",
+    genderLooking: "",
+    birthday: "",
+  });
+  const [position, setPosition] = useState({ latitude: "", longitude: "" });
   const [img, setImg] = useState([]);
   const [tags, setTags] = useState([]);
   const [profileImg, setProfileImg] = useState([]);
-
+  const history = useHistory();
 
   const handleRemoveItem = (e) => {
     // console.log(e);
@@ -38,25 +44,93 @@ function Steps(props) {
   };
 
   const handleDefaultItem = (e, image, auto) => {
-    setProfileImg(e)
-    console.log(e)
-    console.log(img[e])
+    setProfileImg(e);
+    console.log(e);
+    console.log(img[e]);
   };
 
-  const history = useHistory();
-  const routeChange = () => {
-    let path = "/";
-    history.push(path);
-  };
   const [inStep1, setInStep] = useState(0);
+
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (successHandler, errorHandler) {
-      if (successHandler) {
-        console.log("Latitude is :", successHandler.coords.latitude);
-        console.log("Longitude is :", successHandler.coords.longitude);
-        console.log(errorHandler);
-      }
-    });
+    let unmount = false;
+
+    function success(pos) {
+      var crd = pos.coords;
+      // console.log("Latitude is :", crd.latitude);
+      // console.log("Longitude is :", crd.longitude);
+      position.latitude = crd.latitude;
+      position.longitude = crd.longitude;
+      setPosition({ ...position });
+      axios.get(`https://ipinfo.io/json?token=ba47e2018ae9e4`).then((res) => {
+        if (!unmount) {
+          setCity(res.data.city);
+        }
+        // console.log(res.data.city);
+      });
+    }
+
+    function errors(err) {
+      // console.warn(`ERROR(${err.code}): ${err.message}`);
+      axios.get(`https://ipinfo.io/json?token=ba47e2018ae9e4`).then((res) => {
+        if (!unmount) {
+          const position = split(res.data.loc, ",");
+          position.latitude = position[0];
+          position.longitude = position[1];
+          setPosition({ ...position });
+          setCity(res.data.city);
+          // console.log(res.data.city);
+        }
+      });
+    }
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (!unmount) {
+          if (result.state === "granted") {
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          } else if (result.state === "denied") {
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          }
+          if (result.state === "prompt") {
+            navigator.geolocation.getCurrentPosition(success, errors, options);
+          }
+        }
+      });
+    return () => {
+      unmount = true;
+    }; // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    let unmount = false;
+    axios
+      .get("http://localhost:3001/getposition", {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (!unmount) {
+          if (
+            res.data === "U failed to authenticate" ||
+            res.data === "we need a token"
+          ) {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            if (res.data[0].latitude) {
+              history.push("/");
+              // console.log(res.data[0].latitude);
+            }
+          }
+        }
+      });
+    return () => {
+      unmount = true;
+    }; // eslint-disable-next-line
   }, []);
 
   const handelSteps = () => {
@@ -64,39 +138,87 @@ function Steps(props) {
       .post(
         "http://localhost:3001/steps",
         {
+          ...position,
           ...gender,
           notes,
           img,
           tags,
-          profileImg
+          profileImg,
+          city,
         },
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       )
       .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        if (
+          res.data === "U failed to authenticate" ||
+          res.data === "we need a token"
+        ) {
           localStorage.removeItem("token");
           history.push("/login");
-        } else {
+        } else if (res.data === "data too long") {
+          Swal.fire({
+            icon: "error",
+            text: "data in bio or tags is too long",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
           console.log(res.data);
+        } else if (res.data === "done") {
+          Swal.fire({
+            icon: "success",
+            text: "Your profile have been successfully completed",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
+          history.push("/");
+        } else if (res.data === "Please enter a valid birthday") {
+          Swal.fire({
+            icon: "error",
+            text: "Please enter a valid birthday",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
+        } else if (res.data === "You have to complete all the steps first!") {
+          Swal.fire({
+            icon: "error",
+            text: "You have to complete all the steps first!",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
         }
       });
   };
   return (
     <div className="steps">
       <div className="progressbar">
-        <div onClick={() => setInStep(0)} style={{ background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(0)}
+          style={{ background: "#646bfaad", color: "white" }}
+        >
           1
         </div>
-        <div style={inStep1 === 0 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div
+          style={
+            inStep1 === 0
+              ? { background: "white" }
+              : { background: "#646bfaad" }
+          }
+        ></div>
         <div
           onClick={() => setInStep(1)}
-          style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+          style={
+            inStep1 === 0
+              ? { background: "" }
+              : { background: "#646bfaad", color: "white" }
+          }
         >
           2
         </div>
         <div
           style={
-            inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }
+            inStep1 === 0 || inStep1 === 1
+              ? { background: "white" }
+              : { background: "#646bfaad" }
           }
         ></div>
         <div
@@ -134,6 +256,7 @@ function Steps(props) {
               <InStep data={{ gender, setGender }} />
             ) : inStep1 === 1 ? (
               <textarea
+                maxLength="100"
                 className="bio"
                 type="text"
                 placeholder="Add Your Bio"
@@ -150,7 +273,11 @@ function Steps(props) {
             {inStep1 === 3 && img.length ? (
               <div className="upload-image">
                 {img.map((p, i) => (
-                  <div style={{ width: "155px", height: "155px" }} className="test" key={i}>
+                  <div
+                    style={{ width: "155px", height: "155px" }}
+                    className="test"
+                    key={i}
+                  >
                     <img className="file-upload-image" src={p} alt={p} />
                     <button
                       className="remove-image"
@@ -185,7 +312,12 @@ function Steps(props) {
               }}
             >
               <ArrowLeft
-                style={{ marginRight: 9, display: "flex", float: "left", marginTop: 2 }}
+                style={{
+                  marginRight: 9,
+                  display: "flex",
+                  float: "left",
+                  marginTop: 2,
+                }}
                 size={20}
               />
               Previous
@@ -197,32 +329,15 @@ function Steps(props) {
             className="next"
             onClick={() => {
               if (inStep1 === 3) {
-                if (
-                  img.length <= 5 &&
-                  img.length !== 0 &&
-                  gender.yourGender &&
-                  gender.genderLooking &&
-                  gender.birthday &&
-                  notes &&
-                  tags.length
-                ) {
-                  routeChange();
-                  handelSteps();
-                } else if (gender.birthday >= "2010-12-31") {
-                  Swal.fire({
-                    icon: "error",
-                    text: "Please enter a valid birthday",
-                    showConfirmButton: false,
-                    heightAuto: false,
-                  });
-                } else {
-                  Alert();
-                }
+                handelSteps();
               } else setInStep(inStep1 + 1);
             }}
           >
             {inStep1 === 3 ? "Finish" : "Next"}{" "}
-            <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
+            <ArrowRight
+              style={{ display: "flex", float: "right", marginTop: 2 }}
+              size={20}
+            />
           </button>
         </div>
       </div>
