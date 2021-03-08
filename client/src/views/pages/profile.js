@@ -10,7 +10,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import BlockIcon from "@material-ui/icons/Block";
 import FlagRoundedIcon from "@material-ui/icons/FlagRounded";
 import { useParams } from "react-router-dom";
-import { MapWithAMarker } from "../../Components/googleMap";
+import MapWithAMarker  from "../../Components/googleMap";
 
 function Profile(props) {
   const [username, setusername] = useState("");
@@ -25,8 +25,9 @@ function Profile(props) {
   const [report, setReport] = useState("#5961f9ad");
   const [block, setBlock] = useState("#5961f9ad");
   const [userlogged, setUserlogged] = useState(0);
-  const [center, setCenter] = useState({ lat: "", lng: "" });
-
+  const [center, setCenter] = useState({ lat: 0, lng: 0 });
+const [profile, setprofile] = useState(0)
+const [done, setdone] = useState(0)
   const [gender, setGender] = useState({
     yourGender: "",
     genderLooking: "",
@@ -60,6 +61,9 @@ function Profile(props) {
               if (!res.data[0].latitude) {
                 history.push("/steps");
                 // console.log(res);
+              }else{
+                setdone(1)
+                setprofile(1)
               }
             }
           }
@@ -71,8 +75,8 @@ function Profile(props) {
   }, []);
 
   useEffect(() => {
-    return new Promise((resolve, reject) => {
-      let unmount = false;
+    let unmount = false;
+    if(done){
       if (profilename) {
         axios
           .get(`http://localhost:3001/getIdByUser/${profilename}`, {
@@ -190,12 +194,13 @@ function Profile(props) {
             }
           });
       }
+    }
 
       return () => {
         unmount = true;
       };
-    }); // eslint-disable-next-line
-  }, [history, profilename]);
+     // eslint-disable-next-line
+  }, [history, profilename, done]);
   // console.log(tags[0].value);
   const handelLike = () => {
     if (like === "#5961f9ad" && report === "#e8bb11" && block === "#ec1212cc") {
@@ -357,11 +362,13 @@ function Profile(props) {
         </div>
         <div className="stickers">
           <h3 className="profileH3">Localisation : </h3>
+          {profile=== 1 ? 
           <MapWithAMarker
-            containerElement={<div style={{ height: `400px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-            center={center}
-          />
+           data={{ center, setCenter }}
+            // containerElement={<div style={{ height: `400px` }} />}
+            // mapElement={<div style={{ height: `100%` }} />}
+            // center={center}
+          /> : ""}
         </div>
       </div>
       <div className="p3">

@@ -32,19 +32,35 @@ function Steps(props) {
     genderLooking: "",
     birthday: "",
   });
-  const [position, setPosition] = useState({ latitude: "", longitude: "" });
+  const [position, setPosition] = useState({ latitude: null, longitude: null });
   const [img, setImg] = useState([]);
   const [tags, setTags] = useState([]);
   const [profileImg, setProfileImg] = useState([]);
   const history = useHistory();
+  let [unmount, changeUnmount] = useState(false);
 
   const handleRemoveItem = (e) => {
     // console.log(e);
-    setImg(img.filter((item, i) => i !== e));
+    if(profileImg != e){
+      setImg(img.filter((item, i) => i !== e));
+    }else{
+      Swal.fire({
+        icon: "error",
+        text: "this picture was setted as a default profile image you have to change it then you can remove it",
+        showConfirmButton: false,
+        heightAuto: false,
+      });
+    }    
   };
 
   const handleDefaultItem = (e, image, auto) => {
     setProfileImg(e);
+    Swal.fire({
+      icon: "success",
+      text: "You set this picture as a default profile",
+      showConfirmButton: false,
+      heightAuto: false,
+    });
     console.log(e);
     console.log(img[e]);
   };
@@ -57,8 +73,6 @@ function Steps(props) {
     maximumAge: 0,
   };
   useEffect(() => {
-    let unmount = false;
-
     function success(pos) {
       var crd = pos.coords;
       // console.log("Latitude is :", crd.latitude);
@@ -102,12 +116,11 @@ function Steps(props) {
         }
       });
     return () => {
-      unmount = true;
+      changeUnmount(true);
     }; // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    let unmount = false;
     axios
       .get("http://localhost:3001/getposition", {
         headers: { "x-auth-token": localStorage.getItem("token") },
@@ -129,7 +142,7 @@ function Steps(props) {
         }
       });
     return () => {
-      unmount = true;
+      changeUnmount(true);
     }; // eslint-disable-next-line
   }, []);
 

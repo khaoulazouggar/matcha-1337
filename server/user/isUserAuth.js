@@ -9,7 +9,7 @@ const isUserAuth = (req, res, next) => {
       if (err) {
         res.send("U failed to authenticate");
       } else {
-        req.userId = decoded.id;
+        req.userId = decoded.id;        
         next();
       }
     });

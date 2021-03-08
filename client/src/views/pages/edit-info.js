@@ -16,6 +16,7 @@ function EditInfo(props) {
   const [Nemail, setNemail] = useState("");
   const [errNemail, seterrNemail] = useState("");
   const history = useHistory();
+  const [done, setdone] = useState(0);
 
   useEffect(() => {
     if (Nfirstname && !isName(Nfirstname) && Nfirstname.length < 24)
@@ -67,7 +68,10 @@ function EditInfo(props) {
           { headers: { "x-auth-token": localStorage.getItem("token") } }
         )
         .then((res) => {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          if (
+            res.data === "U failed to authenticate" ||
+            res.data === "we need a token"
+          ) {
             localStorage.removeItem("token");
             history.push("/login");
           } else {
@@ -108,29 +112,65 @@ function EditInfo(props) {
   useEffect(() => {
     let unmount = false;
     axios
-      .get("http://localhost:3001/getData", {
+      .get("http://localhost:3001/getposition", {
         headers: { "x-auth-token": localStorage.getItem("token") },
       })
       .then((res) => {
         if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          if (
+            res.data === "U failed to authenticate" ||
+            res.data === "we need a token"
+          ) {
             localStorage.removeItem("token");
             history.push("/login");
           } else {
-            setNfirstname(res.data[0].firstname);
-            setNlastname(res.data[0].lastname);
-            setNusername(res.data[0].username);
-            setNemail(res.data[0].email);
-            // console.log(res.data);
-            if (res.data[0].profilePic)
-              props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+            if (!res.data[0].latitude) {
+              history.push("/steps");
+              // console.log(res);
+            } else {
+              setdone(1);
+            }
           }
         }
       });
     return () => {
       unmount = true;
     }; // eslint-disable-next-line
-  }, [history]);
+  }, []);
+
+  useEffect(() => {
+    let unmount = false;
+    if (done) {
+      axios
+        .get("http://localhost:3001/getData", {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        })
+        .then((res) => {
+          if (!unmount) {
+            if (
+              res.data === "U failed to authenticate" ||
+              res.data === "we need a token"
+            ) {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setNfirstname(res.data[0].firstname);
+              setNlastname(res.data[0].lastname);
+              setNusername(res.data[0].username);
+              setNemail(res.data[0].email);
+              // console.log(res.data);
+              if (res.data[0].profilePic)
+                props.data.setProfileImg(
+                  "http://localhost:3001/images/" + res.data[0].profilePic
+                );
+            }
+          }
+        });
+    }
+    return () => {
+      unmount = true;
+    }; // eslint-disable-next-line
+  }, [history, done]);
 
   return (
     <div className="rightE">

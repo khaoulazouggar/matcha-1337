@@ -11,12 +11,12 @@ router.get("/:profilename", isUserAuth, (req, res) => {
     if (err) {
       res.send({ err: err });
     }
-    if (result.length > 0) {
-      if (result[0].id === id) res.send("user logged");
-      else
-      res.send("not the user logged")
-    }else
-    res.send("no user found")
+    if (result) {
+      if (result.length > 0) {
+        if (result[0].id === id) res.send("user logged");
+        else res.send("not the user logged");
+      }
+    } else res.send("no user found");
   });
 });
 

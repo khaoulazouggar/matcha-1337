@@ -63,6 +63,9 @@ router.post("/", isUserAuth, (req, res) => {
     longitude,
     city,
   } = req.body;
+  // console.log(req.body);
+  // console.log(req.body.img);
+
   if (
     img.length <= 5 &&
     img.length !== 0 &&
@@ -88,39 +91,37 @@ router.post("/", isUserAuth, (req, res) => {
               if (err) {
                 res.send({ err: err });
               }
-              if (resp.length > 0) {
+              // if (resp.length > 0) {
+              if (
+                JSON.stringify(tags).length + resp[0].tags.length > 300 ||
+                resp[0].bio.length + notes.length > 100
+              ) {
+                console.log(JSON.stringify(tags).length + resp[0].tags.length);
+                console.log(resp[0].bio.length + notes.length);
+                res.send("data too long");
+              } else {
                 if (
-                  JSON.stringify(tags).length + resp[0].tags.length > 300 ||
-                  resp[0].bio.length + notes.length > 100
+                  db.query(
+                    "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?",
+                    [
+                      yourGender,
+                      genderLooking,
+                      birthday,
+                      notes,
+                      JSON.stringify(tags),
+                      resl[profileImg],
+                      latitude,
+                      longitude,
+                      city,
+                      id,
+                    ]
+                  )
                 ) {
-                  console.log(
-                    JSON.stringify(tags).length + resp[0].tags.length
-                  );
-                  console.log(resp[0].bio.length + notes.length);
-                  res.send("data too long");
-                } else {
-                  if (
-                    db.query(
-                      "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?",
-                      [
-                        yourGender,
-                        genderLooking,
-                        birthday,
-                        notes,
-                        JSON.stringify(tags),
-                        resl[profileImg],
-                        latitude,
-                        longitude,
-                        city,
-                        id,
-                      ]
-                    )
-                  ) {
-                    console.log("done");
-                    res.send("done");
-                  } else console.log("error");
-                }
+                  console.log("done");
+                  res.send("done");
+                } else console.log("error");
               }
+              // }
             }
           );
         })

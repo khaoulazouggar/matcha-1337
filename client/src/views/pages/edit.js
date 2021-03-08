@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../css/edit.css";
 import EditInfo from "./edit-info";
 import EditProfile from "./edit-profile";
@@ -12,8 +12,6 @@ import { User } from "react-feather";
 import { Aperture } from "react-feather";
 import { MapPin } from "react-feather";
 import noUser from "../../photos/noUser.png";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 function Edit(props) {
   const [tags, setTags] = useState([]);
@@ -21,36 +19,6 @@ function Edit(props) {
   const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [Right, setRight] = useState(1);
   const [ProfileImg, setProfileImg] = useState([noUser]);
-  const history = useHistory();
-
-  useEffect(() => {
-    return new Promise((resolve, reject) => {
-      let unmount = false;
-      axios
-        .get("http://localhost:3001/getposition", {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        })
-        .then((res) => {
-          if (!unmount) {
-            if (
-              res.data === "U failed to authenticate" ||
-              res.data === "we need a token"
-            ) {
-              localStorage.removeItem("token");
-              history.push("/login");
-            } else {
-              if (!res.data[0].latitude) {
-                history.push("/steps");
-                // console.log(res);
-              }
-            }
-          }
-        });
-      return () => {
-        unmount = true;
-      };
-    }); // eslint-disable-next-line
-  }, []);
 
   return (
     <div className="box-formE">
@@ -159,7 +127,7 @@ function Edit(props) {
           ) : Right === 4 ? (
             <EditGallery data={{ ProfileImg, setProfileImg }} />
           ) : (
-            <EditLocalisation/>
+            <EditLocalisation />
           )}
         </div>
       </div>

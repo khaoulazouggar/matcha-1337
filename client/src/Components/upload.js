@@ -15,7 +15,7 @@ function Uploader(props) {
         // console.log({ err: err });
       } else {
         // console.log("rslt");
-        props.data.setImg([content, ...props.data.img]);
+        props.data.setImg([...props.data.img, content]);
       }
     });
   };

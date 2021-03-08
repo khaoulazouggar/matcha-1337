@@ -226,4 +226,7 @@ input.inptE:focus {
     flex-direction: column;
     align-items: center;
   }
+  .map{
+    width: 95%;
+  }
 }
