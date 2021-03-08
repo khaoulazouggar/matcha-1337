@@ -2,19 +2,40 @@ import React, { useEffect, useState } from "react";
 // import {a} from "react-router-dom";
 import "../css/navbar.css";
 import lo1 from "../photos/speech.png";
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChatIcon from '@material-ui/icons/Chat';
+import  socketIOClient  from "socket.io-client";
+
 
 function Navbar() {
   const history = useHistory();
   const [token, setToken] = useState("");
+  const [me, setMe] = useState();
   useEffect(() => {
     setToken(localStorage.getItem("token"));
+    axios.get("http://localhost:3001/getusername", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+        } else {
+                setMe(res.data)
+      }
+    });
   }, [token]);
+  if (token)
+  {
+    const URL = "http://localhost:3001";
+    const socket = socketIOClient(URL);
+    socket.emit('userconnected', me)
+    socket.on('dis', usrname =>{
+    })
+  }
   function Notification (){
+   
   }
   const click = () =>{
     setToken("")
@@ -43,11 +64,19 @@ function Navbar() {
           <li>
               {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
           </li>
+          <li>
+            {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">
+              <ChatIcon >
+              </ChatIcon>
+            </Link>}
+          </li>
           <MenuIcon/>
         </ul>
         <ul className="nav-list">
           <li>
-              {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
+      {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> {
+         // socket.emit('user_online', );
+      }</NotificationsIcon>}
           </li>
           <li>
             {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">

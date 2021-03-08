@@ -11,7 +11,6 @@ import Moment from 'react-moment';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-
 import  socketIOClient  from "socket.io-client";
 
 const useStyles = makeStyles({
@@ -73,7 +72,7 @@ function Chat (){
             
         }
         else {
-        axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date()})
+        axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date(), to_username: tousername})
         .then((response) => {
             if (response.data.sendMsg === 'done')
             {
@@ -83,9 +82,21 @@ function Chat (){
                     msgtime: new Date(),
                     to: to,
                     vu: 0,
+                    to_username: tousername,
                 }
-                let push = chat.concat(newValue);
+                let push = chat?.concat(newValue);
                 setChat(push);
+                const URL = "http://localhost:3001";
+                const socket = socketIOClient(URL);
+                socket.emit('send_message', newValue);
+                socket.on('new_message', function(data){
+                    if (data?.from === to && data?.to === me)
+                    {
+                        push = push?.concat(data)
+                        // let newchat = push;
+                        setChat(push);
+                    }
+                })
             }
             else
             {
@@ -114,14 +125,7 @@ function Chat (){
                 setTousername(username);
                 
             }
-            
         });
-        // const URL = "http://localhost:3001";
-        // const socket = socketIOClient(URL);
-        // socket.emit('user_online', tousername);
-        // socket.on("connect", () => {
-        //     console.log(socket.id + tousername);
-        // });
     }
     useEffect(() => {
     

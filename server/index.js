@@ -21,6 +21,9 @@ const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
 const getmatchedusr = require("./user/getmacheduser");
 const getmsg = require("./user/getmsg");
+const getusername = require("./user/getusername");
+const redis = require("redis");
+const client = redis.createClient({ detect_buffers: true });
 const http = require("http");
 const socketIo = require("socket.io");
 const server = http.createServer(app);
@@ -31,16 +34,41 @@ const io = socketIo(server, {
   }
 });
 io.on("connection", function(socket)  {
-  var users = []
-    io.emit('user_onlime', function(username)  {
-      users[username] = socket.id;
-      io.emit('user_onlime', username);
-    });
+
+    socket.on('userconnected', function(username){
+      var usr = username
+      // console.log(usr)
+      if (usr)
+      {
+        client.set(username, socket.id);
+      }
+          socket.on('disconnect', () => {
+          console.log('user disconnected');
+          if (usr)
+          {
+            client.del(usr);
+          }
+      });
+  });
+    socket.on('send_message', function(data){
+    client.get(data?.to_username, function(err, reply) {
+      if (reply !== null)
+      {
+          socket.broadcast.emit('new_message', data)
+          console.log(data)
+      }
+      else
+      {
+        console.log('mcha');
+      }
+    })
+  })
 })
 
 app.use(cors());
 app.use(express.json());
 app.use("/register", register);
+app.use("/getusername", getusername);
 app.use("/getmatcheduser", getmatchedusr);
 app.use("/getmsg", getmsg);
 app.use("/insertmsg", insertmsg);
