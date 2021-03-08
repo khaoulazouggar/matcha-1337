@@ -3,7 +3,6 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import "../../css/research.css"
 import search from "../../photos/search.svg"
-import abdellah from "../../photos/abdellah.jpg"
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -141,7 +140,9 @@ function Unblock(){
         setMe(res.data);
       }
     });
-  }, []);
+  }
+      // eslint-disable-next-line
+  , []);
   const items = [...users];
   const people = items.map(usr => {
       usr.age = calcAge(usr.birthday);
@@ -173,7 +174,7 @@ function Unblock(){
                         <img
                           alt = "profile"
                           className="research_image"
-                          src={abdellah}
+                          src={"http://localhost:3001/images/" + filterPerson?.profilePic}
                         />
                         <CardContent
                         className={classes.CardContent}

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import "../../css/chat.css";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
-import Profile from "../../photos/test.jpeg";
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 import {useHistory, Link} from 'react-router-dom';
@@ -61,6 +60,7 @@ function Chat (){
     const [chat, setChat] = useState();
     const [matched, setMatch] = useState();
     const [tousername, setTousername] = useState();
+    const [profile, setProfile] = useState();
     const [classStatus, setclassStatus] = useState(0)
     const handleChange = (e) => setMsg(
 		e.target.value
@@ -93,7 +93,6 @@ function Chat (){
                     if (data?.from === to && data?.to === me)
                     {
                         push = push?.concat(data)
-                        // let newchat = push;
                         setChat(push);
                     }
                 })
@@ -108,7 +107,7 @@ function Chat (){
     function viewfreinds (){
         setclassStatus(0);
     }
-    function getmsg (firstuser, lastuser, username)
+    function getmsg (firstuser, lastuser, username, profilePic)
     {
         axios.post('http://localhost:3001/getmsg', {firstuser: firstuser, lastuser:lastuser})
         .then((response) => {
@@ -118,6 +117,17 @@ function Chat (){
                 setTo(lastuser);
                 setTousername(username);
                 setclassStatus(1)
+                setProfile(profilePic);
+                // var count = 0;
+                // while  (count < matched.length)
+                // {
+                //     if (to === matched[count]?.id)
+                //     {
+                //     // setProfile(matched?.profilePic);
+                //         console.log(matched[count]?.profilePic);
+                //     }
+                //     count++;
+                // }
             }
             else if(response.data.status === false)
             {
@@ -146,7 +156,9 @@ function Chat (){
             setMatch(res.data);
       }
     });
-    }, []);
+    }
+    // eslint-disable-next-line
+    , []);
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">
@@ -165,11 +177,11 @@ function Chat (){
                         matched?.map((listmatched, index) => (
                             <div key={index}>
                                 <Box borderBottom={1} className={classes.border} />
-                                <div className="users_chat" id={listmatched.id} onClick={() => getmsg(me, listmatched.id, listmatched.username)}>
+                                <div className="users_chat" id={listmatched.id} onClick={() => getmsg(me, listmatched.id, listmatched.username, listmatched.profilePic)}>
                                     <div className="profile_img">
                                         <img
                                         alt=""
-                                        src={Profile}
+                                        src={"http://localhost:3001/images/" + listmatched?.profilePic}
                                         />
                                         <div>
                                              <h4>{listmatched.firstname} {listmatched.lastname}</h4>
@@ -197,7 +209,7 @@ function Chat (){
                         <img
                         className="chatprofileImg"
                         alt=''
-                        src={Profile}
+                        src={"http://localhost:3001/images/" + profile}
                         />
                     <h3><Link className='username' to={`/profile/${tousername}`}>@{tousername}</Link></h3>
                     </div> : ''
@@ -212,7 +224,7 @@ function Chat (){
                                     <div className="you">
                                         <img
                                             alt=""
-                                            src={Profile}
+                                            src={"http://localhost:3001/images/" + profile}
                                         />
                                         <div><p>{chatmsg?.content}</p></div>
                                     </div>

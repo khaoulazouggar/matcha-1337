@@ -155,6 +155,7 @@ function Research(){
         setRating(res.data[0]?.rating + 1);
       }
     });
+    // eslint-disable-next-line
   }, []);
   const items = [...users];
   var people = items.map(usr => {
@@ -171,7 +172,7 @@ function Research(){
     <div className="filter">
       <div className="undraw-div">
         <div>
-            <h3>Welecome Rihana</h3>
+            <h3>Welecome {me[0]?.username}</h3>
             <p> </p>
         </div>
         <div>

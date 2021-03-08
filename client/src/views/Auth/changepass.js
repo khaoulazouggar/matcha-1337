@@ -49,6 +49,7 @@ function Changepass(props) {
               icon: "success",
               text: "Your password has been successfully modified.",
               showConfirmButton: false,
+              heightAuto: false
             });
             history.push("/login");
           }
@@ -95,7 +96,7 @@ function Changepass(props) {
         </button>
         <br /><br /><br />
         <p>
-          Just remembered? <a href="./login">Log in</a>
+          Just remembered? <a href="/login">Log in</a>
         </p>
       </div>
     </div>

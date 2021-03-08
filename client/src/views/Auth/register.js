@@ -8,7 +8,7 @@ import isEmail from "../../tools/isEmail";
 import isUsername from "../../tools/isUsername";
 import isName from "../../tools/isName";
 import isPassword from "../../tools/isPassword";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [username, setusername] = useState("");
@@ -24,23 +24,28 @@ function Register() {
   const [verifypassword, setverifypassword] = useState("");
   const [errverifypassword, seterrverifypassword] = useState("");
   const history = useHistory();
-  const routeChange = () => {
-    let path = "/login";
-    history.push(path);
-  };
+  const [token, setToken] = useState("");
 
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+    if (token) history.push("/");
+    // eslint-disable-next-line
+  }, [token]);
 
-
-
- useEffect(() => {
-    if (firstname && !isName(firstname) && firstname.length < 24) seterrfirstname("First name is not valide (minimum is 3 letters)");
-    else if (firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
+  useEffect(() => {
+    if (firstname && !isName(firstname) && firstname.length < 24)
+      seterrfirstname("First name is not valide (minimum is 3 letters)");
+    else if (firstname.length > 24)
+      seterrfirstname("First name is too long (maximum is 24 letters)");
     else seterrfirstname("");
-    if (lastname && !isName(lastname) && lastname.length < 24) seterrlastname("Last Name is not valide (minimum is 3 letters)");
+    if (lastname && !isName(lastname) && lastname.length < 24)
+      seterrlastname("Last Name is not valide (minimum is 3 letters)");
     else if (lastname.length > 24) seterrlastname("Last name is too long (maximum is 24 letters)");
     else seterrlastname("");
-    if (username && !isUsername(username) && username.length < 24) seterrusername("Username is not valide (minimum is 3 characters)");
-    else if (username.length > 24) seterrusername("Username is too long (maximum is 24 characters)");
+    if (username && !isUsername(username) && username.length < 24)
+      seterrusername("Username is not valide (minimum is 3 characters)");
+    else if (username.length > 24)
+      seterrusername("Username is too long (maximum is 24 characters)");
     else seterrusername("");
     if (email && !isEmail(email)) seterremail("Email is not valide");
     else seterremail("");
@@ -49,7 +54,8 @@ function Register() {
         "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
       );
     else seterrpassword("");
-    if (verifypassword && password !== verifypassword) seterrverifypassword("Verify Password is not valide");
+    if (verifypassword && password !== verifypassword)
+      seterrverifypassword("Verify Password is not valide");
     else seterrverifypassword("");
   }, [firstname, lastname, username, email, password, verifypassword]);
 
@@ -93,14 +99,16 @@ function Register() {
               icon: "error",
               text: "Email and or username are already used please try with another one ",
               showConfirmButton: false,
+              heightAuto: false,
             });
           } else {
             Swal.fire({
               icon: "success",
               text: "You Are Now Registered Please Check Your Email To Confirm Your Account! ",
               showConfirmButton: false,
+              heightAuto: false,
             });
-            routeChange();
+            history.push("/login");
           }
         })
         .catch((err) => console.log(err));
@@ -114,8 +122,16 @@ function Register() {
           <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
-            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking
-            love.<br/><br/>Get to know more<Link className="about" to= "/about"> &nbsp;About&nbsp; </Link>us.
+            We are here to build emotion, connect people and create happy stories. Online dating
+            sites are the way to go for people seeking love.
+            <br />
+            <br />
+            Get to know more
+            <Link className="about"  to="/about">
+              {" "}
+              &nbsp;About&nbsp;{" "}
+            </Link>
+            us.
           </p>
 
           <span>
@@ -135,7 +151,10 @@ function Register() {
       <div className="right">
         <h5>Create Account</h5>
         <p>
-          Already have an account? <Link className="decoration" to="./login">Log in</Link>
+          Already have an account?{" "}
+          <Link className="decoration" to="/login">
+            Log in
+          </Link>
         </p>
         <div className="inputs">
           <input

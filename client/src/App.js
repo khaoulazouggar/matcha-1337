@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./css/style.css";
 import "./css/App.css";
 import Login from "./views/Auth/login";
@@ -21,10 +21,9 @@ import Changepass from "./views/Auth/changepass";
 import Profile from "./views/pages/profile";
 
 function App() {
-  const [color, changeColor] = useState("white");
   return (
     <Router>
-      <div className="App" style={{ "--color-step": color }}>
+      <div className="App">
         <Switch>
           <Route path="/confirm/:token" component={Confirm} />
           <Route path="/changepass/:token" component={Changepass} />
@@ -53,24 +52,24 @@ function App() {
           <Navbar />
             <Browsing />
           </Route>
-          <Route path="/profile" >
-          <Navbar />
-            <Profile changeColor={changeColor}/>
+             <Route path="/profile/:profilename">
+            <Navbar />
+            <Profile />
           </Route>
           <Route path="/fgpass">
             <Fgpass />
           </Route>
           <Route path="/edit">
             <Navbar />
-            <Edit changeColor={changeColor} />
+            <Edit />
           </Route>
           <Route path="/steps">
             <Navbar />
-            <Steps changeColor={changeColor} />
+            <Steps />
           </Route>
           <Route exact path="/">
             <Navbar />
-            <Home changeColor={changeColor} />
+            <Home />
           </Route>
           <Route path="*" component={Error} />
         </Switch>

@@ -10,6 +10,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { TextField } from "@material-ui/core";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 function EditProfile(props) {
   const history = useHistory();
@@ -32,10 +33,16 @@ function EditProfile(props) {
           localStorage.removeItem("token");
           history.push("/login");
         } else {
-          console.log(res.data);
+          if (res.data === "nothing changed") {
+            Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
+          }else if (res.data === "updated") {
+            Swal.fire({ icon: "success", text: "Your profile has been successfully modified.", showConfirmButton: false ,heightAuto: false});}
+          else if(res.data === "data too long"){
+            Swal.fire({ icon: "error", text: "data too long", showConfirmButton: false ,heightAuto: false});
+          }
+            // console.log(res.data);
         }
       });
-    // console.log({ ...gender, tags, notes });
   };
 
   const getdata = () => {
@@ -51,7 +58,8 @@ function EditProfile(props) {
         data.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
         props.data.setGender({ ...data });
         props.data2.setNotes(res.data[0].bio);
-        props.data1.setTags(JSON.parse(res.data[0].tags));
+        if (res.data[0].tags) props.data1.setTags(JSON.parse(res.data[0].tags));
+        
       }
     });
   };
@@ -63,7 +71,7 @@ function EditProfile(props) {
   const handleChange = (newValue) => {
     if (newValue) props.data1.setTags([...newValue]);
     else props.data1.setTags([]);
-    console.log(props.data1);
+    // console.log(props.data1);
   };
   return (
     <div className="rightE">
@@ -150,9 +158,9 @@ function EditProfile(props) {
                   type="date"
                   InputProps={{ inputProps: { min: "1900-05-01", max: "2020-02-14" } }}
                   // value={props.data.gender.birthday}
-                  value={props.data.gender.birthday ? props.data.gender.birthday : ""}
+                  value={props.data.gender.birthday ? props.data.gender.birthday : ''}
                   onChange={(e) => {
-                    console.log(e.target.value);
+                    // console.log(e.target.value);
                     let data = props.data.gender;
                     data.birthday = e.target.value;
                     props.data.setGender({ ...data });
@@ -174,7 +182,7 @@ function EditProfile(props) {
               className="edit-bio"
               type="text"
               placeholder="Change Your Bio"
-              value={props.data2.notes}
+              value={props.data2.notes ? props.data2.notes : ""}
               onChange={(e) => props.data2.setNotes(e.target.value)}
             />
             <div className="edit-tags">

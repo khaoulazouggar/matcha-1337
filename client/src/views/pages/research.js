@@ -3,7 +3,6 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import "../../css/research.css"
 import search from "../../photos/search.svg"
-import abdellah from "../../photos/abdellah.jpg"
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -157,26 +156,25 @@ function Research(){
         setAge([calcAge(res.data[0].birthday ) - 5, calcAge(res.data[0].birthday ) + 15]);
             // console.log(res);
       }
-    });
-    
+    }); // eslint-disable-next-line
   }, []);
   
   const items = [...users];
   var people = items.map(usr => {
       usr.age = calcAge(usr.birthday);
+      usr.location = computeDistance([me[0]?.latitude, me[0]?.longitude], [usr.latitude, usr.longitude])
       return usr;
   });
   function removeInSearch(id)
   {
       people = people.filter(items => items.id !== id);
       setUsers(people);
-    
   }
   return(
     <div className="filter">
       <div className="undraw-div">
         <div>
-            <h3>Welecome Rihana</h3>
+            <h3>Welecome {me[0]?.username}</h3>
             <p> </p>
         </div>
         <div>
@@ -265,7 +263,7 @@ function Research(){
       </div>
       <div className="resulte">
       {
-        people.filter(person => person.age >= age[0] && person.age <= age[1] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) >= location[0] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -275,16 +273,16 @@ function Research(){
                         <img
                           alt = "profile"
                           className="research_image"
-                          src={abdellah}
+                          src={"http://localhost:3001/images/" + filterPerson?.profilePic}
                         />
                         <CardContent
                         className={classes.CardContent}
                         >
                           <Typography gutterBottom variant="h5" component="h2">
-                          {filterPerson.firstname}{" "}{filterPerson.lastname}
+                          {filterPerson?.firstname}{" "}{filterPerson?.lastname}
                             <br></br>
                           </Typography>
-                          <p>{computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km</p>
+                          <p>{filterPerson?.location.toString().substr(0,4)}Km</p>
                           <p>{filterPerson.age} years old</p>
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">

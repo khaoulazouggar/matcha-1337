@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
         res.send({ err: err });
       }
       if (result.length > 0) {
-        //console.log(result)
+        // console.log(result)        
         bcrypt.compare(password, result[0].password, (error, rslt) => {
           // console.log(result[0].confirm)
           if (rslt) {

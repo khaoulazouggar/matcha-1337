@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../css/navbar.css";
 import lo1 from "../photos/speech.png";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -14,23 +14,34 @@ import  socketIOClient  from "socket.io-client";
 function Navbar() {
   const history = useHistory();
   const [token, setToken] = useState("");
-  const [me, setMe] = useState();
-  useEffect(() => {
+const [userlogged, setuserlogged] = useState("");
+
+useEffect(() => {
+  let unmount = false
+  if(!unmount){
     setToken(localStorage.getItem("token"));
-    axios.get("http://localhost:3001/getusername", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+    axios
+      .get("http://localhost:3001/getusername", {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      })
+      .then((res) => {
         if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
+          localStorage.removeItem("token");
+          history.push("/login");
         } else {
-                setMe(res.data)
-      }
-    });
-  }, [token]);
+          setuserlogged(res.data);
+        }
+      }); 
+  }
+  return () => {
+    unmount = true
+  }// eslint-disable-next-line
+}, [token]);
   if (token)
   {
     const URL = "http://localhost:3001";
     const socket = socketIOClient(URL);
-    socket.emit('userconnected', me)
+    socket.emit('userconnected', userlogged)
     socket.on('dis', usrname =>{
     })
   }
@@ -90,9 +101,9 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <Link className="text-s" to={!token ? "/login" : "/profile"}>
+            <NavLink className="text-s" to={!token ? "/login" : `/profile/${userlogged}`}>
               {!token ? "Login" : "Profile"}
-            </Link>
+            </NavLink>
           </li>
           <li>
             <button className="navbtn" onClick={() => click()}>
