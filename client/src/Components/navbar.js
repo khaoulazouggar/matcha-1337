@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import {a} from "react-router-dom";
 import "../css/navbar.css";
 import lo1 from "../photos/speech.png";
 import axios from 'axios';
@@ -7,14 +6,24 @@ import { NavLink, Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChatIcon from '@material-ui/icons/Chat';
+import Button from '@material-ui/core/Button';
 import  socketIOClient  from "socket.io-client";
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function Navbar() {
   const history = useHistory();
   const [token, setToken] = useState("");
 const [userlogged, setuserlogged] = useState("");
+const [anchorEl, setAnchorEl] = React.useState(null);
+
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+
+const handleClose = () => {
+  setAnchorEl(null);
+};
 
 useEffect(() => {
   let unmount = false
@@ -27,7 +36,7 @@ useEffect(() => {
       .then((res) => {
         if (res.data === "U failed to authenticate" || res.data === "we need a token") {
           localStorage.removeItem("token");
-          history.push("/login");
+          history.push("/");
         } else {
           setuserlogged(res.data);
         }
@@ -66,22 +75,53 @@ useEffect(() => {
         </Link>
       </div>
       <nav>
-        {/* <div className="nav-mobile">
-          <Link id="nav-hrefggle" to="#!">
-            <span></span>
-          </Link>
-        </div> */}
         <ul className="nav-mobile">
           <li>
               {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
           </li>
-          <li>
+          <li className ="chat_icons">
             {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">
-              <ChatIcon >
-              </ChatIcon>
+            <svg viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
             </Link>}
           </li>
-          <MenuIcon/>
+          {token ? 
+          <li>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+              <MenuIcon></MenuIcon>
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}><Link className="notification" to={'/profile/' + userlogged}>Profile</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="notification"  to='/edit'>Edit</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="notification"  to='/research'>Research</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="notification"  to='/browsing'>Browsing</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="notification"  to='/history'>History</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="notification"  to='/unblock'>Blacklist</Link></MenuItem>
+              <MenuItem onClick={() => click()}>Logout</MenuItem>
+            </Menu>
+            </li>
+            :
+            <div>
+              <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <MenuIcon></MenuIcon>
+              </Button>
+              <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}><Link className="text-s" to='/login'>Login</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="text-s"  to='register'>Register</Link></MenuItem>
+            </Menu>
+            </div>
+            }
         </ul>
         <ul className="nav-list">
           <li>
@@ -89,19 +129,35 @@ useEffect(() => {
          // socket.emit('user_online', );
       }</NotificationsIcon>}
           </li>
-          <li>
+          <li className="chat_icons">
             {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">
-              <ChatIcon >
-              </ChatIcon>
+            <svg viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
             </Link>}
           </li>
+          {token ?
+          <div>
+            <li>
+                <Link to='/research' className="text-s" >Research</Link>
+            </li>
+            <li>
+              <Link to='/browsing' className="text-s" >Browsing</Link>
+            </li>
+            <li>
+              <Link to='/unblock' className="text-s" >Blacklist</Link>
+            </li>
+            <li>
+              <Link to='/histroy' className="text-s" >History</Link>
+            </li>
+          </div>
+          : ''
+          }
           <li>
             <Link className="text-s" to={!token ? "/about" : "/edit"}>
               {!token ? "About" : "Edit"}
             </Link>
           </li>
           <li>
-            <NavLink className="text-s" to={!token ? "/login" : `/profile/${userlogged}`}>
+            <NavLink className="text-s" to={!token ? "/login" : '/profile/' + userlogged}>
               {!token ? "Login" : "Profile"}
             </NavLink>
           </li>

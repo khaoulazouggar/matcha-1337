@@ -88,7 +88,7 @@ function valuetext(value) {
 function Research(){
 
   const classes = useStyles();
-  const [age, setAge] = useState([]);
+  const [age, setAge] = useState([0, 0]);
   const [location, setLocation] = useState([0, 0]);
   const [tags, setTags] = useState([0, 5]);
   const [rating, setRating] = useState(0);
@@ -153,7 +153,7 @@ function Research(){
         history.push("/login");
       } else {
         setMe(res.data);
-        setAge([calcAge(res.data[0].birthday ) - 5, calcAge(res.data[0].birthday ) + 15]);
+        // setAge([calcAge(res.data[0].birthday ) - 5, calcAge(res.data[0].birthday ) + 15]);
             // console.log(res);
       }
     }); // eslint-disable-next-line

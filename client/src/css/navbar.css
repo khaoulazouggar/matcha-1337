@@ -15,6 +15,8 @@
 .notification
 {
     cursor: pointer;
+    color: rgb(66, 66, 66);
+    text-decoration: none;
 }
 
 li{
@@ -69,16 +71,9 @@ li{
     background-color: #5961f9ad;
     cursor: pointer;
 }
-/* .nav-list a::before{
-    content: "";
-    
-    position: absolute;
-    bottom: 0px;
-    width: 50px;
-    text-align: center;
-    background-color: white;
-    height: 2px;
-} */
+.chat_icons{
+    margin-top: 5px;
+}
 @media only screen and (max-width: 768px) {
     .nav-list {
         display: none;
@@ -87,5 +82,9 @@ li{
     {
         margin-right: 10px;
         display: inline;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 }

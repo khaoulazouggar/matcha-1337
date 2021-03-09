@@ -25,6 +25,7 @@
     margin-top: 100px;
     display: flex;
     flex-direction: row;
+    overflow: auto;
     justify-content: space-around;
     flex-wrap: wrap;
     width: 80%;
