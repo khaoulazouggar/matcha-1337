@@ -31,6 +31,7 @@ const block = require("./user/block");
 const getblock = require("./user/getblock");
 const getusername = require("./user/getusername");
 const getposition = require("./user/getposition");
+const gethistory = require("./user/gethistory");
 
 app.use(cors());
 // app.use(express.json());
@@ -65,6 +66,7 @@ app.use("/block", block);
 app.use("/getBlock", getblock);
 app.use("/getusername", getusername);
 app.use("/getposition", getposition);
+app.use("/gethistory", gethistory);
 
 app.listen(3001, () => {
   console.log("hello server");
