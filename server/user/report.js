@@ -28,7 +28,7 @@ router.post("/", isUserAuth, (req, res) => {
                   db.query("delete FROM likes WHERE liker = ? and liked = ?", [id, result[0].id]);
                 }
                 if (result[0].rating > 0) {
-                  const rating = result[0].rating - 0.5;
+                  const rating = result[0].rating - 0.1;
                   db.query("UPDATE users SET rating = ? WHERE username = ?", [rating, username]);
                 }
                 db.query("insert into reports (reporter, reported) values (?, ?)", [
@@ -40,7 +40,7 @@ router.post("/", isUserAuth, (req, res) => {
               }
             );
           } else if (rslt.length === 1) {
-            const Norating = result[0].rating + 0.5;
+            const Norating = result[0].rating + 0.1;
             db.query("UPDATE users SET rating = ? WHERE username = ?", [Norating, username]);
             db.query("delete FROM reports WHERE reporter = ? and reported = ?", [id, result[0].id]);
           }

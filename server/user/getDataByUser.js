@@ -12,7 +12,7 @@ router.get("/:profilename", isUserAuth, (req, res) => {
     } else if (result.length > 0) {
       res.send(result);
       // console.log(result);
-    } else if (!result.length) console.log("no user found");
+    } else if (!result.length) res.send("no user found");
   });
 });
 
