@@ -10,12 +10,16 @@ import Button from '@material-ui/core/Button';
 import  socketIOClient  from "socket.io-client";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Badge from '@material-ui/core/Badge';
+
 
 function Navbar() {
   const history = useHistory();
   const [token, setToken] = useState("");
 const [userlogged, setuserlogged] = useState("");
-const [anchorEl, setAnchorEl] = React.useState(null);
+const [anchorEl, setAnchorEl] = useState(null);
+const [notif, setNotif] = useState(false);
+const [notifcount, setnotifCount] = useState(0);
 
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
@@ -40,7 +44,7 @@ useEffect(() => {
         } else {
           setuserlogged(res.data);
         }
-      }); 
+      });
   }
   return () => {
     unmount = true
@@ -53,9 +57,24 @@ useEffect(() => {
     socket.emit('userconnected', userlogged)
     socket.on('dis', usrname =>{
     })
+    socket.on('notification', function(data) {
+      const name = document.URL.substring(document.URL.lastIndexOf('/') + 1);
+      if (name === 'chat')
+      {
+        
+      }
+      else if  (data?.to_username === userlogged)
+      {
+        setNotif(true);
+        let count = notifcount;
+        setnotifCount(count + 1)
+      }
+    })
   }
   function Notification (){
-   
+      history.push('/notification');
+      setNotif(false);
+      setnotifCount(0)
   }
   const click = () =>{
     setToken("")
@@ -125,9 +144,11 @@ useEffect(() => {
         </ul>
         <ul className="nav-list">
           <li>
-      {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> {
-         // socket.emit('user_online', );
-      }</NotificationsIcon>}
+      {
+      !token ? '' : 
+        <Badge color={notif === true ? `secondary` : 'primary'}  badgeContent={notif === true ? notifcount : ''}><NotificationsIcon className="notification" onClick={Notification}>
+        </NotificationsIcon></Badge>
+        }
           </li>
           <li className="chat_icons">
             {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">

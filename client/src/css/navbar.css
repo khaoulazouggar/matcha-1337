@@ -60,6 +60,9 @@ li{
 {
     display: none;
 }
+.MuiBadge-colorPrimary{
+    background-color: #ffff !important;
+}
 .navbtn{
     color: #fff;
     font-size: 16px;

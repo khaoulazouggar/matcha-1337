@@ -3,7 +3,6 @@ import axios from "axios";
 import {Link} from 'react-router-dom';
 import "../../css/research.css"
 import search from "../../photos/search.svg"
-import abdellah from "../../photos/abdellah.jpg"
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -86,8 +85,8 @@ function valuetext(value) {
 function Research(){
 
   const classes = useStyles();
-  const [age, setAge] = useState([]);
-  const [location, setLocation] = useState([0, 80]);
+  const [age, setAge] = useState([0,0]);
+  const [location, setLocation] = useState([0, 120]);
   const [tags, setTags] = useState([0, 5]);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState('age');
@@ -151,8 +150,8 @@ function Research(){
         history.push("/login");
       } else {
         setMe(res.data);
-        setAge([calcAge(res.data[0]?.birthday ) - 5, calcAge(res.data[0]?.birthday ) + 15]);
-        setRating(res.data[0]?.rating + 1);
+        setAge([calcAge(res.data[0]?.birthday) - 5, calcAge(res.data[0]?.birthday ) + 15]);
+        setRating(res.data[0]?.rating + 3);
       }
     });
     // eslint-disable-next-line
@@ -271,7 +270,7 @@ function Research(){
                         <img
                           alt = "profile"
                           className="research_image"
-                          src={abdellah}
+                          src={"http://localhost:3001/images/" + filterPerson?.profilePic}
                         />
                         <CardContent
                         className={classes.CardContent}

@@ -63,7 +63,7 @@ function Chat (){
     const [profile, setProfile] = useState();
     const [classStatus, setclassStatus] = useState(0)
     const handleChange = (e) => setMsg(
-		e.target.value
+		e.target.value,
     )
     function insetMsg(from, to) {
         document.getElementById('outlined-basic').value = '';
@@ -86,6 +86,7 @@ function Chat (){
                 }
                 let push = chat?.concat(newValue);
                 setChat(push);
+                setMsg('');
                 const URL = "http://localhost:3001";
                 const socket = socketIOClient(URL);
                 socket.emit('send_message', newValue);
@@ -118,22 +119,11 @@ function Chat (){
                 setTousername(username);
                 setclassStatus(1)
                 setProfile(profilePic);
-                // var count = 0;
-                // while  (count < matched.length)
-                // {
-                //     if (to === matched[count]?.id)
-                //     {
-                //     // setProfile(matched?.profilePic);
-                //         console.log(matched[count]?.profilePic);
-                //     }
-                //     count++;
-                // }
             }
             else if(response.data.status === false)
             {
                 setTo(lastuser);
                 setTousername(username);
-                
             }
         });
     }
@@ -159,6 +149,7 @@ function Chat (){
     }
     // eslint-disable-next-line
     , []);
+    // console.log(chat);
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">

@@ -18,6 +18,7 @@ import Steps from "./Components/steps";
 import Navbar from "./Components/navbar";
 import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
+import Notification from "./views/pages/notification";
 import Profile from "./views/pages/profile";
 
 function App() {
@@ -51,6 +52,10 @@ function App() {
           <Route path="/browsing">
           <Navbar />
             <Browsing />
+          </Route>
+          <Route path="/notification">
+          <Navbar />
+            <Notification />
           </Route>
              <Route path="/profile/:profilename">
             <Navbar />

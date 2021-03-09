@@ -134,7 +134,7 @@ function Steps(props) {
             localStorage.removeItem("token");
             history.push("/login");
           } else {
-            if (res.data[0].latitude) {
+            if (res?.data[0]?.latitude) {
               history.push("/");
               // console.log(res.data[0].latitude);
             }

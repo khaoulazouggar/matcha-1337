@@ -134,6 +134,12 @@ cursor: pointer;
 .in{
     color: #0e10109c;
 }
+.online{
+  color:  #66ff66;
+}
+.offline{
+  color : rgba(236, 18, 18, 0.8);
+}
 @media only screen and (max-width: 1200px) {
   .profile {
     flex-direction: column;

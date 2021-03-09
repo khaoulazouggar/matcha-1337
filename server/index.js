@@ -54,24 +54,39 @@ io.on("connection", function(socket)  {
 
     socket.on('userconnected', function(username){
       var usr = username
-      // console.log(usr)
       if (usr)
       {
         client.set(username, socket.id);
+        socket.broadcast.emit('online', usr);
       }
           socket.on('disconnect', () => {
-          console.log('user disconnected');
           if (usr)
           {
             client.del(usr);
           }
+          var data = {usr : usr, lastseen : new Date()}
+          socket.broadcast.emit('offline', data);
+      });
+  });
+  socket.on('stateOfuser', function(profile_name){
+      client.get(profile_name, function(err, reply) {
+        if (reply !== null)
+        {
+          socket.broadcast.emit('online', profile_name);
+          console.log(profile_name)
+        }
+        else
+        {
+          socket.broadcast.emit('offline', profile_name);
+        }
       });
   });
     socket.on('send_message', function(data){
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
       {
-          socket.broadcast.emit('new_message', data)
+          socket.broadcast.emit('new_message', data);
+          socket.broadcast.emit('notification', data);
       }
       else
       {
@@ -82,7 +97,6 @@ io.on("connection", function(socket)  {
 })
 
 app.use(cors());
-// app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/images", express.static("./images"));
 app.use("/register", register);

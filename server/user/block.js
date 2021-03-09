@@ -25,20 +25,60 @@ router.post("/", isUserAuth, (req, res) => {
                 if (err) {
                   res.send({ err: err });
                 } else if (rslt.length === 1) {
-                  db.query("delete FROM likes WHERE liker = ? and liked = ?", [id, result[0].id]);
+                  db.query("delete FROM likes WHERE liker = ? and liked = ?", [
+                    id,
+                    result[0].id,
+                  ]);
                 }
                 if (result[0].rating > 0) {
-                  const rating = result[0].rating - 0.5;
-                  db.query("UPDATE users SET rating = ? WHERE username = ?", [rating, username]);
+                  const rating = result[0].rating - 0.1;
+                  db.query("UPDATE users SET rating = ? WHERE username = ?", [
+                    rating,
+                    username,
+                  ]);
                 }
-                db.query("insert into block (blocker, blocked) values (?, ?)", [id, result[0].id]);
+                db.query(
+                  "select * from matchedusers where firstuser = ? and lastuser = ? or firstuser = ? and lastuser = ?",
+                  [id, result[0].id, result[0].id, id],
+                  (err, rsl) => {
+                    if (err) {
+                      res.send({ err: err });
+                    } else if (rsl.length > 0) {
+                      db.query(
+                        "delete from matchedusers where firstuser = ? and lastuser = ? or firstuser = ? and lastuser = ?",
+                        [id, result[0].id, result[0].id, id]
+                      );
+                      console.log("deleted");
+                    }
+                  }
+                );
+                db.query(
+                  "select * from `chat` where `from` = ? and `to` = ? or `from` = ? and `to` = ?",
+                  [id, result[0].id,result[0].id,id],(err, rsl)=>{
+                    if (err) {
+                      res.send({ err: err });
+                    } else if (rsl.length > 0) {
+                      db.query(
+                        "delete from chat where `from` = ? and `to` = ? or `from` = ? and `to` = ?",
+                        [id, result[0].id,result[0].id,id])
+                        console.log("delete chat");
+                        
+                    }
+                  }
+                );
+                db.query("insert into block (blocker, blocked) values (?, ?)", [
+                  id,
+                  result[0].id,
+                ]);
                 res.send("apdated");
               }
             );
+          } else if (rslt.length === 1) {
+            db.query("delete FROM block WHERE blocker = ? and blocked = ?", [
+              id,
+              result[0].id,
+            ]);
           }
-            else if (rslt.length === 1) {
-              db.query("delete FROM block WHERE blocker = ? and blocked = ?", [id, result[0].id]);
-            }
         }
       );
     }

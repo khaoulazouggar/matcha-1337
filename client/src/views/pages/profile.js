@@ -10,7 +10,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import BlockIcon from "@material-ui/icons/Block";
 import FlagRoundedIcon from "@material-ui/icons/FlagRounded";
 import { useParams } from "react-router-dom";
-import MapWithAMarker  from "../../Components/googleMap";
+import MapWithAMarker from "../../Components/googleMap";
+import  socketIOClient  from "socket.io-client";
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Moment from 'react-moment';
 
 function Profile(props) {
   const [username, setusername] = useState("");
@@ -26,8 +29,10 @@ function Profile(props) {
   const [block, setBlock] = useState("#5961f9ad");
   const [userlogged, setUserlogged] = useState(0);
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
-const [profile, setprofile] = useState(0)
-const [done, setdone] = useState(0)
+  const [profile, setprofile] = useState(0);
+  const [done, setdone] = useState(0);
+  const [online, setOnline] = useState(false);
+  const [lastseen, setLastseen] = useState();
   const [gender, setGender] = useState({
     yourGender: "",
     genderLooking: "",
@@ -58,12 +63,11 @@ const [done, setdone] = useState(0)
               localStorage.removeItem("token");
               history.push("/login");
             } else {
-              if (!res.data[0].latitude) {
+              if (!res?.data[0]?.latitude) {
                 history.push("/steps");
                 // console.log(res);
-              }else{
-                setdone(1)
-                setprofile(1)
+              } else {
+                setdone(1);
               }
             }
           }
@@ -76,7 +80,7 @@ const [done, setdone] = useState(0)
 
   useEffect(() => {
     let unmount = false;
-    if(done){
+    if (done) {
       if (profilename) {
         axios
           .get(`http://localhost:3001/getIdByUser/${profilename}`, {
@@ -92,7 +96,7 @@ const [done, setdone] = useState(0)
                 history.push("/login");
               } else if (res.data === "user logged") {
                 setUserlogged(1);
-              } else if (res.data === "no user found") history.push("/");
+              }
             }
           });
         axios
@@ -107,8 +111,10 @@ const [done, setdone] = useState(0)
               ) {
                 localStorage.removeItem("token");
                 history.push("/login");
-              } else {
-                console.log(res.data);
+              } else if (res.data === "no user found") history.push("/");
+              else {
+                // setprofile(1);
+                // console.log(res.data);
                 setfirstname(res.data[0].firstname);
                 setlastname(res.data[0].lastname);
                 setusername(res.data[0].username);
@@ -129,7 +135,7 @@ const [done, setdone] = useState(0)
                   setProfileImg(
                     "http://localhost:3001/images/" + res.data[0].profilePic
                   );
-                if (res.data.image) setImg(res.data);
+                if (res.data[0].image) setImg(res.data);
               }
             }
           });
@@ -189,17 +195,20 @@ const [done, setdone] = useState(0)
                 history.push("/login");
               } else if (res.data === "found") {
                 setBlock("#ec1212cc");
+                history.push("/error")
                 // console.log(res.data);
+              }else if (res.data === "not found"){
+                setprofile(1);
               }
             }
           });
       }
     }
 
-      return () => {
-        unmount = true;
-      };
-     // eslint-disable-next-line
+    return () => {
+      unmount = true;
+    };
+    // eslint-disable-next-line
   }, [history, profilename, done]);
   // console.log(tags[0].value);
   const handelLike = () => {
@@ -251,6 +260,8 @@ const [done, setdone] = useState(0)
           history.push("/login");
         } else {
           console.log(res.data);
+          //add it or not ???????
+          window.location.href = "/error";
         }
       });
   };
@@ -282,6 +293,23 @@ const [done, setdone] = useState(0)
   // #ec1212cc red
   // #5961f9ad purple
   // #e8bb11 yellow
+  const URL = "http://localhost:3001";
+  const socket = socketIOClient(URL);
+  socket.emit('stateOfuser', profilename)
+  socket.on('online', function(data)
+  {
+    if (data === profilename)
+    {
+      setOnline(true);
+    }
+  })
+  socket.on('offline', function(name){
+  if (name?.usr === profilename)
+  {
+    setOnline(false)
+    setLastseen(name?.lastseen)
+  }
+})
   return (
     <div className="profile">
       <div className="p1">
@@ -295,7 +323,11 @@ const [done, setdone] = useState(0)
             />
           </div>
           <br />
-          <div style={{ color: "#0e10109c" }}>Last seen</div>
+          <div style={{ color: "#0e10109c", display:"flex"}}><FiberManualRecordIcon className={online === true ? 'online' : 'offline'}></FiberManualRecordIcon>{
+          online === true ? 'online' : 
+          <Moment className='lastmg' fromNow>{lastseen}</Moment>
+          }
+          </div>
           <br />
           <Rating
             name="half-rating-read"
@@ -362,13 +394,16 @@ const [done, setdone] = useState(0)
         </div>
         <div className="stickers">
           <h3 className="profileH3">Localisation : </h3>
-          {profile=== 1 ? 
-          <MapWithAMarker
-           data={{ center, setCenter }}
-            // containerElement={<div style={{ height: `400px` }} />}
-            // mapElement={<div style={{ height: `100%` }} />}
-            // center={center}
-          /> : ""}
+          {profile === 1 ? (
+            <MapWithAMarker
+              data={{ center, setCenter }}
+              // containerElement={<div style={{ height: `400px` }} />}
+              // mapElement={<div style={{ height: `100%` }} />}
+              // center={center}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="p3">

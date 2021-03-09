@@ -94,7 +94,7 @@ router.post("/", isUserAuth, (req, res) => {
               }
               // if (resp.length > 0) {
               if (
-                JSON.stringify(tags)?.length + resp[0]?.tags?.length > 300 ||
+                JSON?.stringify(tags)?.length + resp[0]?.tags?.length > 300 ||
                 resp[0]?.bio?.length + notes?.length > 100
               ) {
                 console.log(JSON.stringify(tags)?.length + resp[0]?.tags?.length);
