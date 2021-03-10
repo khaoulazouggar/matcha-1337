@@ -32,7 +32,7 @@ function Profile(props) {
   const [profile, setprofile] = useState(0);
   const [done, setdone] = useState(0);
   const [online, setOnline] = useState(false);
-  const [lastseen, setLastseen] = useState();
+  const [lastconnection, setlastConnection] = useState("")
   const [gender, setGender] = useState({
     yourGender: "",
     genderLooking: "",
@@ -120,6 +120,7 @@ function Profile(props) {
                 setusername(res.data[0].username);
                 setRating(res.data[0].rating);
                 setCity(res.data[0].city);
+                setlastConnection(res.data[0]?.last_connection)
                 if (res.data[0].tags) setTags(JSON.parse(res.data[0].tags));
                 gender.birthday = moment(res.data[0].birthday).format(
                   "YYYY-MM-DD"
@@ -302,12 +303,28 @@ function Profile(props) {
     {
       setOnline(true);
     }
+    else
+    {
+    }
   })
   socket.on('offline', function(name){
   if (name?.usr === profilename)
   {
     setOnline(false)
-    setLastseen(name?.lastseen)
+    setlastConnection(name?.lastseen);
+    axios.post('http://localhost:3001/updateLastseen', {username : profilename , newdate: new Date()})
+        .then((response) => {
+            if (response.data.status === true)
+            {
+                
+            }
+            else
+            {
+                console.log(response.data.err);
+            }
+        });
+  }
+  else{
   }
 })
   return (
@@ -325,7 +342,7 @@ function Profile(props) {
           <br />
           <div style={{ color: "#0e10109c", display:"flex"}}><FiberManualRecordIcon className={online === true ? 'online' : 'offline'}></FiberManualRecordIcon>{
           online === true ? 'online' : 
-          <Moment className='lastmg' fromNow>{lastseen}</Moment>
+          <Moment className='lastmg' fromNow>{online === false ? lastconnection : ''}</Moment>
           }
           </div>
           <br />

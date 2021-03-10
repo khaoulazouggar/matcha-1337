@@ -36,6 +36,7 @@ const subscribers = require("./user/subscribers");
 const getusersBlocked = require("./user/getUsersBlocked");
 const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
+const updateLastseen = require("./user/updateLastSeen");
 const getmatchedusr = require("./user/getmacheduser");
 const getmsg = require("./user/getmsg");
 const getusername = require("./user/getusername");
@@ -73,11 +74,10 @@ io.on("connection", function(socket)  {
         if (reply !== null)
         {
           socket.broadcast.emit('online', profile_name);
-          console.log(profile_name)
         }
         else
         {
-          socket.broadcast.emit('offline', profile_name);
+          // socket.broadcast.emit('makaynch', profile_name)
         }
       });
   });
@@ -86,11 +86,11 @@ io.on("connection", function(socket)  {
       if (reply !== null)
       {
           socket.broadcast.emit('new_message', data);
-          socket.broadcast.emit('notification', data);
+          socket.broadcast.emit('notification_message', data);
       }
       else
       {
-        console.log('mcha');
+        
       }
     })
   })
@@ -102,6 +102,7 @@ app.use("/images", express.static("./images"));
 app.use("/register", register);
 app.use("/getusername", getusername);
 app.use("/getmatcheduser", getmatchedusr);
+app.use("/updateLastseen", updateLastseen);
 app.use("/getmsg", getmsg);
 app.use("/insertmsg", insertmsg);
 app.use("/subscribers", subscribers);
