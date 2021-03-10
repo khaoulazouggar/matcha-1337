@@ -5,7 +5,6 @@ const db = require("../db");
 router.post("/", (req, res) => {
     const username = req.body.username;
     const lastseen = req.body.newdate;
-    console.log(lastseen);
     const sqlDelete = "UPDATE `users` SET `last_connection` = ? WHERE `username` = ?";
     db.query(sqlDelete, [lastseen, username], (err, rows) => {
       if (err) {

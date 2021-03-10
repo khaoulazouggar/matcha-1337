@@ -7,18 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserFriends, faEye} from '@fortawesome/free-solid-svg-icons';
 import countapi from 'countapi-js';
 import axios from "axios";
-// import  socketIOClient  from "socket.io-client";
+import  socketIOClient  from "socket.io-client";
 
-// const URL = "http://localhost:3001";
-// const socket = socketIOClient(URL);
-// socket.on('ikhan', function(ikhan){
-//     console.log('number :'+  ikhan + '         ' + 'socket.id: ' +  socket.id);
-// })
-// socket.on("connect", () => {
-//     console.log(socket.id);
-// });
+const URL = "http://localhost:3001";
+const socket = socketIOClient(URL);
 function Home() {
     const [visit, setVisits] = useState();
+    const [onlineUsers, setOnlineUsers] = useState();
+    const [totalMatched, setTotalmatched] = useState([]);
     const [subscribers, setSubscribers] = useState([]);
     useEffect( () => {
          countapi.visits().then((result) => {
@@ -27,7 +23,15 @@ function Home() {
         axios.get("http://localhost:3001/subscribers").then((res) => {
             setSubscribers(res.data);
           });
+          axios.get("http://localhost:3001/totalMatched").then((res) => {
+            setTotalmatched(res.data);
+          });
       },[]);
+      socket.emit('getUsersOnline', 'true');
+      socket.on('usersOnline', function(data){
+        //   console.log(data)
+          setOnlineUsers(data)
+      })
     return (
         <div className="center">
         <div className="home">
@@ -61,7 +65,7 @@ function Home() {
             </div>
             <div className="card">
             <FontAwesomeIcon icon={faUserFriends} className="icons" />
-                <h3>5</h3>
+            <h3>{onlineUsers}</h3>
                 <h3>Users Online</h3>
             </div>
             <div className="card">
@@ -73,8 +77,8 @@ function Home() {
             </div>
             <div className="card">
             <FontAwesomeIcon icon={faUsers} className="icons" />
-                <h3>10005</h3>
-                <h3>Users Online</h3>
+                <h3>{totalMatched[0]?.matched}</h3>
+                <h3>Total Matched</h3>
             </div>
         </div>
         </div>

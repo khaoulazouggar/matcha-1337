@@ -327,6 +327,7 @@ function Profile(props) {
   else{
   }
 })
+  if (!firstname) return <div> </div>;
   return (
     <div className="profile">
       <div className="p1">

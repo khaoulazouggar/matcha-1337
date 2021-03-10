@@ -18,7 +18,7 @@
 }
 .messages
 {
-    flex-basis: 35%;
+    flex-basis: 25%;
     background: #EEEEF6;
     border-radius: 12px;
     height: 100%;
@@ -32,8 +32,8 @@
 
 .conversation
 {
-    flex-basis: 65%;
-    height: 95%;
+    min-width: 75%;
+    height: 90%;
 }
 .conversation h3
 {
@@ -137,7 +137,6 @@
 {
     max-width: 40%;
     align-self: flex-end;
-    display: flex;
     word-wrap: break-word;
     background-color: #B4B6CB;
     margin-right: 10px ;
@@ -147,7 +146,7 @@
 }
 .you
 {
-    max-width: 50%;
+    width: 50%;
     display: flex;
     flex-direction: row;
     margin-left: 10px;
@@ -167,6 +166,7 @@
 }
 .you div
 {
+    max-width: 80%;
     word-wrap: break-word;
     margin-left: 10px ;
     background-color: #13145C;
@@ -184,6 +184,19 @@
     justify-content: space-around;
     align-items: center;
     margin: 0 !important;
+}
+@media only screen and (max-width : 1154px)
+{
+    .profile_img{
+        height: 100%;
+    }
+    .messages{
+        min-width: 35%;
+    }
+    .conversation
+    {
+        min-width: 65%;
+    }
 }
 @media only screen and (max-width : 768px)
 {

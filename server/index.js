@@ -34,6 +34,7 @@ const ussocket = require("./user/socket");
 const unblockUser = require("./user/unblockUsers");
 const subscribers = require("./user/subscribers");
 const getusersBlocked = require("./user/getUsersBlocked");
+const totalMatched = require("./user/totalMatched");
 const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
 const updateLastseen = require("./user/updateLastSeen");
@@ -51,6 +52,7 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
+
 io.on("connection", function(socket)  {
 
     socket.on('userconnected', function(username){
@@ -58,18 +60,24 @@ io.on("connection", function(socket)  {
       if (usr)
       {
         client.set(username, socket.id);
+        client.dbsize(function(err, nuMkey){
+          socket.broadcast.emit('usersOnline', nuMkey);
+        });
         socket.broadcast.emit('online', usr);
       }
           socket.on('disconnect', () => {
           if (usr)
           {
             client.del(usr);
+            client.dbsize(function(err, nuMkey){
+              socket.broadcast.emit('usersOnline', nuMkey);
+            });
           }
           var data = {usr : usr, lastseen : new Date()}
           socket.broadcast.emit('offline', data);
       });
   });
-  socket.on('stateOfuser', function(profile_name){
+      socket.on('stateOfuser', function(profile_name){
       client.get(profile_name, function(err, reply) {
         if (reply !== null)
         {
@@ -86,7 +94,7 @@ io.on("connection", function(socket)  {
       if (reply !== null)
       {
           socket.broadcast.emit('new_message', data);
-          socket.broadcast.emit('notification_message', data);
+          // socket.broadcast.emit('notification_message', data);
       }
       else
       {
@@ -94,6 +102,15 @@ io.on("connection", function(socket)  {
       }
     })
   })
+  socket.on('getUsersOnline', function(data)
+  {
+    if (data === 'true')
+    {
+        client.dbsize(function(err, nuMkey){
+        socket.emit('usersOnline', nuMkey);
+      });
+    }
+})
 })
 
 app.use(cors());
@@ -102,6 +119,7 @@ app.use("/images", express.static("./images"));
 app.use("/register", register);
 app.use("/getusername", getusername);
 app.use("/getmatcheduser", getmatchedusr);
+app.use("/totalMatched", totalMatched);
 app.use("/updateLastseen", updateLastseen);
 app.use("/getmsg", getmsg);
 app.use("/insertmsg", insertmsg);

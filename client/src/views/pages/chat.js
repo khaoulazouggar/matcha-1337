@@ -50,7 +50,8 @@ border:{
     margin: '0',
 },
 });
-
+const URL = "http://localhost:3001";
+const socket = socketIOClient(URL);
 function Chat (){
     const history = useHistory();
     const classes = useStyles();
@@ -87,16 +88,7 @@ function Chat (){
                 let push = chat?.concat(newValue);
                 setChat(push);
                 setMsg('');
-                const URL = "http://localhost:3001";
-                const socket = socketIOClient(URL);
                 socket.emit('send_message', newValue);
-                socket.on('new_message', function(data){
-                    if (data?.from === to && data?.to === me)
-                    {
-                        push = push?.concat(data)
-                        setChat(push);
-                    }
-                })
             }
             else
             {
@@ -150,6 +142,14 @@ function Chat (){
     // eslint-disable-next-line
     , []);
     // console.log(chat);
+    
+    socket.on('new_message', function(data){
+    if (data?.from === to && data?.to === me)
+    {
+        setChat( chat?.concat(data));
+        }
+    })
+    // if (!chat) return <div></div>
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">
