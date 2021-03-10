@@ -64,6 +64,13 @@
 .edit-child:hover {
   color: #7971b8;
 }
+.edit-child1 {
+  cursor: pointer;
+  color: #232327;
+}
+.edit-child1:hover {
+  color: #ce3535;;
+}
 
 .edit-bio {
   outline: none;

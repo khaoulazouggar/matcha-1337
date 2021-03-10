@@ -32,8 +32,13 @@ const getblock = require("./user/getblock");
 const getusername = require("./user/getusername");
 const getposition = require("./user/getposition");
 const gethistory = require("./user/gethistory");
+const deleteAccount = require("./user/deleteAccount");
+// const logger = require('morgan');
+
 
 app.use(cors());
+// app.use(logger('dev'));
+
 // app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/images", express.static("./images"));
@@ -67,6 +72,7 @@ app.use("/getBlock", getblock);
 app.use("/getusername", getusername);
 app.use("/getposition", getposition);
 app.use("/gethistory", gethistory);
+app.use("/deleteAccount", deleteAccount);
 
 app.listen(3001, () => {
   console.log("hello server");

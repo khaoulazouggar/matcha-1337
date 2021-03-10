@@ -68,16 +68,29 @@ router.post("/", isUserAuth, (req, res) => {
                     if (err) {
                       res.send({ err: err });
                     } else if (rslt.length === 0) {
-                      const rating = result[0].rating + 0.1;
-                      db.query(
-                        "UPDATE users SET rating = ? WHERE username = ?",
-                        [rating, username]
-                      );
-                      db.query(
-                        "insert into likes (liker, liked) values (?, ?)",
-                        [id, result[0].id]
-                      );
-                      res.send("apdated");
+                      db.query("select profilePic from users where id = ?", id, (err, rs)=> {
+                        if(err)
+                        res.send({ err: err });
+                        else if(rs[0].profilePic){
+                          console.log(rs[0].profilePic);
+                          
+
+                          const rating = result[0].rating + 0.1;
+                          db.query(
+                            "UPDATE users SET rating = ? WHERE username = ?",
+                            [rating, username]
+                          );
+                          db.query(
+                            "insert into likes (liker, liked) values (?, ?)",
+                            [id, result[0].id]
+                          );
+                          res.send("apdated");
+                          // console.log("apdated")
+                        }else{
+                          res.send("user don't have a picture")
+                          // console.log("dont")
+                        }
+                      })
                     }
                   }
                 );

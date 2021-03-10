@@ -5,20 +5,25 @@ import EditProfile from "./edit-profile";
 import EditPass from "./edit-password";
 import EditGallery from "./edit-gallery";
 import EditLocalisation from "./edit-localisation";
-// import { Upload } from "react-feather";
+import Swal from "sweetalert2";
+import axios from "axios";
 import { Edit2 } from "react-feather";
 import { Key } from "react-feather";
 import { User } from "react-feather";
 import { Aperture } from "react-feather";
 import { MapPin } from "react-feather";
+import { Trash2 } from "react-feather";
 import noUser from "../../photos/noUser.png";
+import { useHistory } from "react-router-dom";
 
 function Edit(props) {
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
   const [gender, setGender] = useState({ yourGender: "", genderLooking: "" });
   const [Right, setRight] = useState(1);
+  const [delet, setdelet] = useState(0);
   const [ProfileImg, setProfileImg] = useState([noUser]);
+  const history = useHistory();
 
   return (
     <div className="box-formE">
@@ -110,6 +115,61 @@ function Edit(props) {
                 }
               />
               Localisation
+            </span>
+            <br /> <br />
+            <span
+              className="edit-child1"
+              onClick={() => {
+                setdelet(1);
+                Swal.fire({
+                  icon: "warning",
+                  text: "Do you really want to delete your account ?",
+                  confirmButtonText: `Delete`,
+                  showCancelButton: true,
+                  confirmButtonColor: "#cd4535",
+                  heightAuto: false,
+                  iconColor: "#cd4535",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    axios
+                      .post("http://localhost:3001/deleteAccount", {},{
+                        headers: {
+                          "x-auth-token": localStorage.getItem("token"),
+                        },
+                      })
+                      .then((res) => {
+                        if (
+                          res.data === "U failed to authenticate" ||
+                          res.data === "we need a token"
+                        ) {
+                          localStorage.removeItem("token");
+                          history.push("/login");
+                        } else {
+                          history.push("/");
+                          console.log(res.data);
+                        }
+                      });
+                    Swal.fire({
+                      icon: "success",
+                      text: "Your Account has been successfully deleted.",
+                      showConfirmButton: false,
+                      heightAuto: false,
+                    });
+                  } else if (result.isDismissed) {
+                    setdelet(0);
+                  }
+                });
+              }}
+              style={delet === 1 ? { color: "#ce3535" } : {}}
+            >
+              <Trash2
+                style={
+                  delet === 1
+                    ? { color: "#ce3535", marginRight: "10px" }
+                    : { marginRight: "10px" }
+                }
+              />
+              DELETE YOUR ACCOUNT
             </span>
           </div>
         </div>
