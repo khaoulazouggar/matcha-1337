@@ -97,7 +97,7 @@ function Chat (){
                 }
             });
         }
-        setTimeout(insertmsg, 1000);
+        setTimeout(insertmsg, 300);
         return (
             clearTimeout()
         )
@@ -154,13 +154,13 @@ function Chat (){
     , []);
     
     socket.on('new_message', function(data){
-        if (data?.to === me && data?.from === to)
-        {
-            setChat(chat?.concat(data));
-        }
-        else
-        {
-        }
+    if (data?.to === me && data?.from === to)
+    {
+        setChat(chat?.concat(data));
+    }
+    else
+    {
+    }
     });
     const lasTtime = chat?.[chat?.length - 1];
     return(
@@ -192,7 +192,7 @@ function Chat (){
                                             {listmatched.id === to  && lasTtime?.content.length > 0 ? 
                                             <div className="lastseen">
                                                 <h3 className={lasTtime?.vu === 1 ? 'lastmg' : ''}>{me === lasTtime?.from ? 'You : ' : ''}{lasTtime?.content.length < 7 ? lasTtime?.content : lasTtime?.content.substr(0,7) + '...'}</h3>
-                                                    <Moment className='lastmg' fromNow>{lasTtime?.msgtime}</Moment>
+                                                    <Moment className='lastmg'fromNow >{lasTtime?.msgtime}</Moment>
                                             </div>
                                             :
                                             ''

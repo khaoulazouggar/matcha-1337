@@ -12,7 +12,6 @@ router.post("/", isUserAuth, (req, res) => {
     if (err) {
       res.send({ err: err });
     }
-    // console.log(result[0].liked)
     else {
  
       //add likes
@@ -30,9 +29,8 @@ router.post("/", isUserAuth, (req, res) => {
                 if (err) {
                   res.send({ err: err });
                 } else if (resp.length === 0) {
-                  console.log("not matched");
+                  
                 } else if (resp.length > 0) {
-                  console.log("matched");
                   db.query(
                     "insert into matchedusers (firstuser,lastuser) values(?,?)",
                     [id, result[0].id]

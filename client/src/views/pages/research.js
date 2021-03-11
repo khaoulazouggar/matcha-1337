@@ -82,9 +82,6 @@ const useStyles = makeStyles({
     }
   }
 });
-function valuetext(value) {
-  return `${value}°C`;
-}
 function Research(){
 
   const classes = useStyles();
@@ -153,8 +150,6 @@ function Research(){
         history.push("/login");
       } else {
         setMe(res.data);
-        // setAge([calcAge(res.data[0].birthday ) - 5, calcAge(res.data[0].birthday ) + 15]);
-            // console.log(res);
       }
     }); // eslint-disable-next-line
   }, []);
@@ -210,7 +205,6 @@ function Research(){
               onChange={ageChange}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
             />
             </div>
         </div>
@@ -226,7 +220,6 @@ function Research(){
                 onChange={locationChange}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
-                getAriaValueText={valuetext}
               />
           </div>
         </div>
@@ -242,7 +235,6 @@ function Research(){
                 onChange={tagsChange}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
-                getAriaValueText={valuetext}
               />
           </div>
         </div>

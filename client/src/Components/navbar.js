@@ -14,8 +14,8 @@ import Badge from '@material-ui/core/Badge';
 
 
 function Navbar() {
-  const history = useHistory();
-  const [token, setToken] = useState("");
+const history = useHistory();
+const [token, setToken] = useState("");
 const [userlogged, setuserlogged] = useState("");
 const [anchorEl, setAnchorEl] = useState(null);
 const [notifmsg, setNotifmsg] = useState(false);

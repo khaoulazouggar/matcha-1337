@@ -47,8 +47,9 @@ const http = require("http");
 const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io = socketIo(server, {
+  transports: ['websocket', 'polling'],
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -85,7 +86,7 @@ io.on("connection", function(socket)  {
         }
         else
         {
-          // socket.broadcast.emit('makaynch', profile_name)
+
         }
       });
   });
@@ -93,12 +94,11 @@ io.on("connection", function(socket)  {
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
       {
-          socket.broadcast.emit('new_message', data);
+            socket.broadcast.emit('new_message', data);
           // socket.broadcast.emit('notification_message', data);
       }
       else
       {
-        
       }
     })
   })
@@ -111,6 +111,7 @@ io.on("connection", function(socket)  {
       });
     }
 })
+
 })
 
 app.use(cors());
