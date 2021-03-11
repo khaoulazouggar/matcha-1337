@@ -48,7 +48,6 @@ router.post("/", isUserAuth, (req, res) => {
                         "delete from matchedusers where firstuser = ? and lastuser = ? or firstuser = ? and lastuser = ?",
                         [id, result[0].id, result[0].id, id]
                       );
-                      console.log("deleted");
                     }
                   }
                 );
@@ -61,7 +60,6 @@ router.post("/", isUserAuth, (req, res) => {
                       db.query(
                         "delete from chat where `from` = ? and `to` = ? or `from` = ? and `to` = ?",
                         [id, result[0].id,result[0].id,id])
-                        console.log("delete chat");
                         
                     }
                   }

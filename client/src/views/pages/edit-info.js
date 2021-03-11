@@ -171,7 +171,6 @@ function EditInfo(props) {
       unmount = true;
     }; // eslint-disable-next-line
   }, [history, done]);
-
   return (
     <div className="rightE">
       <h1>Edit Account</h1>

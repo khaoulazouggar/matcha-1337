@@ -100,9 +100,7 @@ router.post("/", isUserAuth, (req, res) => {
                 } else if (rsl.length > 0) {
                   db.query(
                     "delete from matchedusers where firstuser = ? and lastuser = ? or firstuser = ? and lastuser = ?",
-                    [id, result[0].id,result[0].id,id])
-                    console.log("deleted");
-                    
+                    [id, result[0].id,result[0].id,id])                    
                 }
               }
             );
@@ -114,9 +112,7 @@ router.post("/", isUserAuth, (req, res) => {
                 } else if (rsl.length > 0) {
                   db.query(
                     "delete from chat where `from` = ? and `to` = ? or `from` = ? and `to` = ?",
-                    [id, result[0].id,result[0].id,id])
-                    console.log("delete chat");
-                    
+                    [id, result[0].id,result[0].id,id])                    
                 }
               }
             );

@@ -79,6 +79,7 @@ function Profile(props) {
   }, []);
 
   useEffect(() => {
+    const getInfos = () => {
     let unmount = false;
     if (done) {
       if (profilename) {
@@ -209,6 +210,11 @@ function Profile(props) {
     return () => {
       unmount = true;
     };
+  }
+  setTimeout(getInfos,  500);
+    return (
+          clearTimeout()
+      )
     // eslint-disable-next-line
   }, [history, profilename, done]);
   // console.log(tags[0].value);
@@ -341,7 +347,7 @@ function Profile(props) {
             />
           </div>
           <br />
-          <div style={{ color: "#0e10109c", display:"flex"}}><FiberManualRecordIcon className={online === true ? 'online' : 'offline'}></FiberManualRecordIcon>{
+          <div style={{  display:"flex"}}><FiberManualRecordIcon className={online === true ? 'online' : 'offline'}></FiberManualRecordIcon>{
           online === true ? 'online' : 
           <Moment className='lastmg' fromNow>{online === false ? lastconnection : ''}</Moment>
           }

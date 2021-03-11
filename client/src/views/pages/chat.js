@@ -73,28 +73,34 @@ function Chat (){
             
         }
         else {
-        axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date(), to_username: tousername})
-        .then((response) => {
-            if (response.data.sendMsg === 'done')
-            {
-                console.log('msg is done');
-                let newValue = {content: msg,
-                    from: from,
-                    msgtime: new Date(),
-                    to: to,
-                    vu: 0,
-                    to_username: tousername,
+        const insertmsg = () => {
+            axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date(), to_username: tousername})
+            .then((response) => {
+                if (response.data.sendMsg === 'done')
+                {
+                    console.log('msg is done');
+                    let newValue = {content: msg,
+                        from: from,
+                        msgtime: new Date(),
+                        to: to,
+                        vu: 0,
+                        to_username: tousername,
+                    }
+                    let push = chat?.concat(newValue);
+                    setChat(push);
+                    setMsg('');
+                    socket.emit('send_message', newValue);
                 }
-                let push = chat?.concat(newValue);
-                setChat(push);
-                setMsg('');
-                socket.emit('send_message', newValue);
-            }
-            else
-            {
-                console.log(response.data.err);
-            }
-        });
+                else if (response.data.sendMsg === 'reload')
+                {
+                    window.location.href = "/chat";
+                }
+            });
+        }
+        setTimeout(insertmsg, 1000);
+        return (
+            clearTimeout()
+        )
     }
     }
     function viewfreinds (){
@@ -120,36 +126,42 @@ function Chat (){
         });
     }
     useEffect(() => {
-    
-        axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-        } else {
-                setMe(res.data[0]?.id)
-      }
-    });
-    
-    axios.get("http://localhost:3001/getmatcheduser", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-        } else {
-            setMatch(res.data);
-      }
-    });
+        const getInfos = () => {
+            axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                    localStorage.removeItem("token");
+                    history.push("/login");
+                } else {
+                        setMe(res.data[0]?.id)
+                    }
+                });
+            
+            axios.get("http://localhost:3001/getmatcheduser", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                    localStorage.removeItem("token");
+                    history.push("/login");
+                } else {
+                    setMatch(res.data);
+              }
+            }); 
+        }
+        setTimeout(getInfos, 500);
+        return (
+            clearTimeout()
+        )
     }
     // eslint-disable-next-line
     , []);
-    // console.log(chat);
     
     socket.on('new_message', function(data){
-    if (data?.from === to && data?.to === me)
-    {
-        setChat( chat?.concat(data));
+        if (data?.to === me && data?.from === to)
+        {
+            setChat(chat?.concat(data));
         }
-    })
-    // if (!chat) return <div></div>
+        else
+        {
+        }
+    });
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">

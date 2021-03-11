@@ -167,6 +167,7 @@ function Research(){
       setUsers(people);
     
   }
+  if (!users) return <div></div>;
   return(
     <div className="filter">
       <div className="undraw-div">

@@ -170,6 +170,7 @@ function Research(){
       people = people.filter(items => items.id !== id);
       setUsers(people);
   }
+  if (!users) return <div></div>;
   return(
     <div className="filter">
       <div className="undraw-div">
