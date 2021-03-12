@@ -322,7 +322,6 @@ function Profile(props) {
         .then((response) => {
             if (response.data.status === true)
             {
-                
             }
             else
             {

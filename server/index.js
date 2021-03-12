@@ -95,7 +95,7 @@ io.on("connection", function(socket)  {
       if (reply !== null)
       {
             socket.broadcast.emit('new_message', data);
-          // socket.broadcast.emit('notification_message', data);
+            socket.broadcast.emit('notification_message', data?.to_username);
       }
       else
       {

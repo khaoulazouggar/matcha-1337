@@ -59,9 +59,9 @@ useEffect(() => {
     socket.emit('userconnected', userlogged)
     socket.on('dis', usrname =>{
     })
-    socket.on('notification_message', function(data) {
+    socket.on('notification_message', function(username) {
       // const name = document.URL.substring(document.URL.lastIndexOf('/') + 1);
-      if  (data?.to_username === userlogged)
+      if  (username=== userlogged)
       {
         setNotifmsg(true);
         setnotifCountmsg(notifcountmsg + 1)

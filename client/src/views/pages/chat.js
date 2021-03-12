@@ -50,9 +50,9 @@ border:{
     margin: '0',
 },
 });
-const URL = "http://localhost:3001";
-const socket = socketIOClient(URL);
 function Chat (){
+    const URL = "http://localhost:3001";
+    const socket = socketIOClient(URL); 
     const history = useHistory();
     const classes = useStyles();
     const[to, setTo] = useState();
