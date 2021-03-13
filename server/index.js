@@ -41,6 +41,8 @@ const updateLastseen = require("./user/updateLastSeen");
 const getmatchedusr = require("./user/getmacheduser");
 const getmsg = require("./user/getmsg");
 const getusername = require("./user/getusername");
+const removeNotificaion = require("./user/removenotification");
+const notification = require("./user/notification")
 const redis = require("redis");
 const client = redis.createClient({ detect_buffers: true });
 const http = require("http");
@@ -55,7 +57,6 @@ const io = socketIo(server, {
 });
 
 io.on("connection", function(socket)  {
-
     socket.on('userconnected', function(username){
       var usr = username
       if (usr)
@@ -119,6 +120,8 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/images", express.static("./images"));
 app.use("/register", register);
 app.use("/getusername", getusername);
+app.use("/removeNotificaion", removeNotificaion);
+app.use("/notification", notification);
 app.use("/getmatcheduser", getmatchedusr);
 app.use("/totalMatched", totalMatched);
 app.use("/updateLastseen", updateLastseen);
