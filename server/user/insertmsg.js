@@ -20,6 +20,10 @@ router.post("/", (req, res) => {
           }
           if (result)
           {
+            db.query(
+              "INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values (?, ?, ?, ?)",
+                [from, to, 'received a message', new Date()]
+            );
             res.send({sendMsg : 'done'})
           }
         });

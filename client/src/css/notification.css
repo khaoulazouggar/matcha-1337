@@ -10,7 +10,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 40%;
+    width: 70%;
 }
 .stylenotif img {
     width: 50px;
@@ -21,9 +21,21 @@
     color: red !important;
     cursor: pointer;
 }
-
+.stylenotif h3 {
+    width: 23%;
+    text-align: center;
+}
 @media only screen and (max-width: 768px) {
     .stylenotif {
-        width: 80%;
+        width: 100%;
+    }
+    .stylenotif a {
+        margin: 8px;
+    }
+    .stylenotif p {
+        text-align: center;
+    }
+    .stylenotif h3 {
+        width: 55%;
     }
 }

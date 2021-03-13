@@ -35,6 +35,10 @@ router.post("/", isUserAuth, (req, res) => {
                     "insert into matchedusers (firstuser,lastuser) values(?,?)",
                     [id, result[0].id]
                   );
+                  db.query(
+                    "INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values (?, ?, ?, ?)",
+                    [id, result[0].id, 'liked back', new Date()]
+                  );
                 }
               })
             db.query(
@@ -75,7 +79,11 @@ router.post("/", isUserAuth, (req, res) => {
                         "insert into likes (liker, liked) values (?, ?)",
                         [id, result[0].id]
                       );
-                      res.send("apdated");
+                      db.query(
+                        "INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values (?, ?, ?, ?)",
+                        [id, result[0].id, 'liked you', new Date()]
+                      );
+                      res.send("updated");
                     }
                   }
                 );
@@ -98,7 +106,11 @@ router.post("/", isUserAuth, (req, res) => {
                 } else if (rsl.length > 0) {
                   db.query(
                     "delete from matchedusers where firstuser = ? and lastuser = ? or firstuser = ? and lastuser = ?",
-                    [id, result[0].id,result[0].id,id])                    
+                    [id, result[0].id,result[0].id,id])
+                  db.query(
+                    "INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values (?, ?, ?, ?)",
+                      [id, result[0].id, 'unliked you', new Date()]
+                  );
                 }
               }
             );

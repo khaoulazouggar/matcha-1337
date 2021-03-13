@@ -1,7 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import "../../css/notification.css"
 import axios from "axios";
-import rihana from "../../photos/test.jpeg"
 import { useHistory, Link } from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
@@ -30,7 +29,6 @@ function Notification (){
                 console.log('error');
             }
         });
-        console.log(id)
     }
       useEffect(() => {
     axios.get("http://localhost:3001/notification", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
@@ -48,12 +46,12 @@ function Notification (){
                 notif?.map((notification, index) => (
                 <div  className="stylenotif" key={index}>
                     <img
-                        src={rihana}
+                        src={"http://localhost:3001/images/" + notification?.profilePic}
                         alt="aa"
                     />
-                    <h3>{notification?.from} is liked you</h3>
-                    <p>{moment("2021-03-12T17:17:00.695Z").fromNow()}</p>
-                    <Link to="/profile/karroch">viewd profile</Link>
+                    <h3>{notification?.username + "  " + notification?.subject}</h3>
+                    <p>{moment(notification?.time).fromNow()}</p>
+                    <Link to={"/profile/" + notification?.username}>viewd profile</Link>
                     <DeleteIcon className="delete"  onClick={() => removeNotification(notification?.id)}></DeleteIcon>
                 </div>
            ))}

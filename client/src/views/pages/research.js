@@ -153,13 +153,44 @@ function Research(){
       }
     }); // eslint-disable-next-line
   }, []);
-  
+  function compareArray(a, b)
+  {
+      var res = 0;
+      for(var i=0;i<a.length;i++) 
+      {
+        for (var x = 0; x < b.length; x++)
+        {
+          if (a[i] === b[x])
+          {
+            res++;
+          }
+        }
+      }
+      return res;
+  }
+  var meTags = me[0]?.tags;
+  let meTag = [];
+  if (meTags)
+  {
+    meTags = JSON.parse(meTags)
+    meTags.map(tag => meTag.push(tag.label))
+  }
+  // console.log(meTag)
   const items = [...users];
   var people = items.map(usr => {
       usr.age = calcAge(usr.birthday);
       usr.location = computeDistance([me[0]?.latitude, me[0]?.longitude], [usr.latitude, usr.longitude])
+  
+      let allTags = JSON.parse(usr.tags)
+      usr.allTags = [];
+      allTags.map(tag => usr.allTags.push(tag.label))
+      if (usr.allTags && meTags)
+      {
+        usr.tasgCount = compareArray(usr.allTags, meTag)
+      }
       return usr;
   });
+  console.log(people)
   function removeInSearch(id)
   {
       people = people.filter(items => items.id !== id);
@@ -249,14 +280,14 @@ function Research(){
             colorSecondary: classes.radio,}} />} label="Location" />
           <FormControlLabel value="rating" control={<Radio classes={{checked: classes.checked,
             colorSecondary: classes.radio,}} />} label="Fame Rating" />
-          <FormControlLabel value="tags" control={<Radio  classes={{checked: classes.checked,
+          <FormControlLabel value="tasgCount" control={<Radio  classes={{checked: classes.checked,
             colorSecondary: classes.radio,}} />} label="Tags" />
         </RadioGroup>
       </FormControl>
       </div>
       <div className="resulte">
       {
-        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating && person.tasgCount >= tags[0] && person.tasgCount <= tags[1]).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -280,6 +311,7 @@ function Research(){
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                           <Rating name="read-only" value={filterPerson.rating}  precision={0.5} readOnly />
+                          <p></p>
                         </Box>
                     </CardActionArea>
                     <div className="icons">
