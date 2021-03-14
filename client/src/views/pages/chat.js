@@ -10,7 +10,7 @@ import Moment from 'react-moment';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import  socketIOClient  from "socket.io-client";
+import { socketConn as socket } from 'tools/socket_con'
 
 const useStyles = makeStyles({
 chat: {
@@ -50,14 +50,12 @@ border:{
     margin: '0',
 },
 });
-const URL = "http://localhost:3001";
-const socket = socketIOClient(URL); 
 function Chat (){
-   
+    // const URL = "http://localhost:3001";
+    // const socket = socketIOClient(URL); 
     const history = useHistory();
     const classes = useStyles();
     const[to, setTo] = useState();
-    const[meUsername, setMeusername] = useState();
     const [msg, setMsg] = useState();
     const [me, setMe] = useState();
     const [chat, setChat] = useState();
@@ -75,12 +73,10 @@ function Chat (){
             
         }
         else {
-        const insertmsg = () => {
             axios.post('http://localhost:3001/insertmsg', {msgfrom : from, msgto : to, msgcontent: msg, msgtime : new Date(), to_username: tousername})
             .then((response) => {
                 if (response.data.sendMsg === 'done')
                 {
-                    console.log('msg is done');
                     let newValue = {content: msg,
                         from: from,
                         msgtime: new Date(),
@@ -99,11 +95,6 @@ function Chat (){
                 }
             });
         }
-        setTimeout(insertmsg, );
-        return (
-            clearTimeout()
-        )
-    }
     }
     function viewfreinds (){
         setclassStatus(0);
@@ -128,6 +119,10 @@ function Chat (){
         });
     }
     useEffect(() => {
+        socket.on('new_message', function(data){
+            setChat((oldchat)=> oldchat?.concat(data))
+            // console.log(data)
+        });
         const getInfos = () => {
             axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
                 if (res.data === "U failed to authenticate" || res.data === "we need a token") {
@@ -135,7 +130,6 @@ function Chat (){
                     history.push("/login");
                 } else {
                         setMe(res.data[0]?.id)
-                        setMeusername(res.data[0]?.username)
                     }
                 });
             
@@ -155,14 +149,6 @@ function Chat (){
     }
     // eslint-disable-next-line
     , []);
-    
-    if(meUsername)
-    {
-        socket.on('new_message' + meUsername, function(data){
-                setChat(chat?.concat(data));
-                console.log(data)
-        });
-    }
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">

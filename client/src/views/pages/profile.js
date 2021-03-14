@@ -11,9 +11,9 @@ import BlockIcon from "@material-ui/icons/Block";
 import FlagRoundedIcon from "@material-ui/icons/FlagRounded";
 import { useParams } from "react-router-dom";
 import MapWithAMarker from "../../Components/googleMap";
-import  socketIOClient  from "socket.io-client";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Moment from 'react-moment';
+import { socketConn as socket } from 'tools/socket_con'
 
 function Profile(props) {
   const [username, setusername] = useState("");
@@ -300,8 +300,8 @@ function Profile(props) {
   // #ec1212cc red
   // #5961f9ad purple
   // #e8bb11 yellow
-  const URL = "http://localhost:3001";
-  const socket = socketIOClient(URL);
+  // const URL = "http://localhost:3001";
+  // const socket = socketIOClient(URL);
   socket.emit('stateOfuser', profilename)
   socket.on('online', function(data)
   {
@@ -311,6 +311,7 @@ function Profile(props) {
     }
     else
     {
+      
     }
   })
   socket.on('offline', function(name){

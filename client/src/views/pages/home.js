@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserFriends, faEye} from '@fortawesome/free-solid-svg-icons';
 import countapi from 'countapi-js';
 import axios from "axios";
-import  socketIOClient  from "socket.io-client";
+import { socketConn as socket } from 'tools/socket_con'
 
-const URL = "http://localhost:3001";
-const socket = socketIOClient(URL);
+// const URL = "http://localhost:3001";
+// const socket = socketIOClient(URL);
 function Home() {
     const [visit, setVisits] = useState();
     const [onlineUsers, setOnlineUsers] = useState();

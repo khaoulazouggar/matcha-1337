@@ -7,11 +7,10 @@ import { useHistory } from "react-router-dom";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
-import  socketIOClient  from "socket.io-client";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Badge from '@material-ui/core/Badge';
-
+import { socketConn as socket } from 'tools/socket_con'
 
 function Navbar() {
 const history = useHistory();
@@ -54,18 +53,15 @@ useEffect(() => {
 }, [token]);
   if (token)
   {
-    const URL = "http://localhost:3001";
-    const socket = socketIOClient(URL);
+    // const URL = "http://localhost:3001";
+    // const socket = socketIOClient(URL);
     socket.emit('userconnected', userlogged)
     socket.on('dis', usrname =>{
     })
-    socket.on('notification_message' + userlogged, function(username) {
-      // const name = document.URL.substring(document.URL.lastIndexOf('/') + 1);
-      if  (username=== userlogged)
-      {
+    socket.on('notification_message', function(username) {
         setNotifmsg(true);
         setnotifCountmsg(notifcountmsg + 1)
-      }
+        console.log(username)
     })
   }
   function Notification (){

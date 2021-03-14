@@ -39,6 +39,7 @@ const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
 const updateLastseen = require("./user/updateLastSeen");
 const getmatchedusr = require("./user/getmacheduser");
+// require('events').EventEmitter.prototype._maxListeners = 100;
 const getmsg = require("./user/getmsg");
 const getusername = require("./user/getusername");
 const removeNotificaion = require("./user/removenotification");
@@ -46,6 +47,7 @@ const notification = require("./user/notification")
 const redis = require("redis");
 const client = redis.createClient({ detect_buffers: true });
 const http = require("http");
+let users = {}
 const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -57,13 +59,13 @@ const io = socketIo(server, {
 });
 
 io.on("connection", function(socket)  {
-  console.log("Aa");
     socket.on('userconnected', function(username){
       var usr = username
       if (usr)
       {
-        client.set(username, socket.id);
-        client.dbsize(function(err, nuMkey){
+          users[username] = socket
+          client.set(username, socket.id);
+          client.dbsize(function(err, nuMkey){
           socket.broadcast.emit('usersOnline', nuMkey);
         });
         socket.broadcast.emit('online', usr);
@@ -84,7 +86,7 @@ io.on("connection", function(socket)  {
       client.get(profile_name, function(err, reply) {
         if (reply !== null)
         {
-          socket.broadcast.emit('online', profile_name);
+          socket.emit('online', profile_name);
         }
         else
         {
@@ -95,9 +97,9 @@ io.on("connection", function(socket)  {
     socket.on('send_message', function(data){
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
-      {
-            socket.broadcast.emit('new_message' + data?.to_username, data);
-            socket.broadcast.emit('notification_message' + data?.to_username, data?.to_username);
+      { 
+            users[data?.to_username].emit('new_message', data);
+            users[data?.to_username].emit('notification_message', data?.to_username);
       }
       else
       {
@@ -114,7 +116,7 @@ io.on("connection", function(socket)  {
     }
 })
 
-})
+}).setMaxListeners(0)
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
