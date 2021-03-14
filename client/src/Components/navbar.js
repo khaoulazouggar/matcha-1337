@@ -59,7 +59,7 @@ useEffect(() => {
     socket.emit('userconnected', userlogged)
     socket.on('dis', usrname =>{
     })
-    socket.on('notification_message', function(username) {
+    socket.on('notification_message' + userlogged, function(username) {
       // const name = document.URL.substring(document.URL.lastIndexOf('/') + 1);
       if  (username=== userlogged)
       {

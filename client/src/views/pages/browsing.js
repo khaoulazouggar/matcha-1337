@@ -19,7 +19,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useHistory } from "react-router-dom";
 
@@ -156,9 +155,41 @@ function Research(){
     });
     // eslint-disable-next-line
   }, []);
+  function compareArray(a, b)
+  {
+      var res = 0;
+      for(var i=0;i<a.length;i++) 
+      {
+        for (var x = 0; x < b.length; x++)
+        {
+          if (a[i] === b[x])
+          {
+            res++;
+          }
+        }
+      }
+      return res;
+  }
+  var meTags = me[0]?.tags;
+  let meTag = [];
+  if (meTags)
+  {
+    meTags = JSON.parse(meTags)
+    meTags.map(tag => meTag.push(tag.label))
+  }
+  // console.log(meTag)
   const items = [...users];
   var people = items.map(usr => {
       usr.age = calcAge(usr.birthday);
+      usr.location = computeDistance([me[0]?.latitude, me[0]?.longitude], [usr.latitude, usr.longitude])
+  
+      let allTags = JSON.parse(usr.tags)
+      usr.allTags = [];
+      allTags.map(tag => usr.allTags.push(tag.label))
+      if (usr.allTags && meTags)
+      {
+        usr.tasgCount = compareArray(usr.allTags, meTag)
+      }
       return usr;
   });
   function removeInSearch(id)
@@ -254,14 +285,14 @@ function Research(){
             colorSecondary: classes.radio,}} />} label="Location" />
           <FormControlLabel value="rating" control={<Radio classes={{checked: classes.checked,
             colorSecondary: classes.radio,}} />} label="Fame Rating" />
-          <FormControlLabel value="tags" control={<Radio  classes={{checked: classes.checked,
+          <FormControlLabel value="tasgCount" control={<Radio  classes={{checked: classes.checked,
             colorSecondary: classes.radio,}} />} label="Tags" />
         </RadioGroup>
       </FormControl>
       </div>
       <div className="resulte">
       {
-        people.filter(person => person.age >= age[0] && person.age <= age[1] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) >= location[0] && computeDistance([me[0]?.latitude, me[0]?.longitude], [person.latitude, person.longitude]) <= location[1] && person.rating >= 0 && person.rating <= rating).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating && person.tasgCount >= tags[0] && person.tasgCount <= tags[1]).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >
@@ -277,20 +308,18 @@ function Research(){
                         className={classes.CardContent}
                         >
                           <Typography gutterBottom variant="h5" component="h2">
-                          {filterPerson.firstname}{" "}{filterPerson.lastname}
+                          {filterPerson?.firstname}{" "}{filterPerson?.lastname}
                             <br></br>
-                            {computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0,4)}Km
                           </Typography>
+                          <p>{filterPerson?.location.toString().substr(0,4)}Km</p>
                           <p>{filterPerson.age} years old</p>
                         </CardContent>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                           <Rating name="read-only" value={filterPerson.rating}  precision={0.5} readOnly />
+                          <p></p>
                         </Box>
                     </CardActionArea>
                     <div className="icons">
-                      <FavoriteIcon 
-                            className={classes.FavoriteIcon}
-                      />
                       <HighlightOffIcon
                         className={classes.FavoriteIcon}
                         onClick={() => removeInSearch(filterPerson.id)}

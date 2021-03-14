@@ -57,6 +57,7 @@ const io = socketIo(server, {
 });
 
 io.on("connection", function(socket)  {
+  console.log("Aa");
     socket.on('userconnected', function(username){
       var usr = username
       if (usr)
@@ -95,8 +96,8 @@ io.on("connection", function(socket)  {
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
       {
-            socket.broadcast.emit('new_message', data);
-            socket.broadcast.emit('notification_message', data?.to_username);
+            socket.broadcast.emit('new_message' + data?.to_username, data);
+            socket.broadcast.emit('notification_message' + data?.to_username, data?.to_username);
       }
       else
       {

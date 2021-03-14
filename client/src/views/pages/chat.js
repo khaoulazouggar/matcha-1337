@@ -50,12 +50,14 @@ border:{
     margin: '0',
 },
 });
+const URL = "http://localhost:3001";
+const socket = socketIOClient(URL); 
 function Chat (){
-    const URL = "http://localhost:3001";
-    const socket = socketIOClient(URL); 
+   
     const history = useHistory();
     const classes = useStyles();
     const[to, setTo] = useState();
+    const[meUsername, setMeusername] = useState();
     const [msg, setMsg] = useState();
     const [me, setMe] = useState();
     const [chat, setChat] = useState();
@@ -97,7 +99,7 @@ function Chat (){
                 }
             });
         }
-        setTimeout(insertmsg, 300);
+        setTimeout(insertmsg, );
         return (
             clearTimeout()
         )
@@ -133,6 +135,7 @@ function Chat (){
                     history.push("/login");
                 } else {
                         setMe(res.data[0]?.id)
+                        setMeusername(res.data[0]?.username)
                     }
                 });
             
@@ -153,15 +156,13 @@ function Chat (){
     // eslint-disable-next-line
     , []);
     
-    socket.on('new_message', function(data){
-    if (data?.to === me && data?.from === to)
+    if(meUsername)
     {
-        setChat(chat?.concat(data));
+        socket.on('new_message' + meUsername, function(data){
+                setChat(chat?.concat(data));
+                console.log(data)
+        });
     }
-    else
-    {
-    }
-    });
     const lasTtime = chat?.[chat?.length - 1];
     return(
         <div className="center-chat">

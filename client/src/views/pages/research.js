@@ -19,7 +19,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useHistory } from "react-router-dom";
 
@@ -87,7 +86,7 @@ function Research(){
   const classes = useStyles();
   const [age, setAge] = useState([0, 0]);
   const [location, setLocation] = useState([0, 0]);
-  const [tags, setTags] = useState([0, 5]);
+  const [tags, setTags] = useState([0, 0]);
   const [rating, setRating] = useState(0);
   const [sort, setSort] = useState('age');
   const history = useHistory();
@@ -190,7 +189,6 @@ function Research(){
       }
       return usr;
   });
-  console.log(people)
   function removeInSearch(id)
   {
       people = people.filter(items => items.id !== id);
@@ -315,9 +313,6 @@ function Research(){
                         </Box>
                     </CardActionArea>
                     <div className="icons">
-                      <FavoriteIcon 
-                            className={classes.FavoriteIcon}
-                      />
                       <HighlightOffIcon
                         className={classes.FavoriteIcon}
                         onClick={() => removeInSearch(filterPerson.id)}
