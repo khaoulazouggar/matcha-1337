@@ -242,7 +242,7 @@ function Profile(props) {
           localStorage.removeItem("token");
           history.push("/login");
         } else {
-          console.log(res.data);
+          socket.emit("setLike", profilename)
         }
       });
   };

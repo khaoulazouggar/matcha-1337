@@ -74,8 +74,11 @@ li{
     background-color: #5961f9ad;
     cursor: pointer;
 }
-.chat_icons{
-    margin-top: 5px;
+.disableicons{
+    display: none !important;
+}
+.chat_icons div{
+    display: flex;
 }
 @media only screen and (max-width: 768px) {
     .nav-list {
@@ -89,5 +92,8 @@ li{
         flex-direction: row;
         justify-content: center;
         align-items: center;
+    }
+    .iconStyle{
+        margin-top: 0px !important;
     }
 }

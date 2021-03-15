@@ -15,6 +15,7 @@ function Home() {
     const [visit, setVisits] = useState();
     const [onlineUsers, setOnlineUsers] = useState();
     const [totalMatched, setTotalmatched] = useState([]);
+    const [me, setMe] = useState('');
     const [subscribers, setSubscribers] = useState([]);
     useEffect( () => {
          countapi.visits().then((result) => {
@@ -26,6 +27,14 @@ function Home() {
           axios.get("http://localhost:3001/totalMatched").then((res) => {
             setTotalmatched(res.data);
           });
+          axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                setMe(false)
+            } else {
+                setMe(true);
+            }
+    });
       },[]);
       socket.emit('getUsersOnline', 'true');
       socket.on('usersOnline', function(data){
@@ -41,6 +50,7 @@ function Home() {
                 <p>
                 We are here to build emotion, connect people and create happy stories.Online dating sites are the way to go for people seeking love or to meet singles while they don’t know where to find them. There are lots of online dating sites available which makes it .
                 </p>
+            {me === false ?
             <Link to="/register">
                 <Button
                     variant="contained"
@@ -49,6 +59,16 @@ function Home() {
                     Get started
                 </Button>
             </Link>
+            :  
+            <Link to="/browsing">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    >
+                    Find matching user
+                </Button>
+            </Link>
+            }
             </div>
             <div className="image">
                 <img 

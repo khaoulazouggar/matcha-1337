@@ -39,7 +39,6 @@ const getusers = require("./user/getusers");
 const insertmsg = require("./user/insertmsg");
 const updateLastseen = require("./user/updateLastSeen");
 const getmatchedusr = require("./user/getmacheduser");
-// require('events').EventEmitter.prototype._maxListeners = 100;
 const getmsg = require("./user/getmsg");
 const getusername = require("./user/getusername");
 const removeNotificaion = require("./user/removenotification");
@@ -49,6 +48,7 @@ const client = redis.createClient({ detect_buffers: true });
 const http = require("http");
 let users = {}
 const socketIo = require("socket.io");
+const { use } = require("bcrypt/promises");
 const server = http.createServer(app);
 const io = socketIo(server, {
   transports: ['websocket', 'polling'],
@@ -97,7 +97,7 @@ io.on("connection", function(socket)  {
     socket.on('send_message', function(data){
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
-      { 
+      {
             users[data?.to_username].emit('new_message', data);
             users[data?.to_username].emit('notification_message', data?.to_username);
       }
@@ -115,6 +115,9 @@ io.on("connection", function(socket)  {
       });
     }
 })
+    socket.on("setLike", function(data){
+    users[data].emit("notification_Like", data)
+  })
 
 }).setMaxListeners(0)
 

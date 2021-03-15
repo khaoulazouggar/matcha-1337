@@ -25,12 +25,19 @@ const [notifcount, setnotifCount] = useState(0);
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
 };
-
 const handleClose = () => {
   setAnchorEl(null);
 };
 
 useEffect(() => {
+  socket.on('notification_message', function(username) {
+      setNotifmsg(true);
+      setnotifCountmsg((oldchat)=> oldchat + 1)
+  })
+  socket.on('notification_Like', function(username) {
+    setNotif(true);
+    setnotifCount((oldchat)=> oldchat + 1)
+})
   let unmount = false
   if(!unmount){
     setToken(localStorage.getItem("token"));
@@ -44,26 +51,14 @@ useEffect(() => {
           history.push("/");
         } else {
           setuserlogged(res.data);
+          socket.emit('userconnected', res.data)
         }
       });
   }
   return () => {
     unmount = true
   }// eslint-disable-next-line
-}, [token]);
-  if (token)
-  {
-    // const URL = "http://localhost:3001";
-    // const socket = socketIOClient(URL);
-    socket.emit('userconnected', userlogged)
-    socket.on('dis', usrname =>{
-    })
-    socket.on('notification_message', function(username) {
-        setNotifmsg(true);
-        setnotifCountmsg(notifcountmsg + 1)
-        console.log(username)
-    })
-  }
+}, []);
   function Notification (){
       history.push('/notification');
       setNotif(false);
@@ -93,13 +88,18 @@ useEffect(() => {
       </div>
       <nav>
         <ul className="nav-mobile">
-          <li>
-              {!token ? '' : <NotificationsIcon className="notification" onClick={Notification}> </NotificationsIcon>}
+        <li>
+      {
+      !token ? '' : 
+        <Badge color={notif === true ? `secondary` : 'primary'}  badgeContent={notif === true ? notifcount : ''}><NotificationsIcon className="notification" onClick={Notification}>
+        </NotificationsIcon></Badge>
+        }
           </li>
-          <li className ="chat_icons">
-            {!token ? '' : <Link to={!token ? "" : "/chat"} className="notification">
-            <svg viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
-            </Link>}
+          <li className="chat_icons">
+            {!token ? '' :  <Badge color={notifmsg === true ? `secondary` : 'primary'}  badgeContent={notifmsg === true ? notifcountmsg : ''}>
+            <svg className="notification" onClick={Notificationmsg}viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
+            </Badge>
+            }
           </li>
           {token ? 
           <li>
@@ -149,9 +149,9 @@ useEffect(() => {
         }
           </li>
           <li className="chat_icons">
-            {!token ? '' :  <Badge color={notifmsg === true ? `secondary` : 'primary'}  badgeContent={notifmsg === true ? notifcountmsg : ''}>
-            <svg className="notification" onClick={Notificationmsg}viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
-            </Badge>
+            {!token ? '' :  <div><svg className="notification" onClick={Notificationmsg}viewBox="0 0 28 28" alt=""  height="20" width="20"><path d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"></path></svg>
+            <Badge color={notifmsg === true ? `secondary` : 'primary'} className={notifmsg === true ? '' : 'disableicons'} badgeContent={notifmsg === true ? notifcountmsg : ''}> </Badge>
+            </div>
             }
           </li>
           {token ?
