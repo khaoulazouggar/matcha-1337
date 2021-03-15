@@ -48,6 +48,9 @@ const useStyles = makeStyles({
   sort : {
     flexDirection: 'row',
   },
+  CardContent:{
+    textAlign: "center",
+  },
   radio: {
     "&$checked": {
       color: "#5961f9ad"
@@ -152,7 +155,7 @@ function Unblock(){
     <div className="filter">
       <div className="undraw-div">
         <div>
-            <h3>Welecome {me[0]?.username}</h3>
+            <h3>Welcome {me[0]?.username}</h3>
             <p> </p>
         </div>
         <div>

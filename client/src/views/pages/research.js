@@ -179,7 +179,6 @@ function Research(){
   var people = items.map(usr => {
       usr.age = calcAge(usr.birthday);
       usr.location = computeDistance([me[0]?.latitude, me[0]?.longitude], [usr.latitude, usr.longitude])
-  
       let allTags = JSON.parse(usr.tags)
       usr.allTags = [];
       allTags.map(tag => usr.allTags.push(tag.label))
@@ -199,7 +198,7 @@ function Research(){
     <div className="filter">
       <div className="undraw-div">
         <div>
-            <h3>Welecome {me[0]?.username}</h3>
+            <h3>Welcome {me[0]?.username}</h3>
             <p> </p>
         </div>
         <div>
