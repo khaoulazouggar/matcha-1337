@@ -95,7 +95,7 @@ function Research(){
   const history = useHistory();
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState('');
-  const [genderLooking, setgenderLooking] = useState('');
+  // const [genderLooking, setgenderLooking] = useState('');
   // const [dis, setDis] = useState([]);
 
   function computeDistance([prevLat, prevLong], [lat, long]) {
@@ -155,7 +155,7 @@ function Research(){
         setMe(res.data);
         setAge([calcAge(res.data[0]?.birthday) - 5, calcAge(res.data[0]?.birthday ) + 15]);
         setRating(res.data[0]?.rating + 3);
-        setgenderLooking(res.data[0]?.genderLooking);
+        // setgenderLooking(res.data[0]?.genderLooking);
       }
     });
     // eslint-disable-next-line
@@ -297,7 +297,7 @@ function Research(){
       </div>
       <div className="resulte">
       {
-        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating && person.tasgCount >= tags[0] && person.tasgCount <= tags[1] && genderLooking === person.gender).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
+        people.filter(person => person.age >= age[0] && person.location >= location[0] && person.location <= location[1] && person.rating >= 0 && person.rating <= rating && person.tasgCount >= tags[0] && person.tasgCount <= tags[1]).sort((a, b) => (a[sort] - b[sort])).map((filterPerson, index) =>(
               <div className={classes.res} key={index}>
                   <Card
                   >

@@ -7,7 +7,6 @@ import About from "./views/pages/about";
 import Home from "./views/pages/home";
 import Chat from "./views/pages/chat";
 import Unblock from "./views/pages/block";
-import Research from "./views/pages/research";
 import Browsing from "./views/pages/browsing";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
@@ -40,10 +39,6 @@ function App() {
           <Route path="/chat">
           <Navbar />
             <Chat />
-          </Route>
-          <Route path="/research">
-          <Navbar />
-            <Research />
           </Route>
           <Route path="/unblock">
           <Navbar />

@@ -115,7 +115,6 @@ useEffect(() => {
             >
               <MenuItem onClick={handleClose}><Link className="notification" to={'/profile/' + userlogged}>Profile</Link></MenuItem>
               <MenuItem onClick={handleClose}><Link className="notification"  to='/edit'>Edit</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link className="notification"  to='/research'>Research</Link></MenuItem>
               <MenuItem onClick={handleClose}><Link className="notification"  to='/browsing'>Browsing</Link></MenuItem>
               <MenuItem onClick={handleClose}><Link className="notification"  to='/history'>History</Link></MenuItem>
               <MenuItem onClick={handleClose}><Link className="notification"  to='/unblock'>Blacklist</Link></MenuItem>
@@ -156,9 +155,6 @@ useEffect(() => {
           </li>
           {token ?
           <div>
-            <li>
-                <Link to='/research' className="text-s" >Research</Link>
-            </li>
             <li>
               <Link to='/browsing' className="text-s" >Browsing</Link>
             </li>
