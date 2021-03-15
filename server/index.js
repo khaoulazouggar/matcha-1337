@@ -99,8 +99,11 @@ io.on("connection", function(socket)  {
     client.get(data?.to_username, function(err, reply) {
       if (reply !== null)
       {
+        if (users[data?.to_username])
+        {
             users[data?.to_username].emit('new_message', data);
             users[data?.to_username].emit('notification_message', data?.to_username);
+        }
       }
       else
       {

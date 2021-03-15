@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
         db.query(sqlInsert, [from, to, content, time, to_username], (err, result) => {
           if (err)
           {
-            res.send({err : err})
+            res.send({status : 'msg is so long'})
           }
           if (result)
           {

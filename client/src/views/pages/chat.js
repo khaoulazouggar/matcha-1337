@@ -11,6 +11,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import { socketConn as socket } from 'tools/socket_con'
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles({
 chat: {
@@ -88,6 +89,15 @@ function Chat (){
                     setChat(push);
                     setMsg('');
                     socket.emit('send_message', newValue);
+                }
+                else if (response.data.status === "msg is so long")
+                {
+                    Swal.fire({
+                        icon: "error",
+                        text: "the msg is so long or content is not accepte",
+                        showConfirmButton: false,
+                        heightAuto: false,
+                      });
                 }
                 else if (response.data.sendMsg === 'reload')
                 {
