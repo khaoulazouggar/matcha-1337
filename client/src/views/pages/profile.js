@@ -14,6 +14,7 @@ import MapWithAMarker from "../../Components/googleMap";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Moment from 'react-moment';
 import { socketConn as socket } from 'tools/socket_con'
+import Swal from "sweetalert2";
 
 function Profile(props) {
   const [username, setusername] = useState("");
@@ -97,6 +98,10 @@ function Profile(props) {
                 history.push("/login");
               } else if (res.data === "user logged") {
                 setUserlogged(1);
+              }
+              else
+              {
+                socket.emit("viewed your profile", profilename)
               }
             }
           });
@@ -226,7 +231,11 @@ function Profile(props) {
       setReport("#5961f9ad");
     } else if (like === "#5961f9ad" && block === "#ec1212cc")
       setLike("#5961f9ad");
-    else if (like === "#5961f9ad") setLike("#ec1212cc");
+      
+    else if (like === "#5961f9ad")
+    {
+      setLike("#ec1212cc");
+    }
     else setLike("#5961f9ad");
     axios
       .post(
@@ -241,8 +250,26 @@ function Profile(props) {
         ) {
           localStorage.removeItem("token");
           history.push("/login");
-        } else {
-          socket.emit("setLike", profilename)
+        }
+        else if (res.data === "unliked")
+        {
+          socket.emit("unliked", profilename);
+        }
+        else if (res.data === "updated")
+        {
+          socket.emit("setLike", profilename);
+        }
+        else {
+          // console.log(res.data);
+          if(res.data === "user don't have a picture"){
+            setLike("#5961f9ad");
+            Swal.fire({
+              icon: "error",
+              text: "You must have a profile picture to complete this action",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          }
         }
       });
   };
@@ -300,6 +327,7 @@ function Profile(props) {
   // #ec1212cc red
   // #5961f9ad purple
   // #e8bb11 yellow
+
   // const URL = "http://localhost:3001";
   // const socket = socketIOClient(URL);
   socket.emit('stateOfuser', profilename)
@@ -421,9 +449,6 @@ function Profile(props) {
           {profile === 1 ? (
             <MapWithAMarker
               data={{ center, setCenter }}
-              // containerElement={<div style={{ height: `400px` }} />}
-              // mapElement={<div style={{ height: `100%` }} />}
-              // center={center}
             />
           ) : (
             ""

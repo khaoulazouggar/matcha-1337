@@ -65,7 +65,6 @@ function EditGallery(props) {
       showCancelButton: true,
       confirmButtonColor: "#cd4535",
       heightAuto: false,
-      showLoaderOnConfirm: true,
       iconColor: "#cd4535",
     }).then((result) => {
       if (result.isConfirmed) {

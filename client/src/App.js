@@ -19,6 +19,7 @@ import Confirm from "./views/Auth/confim";
 import Changepass from "./views/Auth/changepass";
 import Notification from "./views/pages/notification";
 import Profile from "./views/pages/profile";
+import History from "./views/pages/history";
 
 function App() {
   return (
@@ -66,6 +67,10 @@ function App() {
           <Route path="/steps">
             <Navbar />
             <Steps />
+          </Route>
+          <Route path="/history">
+            <Navbar />
+            <History />
           </Route>
           <Route exact path="/">
             <Navbar />

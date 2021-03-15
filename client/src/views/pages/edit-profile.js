@@ -37,9 +37,12 @@ function EditProfile(props) {
             Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
           }else if (res.data === "updated") {
             Swal.fire({ icon: "success", text: "Your profile has been successfully modified.", showConfirmButton: false ,heightAuto: false});}
-          else if(res.data === "data too long"){
-            Swal.fire({ icon: "error", text: "data too long", showConfirmButton: false ,heightAuto: false});
-          }
+            else if(res.data === "data too long"){
+              Swal.fire({ icon: "error", text: "data too long", showConfirmButton: false ,heightAuto: false});
+            }
+            else if(res.data === "Please enter a valid birthday"){
+              Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false ,heightAuto: false});
+            }
             // console.log(res.data);
         }
       });

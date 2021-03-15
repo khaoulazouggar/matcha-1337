@@ -31,6 +31,8 @@ const block = require("./user/block");
 const getblock = require("./user/getblock");
 const getposition = require("./user/getposition");
 const unblockUser = require("./user/unblockUsers");
+const gethistory = require("./user/gethistory");
+const deleteAccount = require("./user/deleteAccount");
 const subscribers = require("./user/subscribers");
 const getusersBlocked = require("./user/getUsersBlocked");
 const totalMatched = require("./user/totalMatched");
@@ -74,7 +76,7 @@ io.on("connection", function(socket)  {
           {
             client.del(usr);
             client.dbsize(function(err, nuMkey){
-              socket.broadcast.emit('usersOnline', nuMkey);
+            socket.broadcast.emit('usersOnline', nuMkey);
             });
           }
           var data = {usr : usr, lastseen : new Date()}
@@ -115,12 +117,36 @@ io.on("connection", function(socket)  {
     }
 })
     socket.on("setLike", function(data){
-    users[data].emit("notification_Like", data)
+      if (users[data])
+      {
+         users[data].emit("notification_Like", data)
+      }
+  })
+  socket.on("viewed your profile", function(data)
+  {
+    if (users[data])
+    {
+      users[data].emit("notification_viewed", data)
+    }
+  })
+  socket.on("unliked", function(data)
+  {
+    if (users[data])
+    {
+      users[data].emit("unliked", data)
+    }
+  })
+  socket.on("checkuser", function(data)
+  {
+    client.del(data);
+    var data = {usr : data, lastseen : new Date()}
+    socket.broadcast.emit('offline', data);
   })
 
 }).setMaxListeners(0)
 
 app.use(cors());
+
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/images", express.static("./images"));
 app.use("/register", register);
@@ -164,6 +190,8 @@ app.use("/block", block);
 app.use("/getBlock", getblock);
 app.use("/getusername", getusername);
 app.use("/getposition", getposition);
+app.use("/gethistory", gethistory);
+app.use("/deleteAccount", deleteAccount);
 
 server.listen(3001, () => {
   console.log("hello server");

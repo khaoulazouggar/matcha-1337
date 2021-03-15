@@ -38,6 +38,14 @@ useEffect(() => {
     setNotif(true);
     setnotifCount((oldchat)=> oldchat + 1)
 })
+socket.on('notification_viewed', function(username) {
+  setNotif(true);
+  setnotifCount((oldchat)=> oldchat + 1)
+})
+socket.on('unliked', function(username) {
+  setNotif(true);
+  setnotifCount((oldchat)=> oldchat + 1)
+})
   let unmount = false
   if(!unmount){
     setToken(localStorage.getItem("token"));
@@ -73,6 +81,7 @@ useEffect(() => {
     setToken("")
     if (token) localStorage.removeItem("token")
     else (setToken("")) 
+    socket.emit("checkuser", userlogged)
     history.push("/")
   }
   return (
@@ -162,7 +171,7 @@ useEffect(() => {
               <Link to='/unblock' className="text-s" >Blacklist</Link>
             </li>
             <li>
-              <Link to='/histroy' className="text-s" >History</Link>
+              <Link to='/history' className="text-s" >History</Link>
             </li>
           </div>
           : ''
