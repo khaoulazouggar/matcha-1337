@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import fb from "../../photos/fb.png";
-import google from "../../photos/google.png";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -133,18 +131,6 @@ function Register() {
             </Link>
             us.
           </p>
-
-          <span>
-            <p>Login with your social network</p>
-            <br />
-            <button className="media">
-              <img alt="" src={fb} />
-              Sign Up With Facebook
-            </button>
-            <button className="media">
-              <img alt="" src={google} />
-            </button>
-          </span>
         </div>
       </div>
 

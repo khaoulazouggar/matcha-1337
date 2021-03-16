@@ -10,7 +10,6 @@ import Unblock from "./views/pages/block";
 import Browsing from "./views/pages/browsing";
 import Edit from "./views/pages/edit";
 import Error from "./Components/error";
-import Footer from "./Components/footer";
 import Fgpass from "./views/Auth/fgpass";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Steps from "./Components/steps";
@@ -78,7 +77,6 @@ function App() {
           </Route>
           <Route path="*" component={Error} />
         </Switch>
-        <Footer />
       </div>
     </Router>
   );

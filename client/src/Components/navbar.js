@@ -143,7 +143,7 @@ socket.on('unliked', function(username) {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}><Link className="text-s" to='/login'>Login</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link className="text-s"  to='register'>Register</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link className="text-s"  to='/register'>Register</Link></MenuItem>
             </Menu>
             </div>
             }
@@ -187,8 +187,8 @@ socket.on('unliked', function(username) {
             </NavLink>
           </li>
           <li>
-            <button className="navbtn" onClick={() => click()}>
-              <Link className="text-sz" to={!token ? "/register" : "/"}>
+            <button className="navbtn" onClick={() => token ? click() : ''}>
+              <Link className="text-sz" to={!token ? '/register' : "/"}>
                 {!token ? "Register" : "Log out"}
               </Link>
             </button>

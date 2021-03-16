@@ -60,8 +60,8 @@ function EditGallery(props) {
   const handleRemoveItem = (e, image, auto) => {
     Swal.fire({
       icon: "warning",
-      text: 'Do you really want to delete this picture ?',
-      confirmButtonText: `Delete`,    
+      text: "Do you really want to delete this picture ?",
+      confirmButtonText: `Delete`,
       showCancelButton: true,
       confirmButtonColor: "#cd4535",
       heightAuto: false,
@@ -69,15 +69,9 @@ function EditGallery(props) {
     }).then((result) => {
       if (result.isConfirmed) {
         // console.log(e);
-        if(props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image){
-          props.data.setProfileImg([noUser])
-          axios
-          .post(
-            "http://localhost:3001/removeProfilePic",
-            { Img,e },
-            { headers: { "x-auth-token": localStorage.getItem("token") } }
-          )
-          .then((res) => {
+        if (props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image) {
+          props.data.setProfileImg([noUser]);
+          axios.post("http://localhost:3001/removeProfilePic", { Img, e }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
             if (res.data === "U failed to authenticate" || res.data === "we need a token") {
               localStorage.removeItem("token");
               history.push("/login");
@@ -87,46 +81,34 @@ function EditGallery(props) {
           });
         }
         setImg(Img.filter((item, i) => i !== e));
-        axios
-          .post(
-            "http://localhost:3001/removeimage",
-            { auto, image },
-            { headers: { "x-auth-token": localStorage.getItem("token") } }
-          )
-          .then((res) => {
-            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-              localStorage.removeItem("token");
-              history.push("/login");
-            } else {
-              // console.log(res.data);
-            }
-          });
-          Swal.fire({
-            icon: "success",
-            text: "Your picture has been successfully deleted.",
-            showConfirmButton: false,
-            heightAuto: false,
-          });
-      } 
-    })
-    
+        axios.post("http://localhost:3001/removeimage", { auto, image }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            // console.log(res.data);
+          }
+        });
+        Swal.fire({
+          icon: "success",
+          text: "Your picture has been successfully deleted.",
+          showConfirmButton: false,
+          heightAuto: false,
+        });
+      }
+    });
   };
   const handleDefaultItems = (e) => {
     // console.log("-----------", e, "---------", Img);
     props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
     // console.log(props.data);
 
-    axios
-      .post(
-        "http://localhost:3001/defaultimage",
-        {Img,e},
-        { headers: { "x-auth-token": localStorage.getItem("token") } }
-      )
-      .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {if(res.data === "done"){
+    axios.post("http://localhost:3001/defaultimage", { Img, e }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+        localStorage.removeItem("token");
+        history.push("/login");
+      } else {
+        if (res.data === "done") {
           // console.log(res.data);
           Swal.fire({
             icon: "success",
@@ -135,8 +117,8 @@ function EditGallery(props) {
             heightAuto: false,
           });
         }
-        }
-      });
+      }
+    });
   };
 
   const handleRemoveItems = (e) => {
@@ -165,19 +147,25 @@ function EditGallery(props) {
   };
 
   useEffect(() => {
+    let unmount = false;
     axios
       .get("http://localhost:3001/getImages", {
         headers: { "x-auth-token": localStorage.getItem("token") },
       })
       .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          setImg(res.data);
-          // console.log(res.data);
+        if (!unmount) {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            setImg(res.data);
+            // console.log(res.data);
+          }
         }
       });
+    return () => {
+      unmount = true;
+    };
   }, [history]);
   return (
     <div className="rightE">
@@ -187,12 +175,7 @@ function EditGallery(props) {
       <div>
         <div className="fileUpload">
           <div className="image-upload-wrap">
-            <input
-              className="file-upload-input"
-              type="file"
-              accept="image/*"
-              onChange={(e) => onDrop(e, e.target.files)}
-            />
+            <input className="file-upload-input" type="file" accept="image/*" onChange={(e) => onDrop(e, e.target.files)} />
             <div className="drag-text">
               <Upload style={{ paddingTop: "50px" }} size={40} />
               <h3> Drag And Drop At Most Five Images Here</h3>
@@ -204,11 +187,7 @@ function EditGallery(props) {
           {img.map((p, i) => (
             <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
               <img className="gallery-img" src={p} alt={p} key={p} />
-              <button
-                className="remove-image"
-                title="remove-image"
-                onClick={() => handleRemoveItems(i)}
-              >
+              <button className="remove-image" title="remove-image" onClick={() => handleRemoveItems(i)}>
                 <Trash2 size={20} />
               </button>
               {/* <button
@@ -222,23 +201,11 @@ function EditGallery(props) {
           ))}
           {Img.map((p, i) => (
             <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
-              <img
-                className="gallery-img"
-                src={"http://localhost:3001/images/" + p.image}
-                alt={p}
-              />
-              <button
-                className="remove-image"
-                title="remove-image"
-                onClick={() => handleRemoveItem(i, p.image, p.auto)}
-              >
+              <img className="gallery-img" src={"http://localhost:3001/images/" + p.image} alt={p} />
+              <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i, p.image, p.auto)}>
                 <Trash2 size={20} />
               </button>
-              <button
-                className="default-image"
-                title="default-image"
-                onClick={() => handleDefaultItems(i)}
-              >
+              <button className="default-image" title="default-image" onClick={() => handleDefaultItems(i)}>
                 <User size={20} />
               </button>
             </div>

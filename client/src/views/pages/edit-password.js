@@ -29,12 +29,13 @@ function EditPass() {
             history.push("/login");
           } else {
             if (res.data === "inccorect password" || res.data === "error") {
-              Swal.fire({ icon: "error", text: "Inccorect Password", showConfirmButton: false ,heightAuto: false});
-            }else if (res.data === "modified") {
-              setNpassword("")
-              setOpassword("")
-              setverifyNpassword("")
-              Swal.fire({ icon: "success", text: "Your password has been successfully modified.", showConfirmButton: false ,heightAuto: false});}
+              Swal.fire({ icon: "error", text: "Inccorect Password", showConfirmButton: false, heightAuto: false });
+            } else if (res.data === "modified") {
+              setNpassword("");
+              setOpassword("");
+              setverifyNpassword("");
+              Swal.fire({ icon: "success", text: "Your password has been successfully modified.", showConfirmButton: false, heightAuto: false });
+            }
             // console.log(res.data);
           }
         });
@@ -43,12 +44,9 @@ function EditPass() {
 
   useEffect(() => {
     if (Npassword && !isPassword(Npassword))
-      seterrNpassword(
-        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
-      );
+      seterrNpassword("Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
     else seterrNpassword("");
-    if (verifyNpassword && Npassword !== verifyNpassword)
-      seterrverifyNpassword("Verify Password is not valide");
+    if (verifyNpassword && Npassword !== verifyNpassword) seterrverifyNpassword("Verify Password is not valide");
     else seterrverifyNpassword("");
   }, [Npassword, verifyNpassword]);
   return (

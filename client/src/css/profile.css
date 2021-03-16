@@ -93,14 +93,14 @@
 .bioghraphie::-webkit-scrollbar {
   display: none;
 }
-.icons{
+.icons {
   width: 100%;
   display: flex;
   justify-content: space-around;
 }
 
-.icon:hover{
-cursor: pointer;
+.icon:hover {
+  cursor: pointer;
 }
 
 .stickers {
@@ -121,24 +121,24 @@ cursor: pointer;
   font-size: x-large;
 }
 
-.album{
-    display: flex;
-    flex-wrap: wrap;
+.album {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.inf{
-    font-weight: bold;
-    border-radius: 3px;
-    color: black;
+.inf {
+  font-weight: bold;
+  border-radius: 3px;
+  color: black;
 }
-.in{
-    color: #0e10109c;
+.in {
+  color: #0e10109c;
 }
-.online{
-  color:  #66ff66;
+.online {
+  color: #66ff66;
 }
-.offline{
-  color : rgba(236, 18, 18, 0.8);
+.offline {
+  color: rgba(236, 18, 18, 0.8);
 }
 @media only screen and (max-width: 1200px) {
   .profile {
@@ -165,5 +165,10 @@ cursor: pointer;
   .p1 {
     padding: 25px;
     box-sizing: border-box;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .info {
+    width: 105%;
   }
 }

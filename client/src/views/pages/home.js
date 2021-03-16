@@ -18,23 +18,32 @@ function Home() {
     const [me, setMe] = useState('');
     const [subscribers, setSubscribers] = useState([]);
     useEffect( () => {
+        let unmount = false
          countapi.visits().then((result) => {
+             if(!unmount)
             setVisits(result.value);
         });
         axios.get("http://localhost:3001/subscribers").then((res) => {
+            if(!unmount)
             setSubscribers(res.data);
           });
           axios.get("http://localhost:3001/totalMatched").then((res) => {
+            if(!unmount)
             setTotalmatched(res.data);
           });
           axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                localStorage.removeItem("token");
-                setMe(false)
-            } else {
-                setMe(true);
+            if(!unmount){
+                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                    localStorage.removeItem("token");
+                    setMe(false)
+                } else {
+                    setMe(true);
+                }
             }
     });
+    return () => {
+        unmount = true
+    }
       },[]);
       socket.emit('getUsersOnline', 'true');
       socket.on('usersOnline', function(data){
