@@ -88,7 +88,11 @@ function Unblock() {
 
     return (
       // In kilometers
-      6377.830272 * Math.acos(Math.sin(prevLatInRad) * Math.sin(latInRad) + Math.cos(prevLatInRad) * Math.cos(latInRad) * Math.cos(longInRad - prevLongInRad))
+      6377.830272 *
+      Math.acos(
+        Math.sin(prevLatInRad) * Math.sin(latInRad) +
+          Math.cos(prevLatInRad) * Math.cos(latInRad) * Math.cos(longInRad - prevLongInRad)
+      )
     );
   }
 
@@ -118,26 +122,30 @@ function Unblock() {
   useEffect(
     () => {
       let unmount = false;
-      axios.get("http://localhost:3001/getusersblocked", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            setUsers(res.data);
+      axios
+        .get("http://localhost:3001/getusersblocked", { headers: { "x-auth-token": localStorage.getItem("token") } })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setUsers(res.data);
+            }
           }
-        }
-      });
-      axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            setMe(res.data);
+        });
+      axios
+        .get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setMe(res.data);
+            }
           }
-        }
-      });
+        });
       return () => {
         unmount = true;
       };
@@ -166,12 +174,22 @@ function Unblock() {
           <div className={classes.res} key={index}>
             <Card>
               <CardActionArea className={classes.card}>
-                <img alt="profile" className="research_image" src={"http://localhost:3001/images/" + filterPerson?.profilePic} />
+                <img
+                  alt="profile"
+                  className="research_image"
+                  src={"http://localhost:3001/images/" + filterPerson?.profilePic}
+                />
                 <CardContent className={classes.CardContent}>
                   <Typography gutterBottom variant="h5" component="h2">
                     {filterPerson.firstname} {filterPerson.lastname}
                     <br></br>
-                    {computeDistance([me[0]?.latitude, me[0]?.longitude], [filterPerson.latitude, filterPerson.longitude]).toString().substr(0, 4)}Km
+                    {computeDistance(
+                      [me[0]?.latitude, me[0]?.longitude],
+                      [filterPerson.latitude, filterPerson.longitude]
+                    )
+                      .toString()
+                      .substr(0, 4)}
+                    Km
                   </Typography>
                   <p>{filterPerson.age} years old</p>
                 </CardContent>

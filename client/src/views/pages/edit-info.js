@@ -19,13 +19,16 @@ function EditInfo(props) {
   const [done, setdone] = useState(0);
 
   useEffect(() => {
-    if (Nfirstname && !isName(Nfirstname) && Nfirstname.length < 24) seterrNfirstname("First name is not valide (minimum is 3 letters)");
+    if (Nfirstname && !isName(Nfirstname) && Nfirstname.length < 24)
+      seterrNfirstname("First name is not valide (minimum is 3 letters)");
     else if (Nfirstname.length > 24) seterrNfirstname("First name is too long (maximum is 24 letters)");
     else seterrNfirstname("");
-    if (Nlastname && !isName(Nlastname) && Nlastname.length < 24) seterrNlastname("Last Name is not valide (minimum is 3 letters)");
+    if (Nlastname && !isName(Nlastname) && Nlastname.length < 24)
+      seterrNlastname("Last Name is not valide (minimum is 3 letters)");
     else if (Nlastname.length > 24) seterrNlastname("Last name is too long (maximum is 24 letters)");
     else seterrNlastname("");
-    if (Nusername && !isUsername(Nusername) && Nusername.length < 24) seterrNusername("Username is not valide (minimum is 3 characters)");
+    if (Nusername && !isUsername(Nusername) && Nusername.length < 24)
+      seterrNusername("Username is not valide (minimum is 3 characters)");
     else if (Nusername.length > 24) seterrNusername("Username is too long (maximum is 24 characters)");
     else seterrNusername("");
     if (Nemail && !isEmail(Nemail)) seterrNemail("Email is not valide");
@@ -40,7 +43,16 @@ function EditInfo(props) {
     if (!Nusername) seterrNusername("Username should not be empty");
 
     if (!Nemail) seterrNemail("Email should not be empty");
-    if (Nusername && Nfirstname && Nlastname && Nemail && !errNusername && !errNfirstname && !errNlastname && !errNemail)
+    if (
+      Nusername &&
+      Nfirstname &&
+      Nlastname &&
+      Nemail &&
+      !errNusername &&
+      !errNfirstname &&
+      !errNlastname &&
+      !errNemail
+    )
       axios
         .post(
           "http://localhost:3001/edit",
@@ -135,7 +147,8 @@ function EditInfo(props) {
               setNusername(res.data[0].username);
               setNemail(res.data[0].email);
               // console.log(res.data);
-              if (res.data[0].profilePic) props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+              if (res.data[0].profilePic)
+                props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
             }
           }
         });

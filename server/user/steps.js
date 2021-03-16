@@ -55,7 +55,12 @@ router.post("/", isUserAuth, (req, res) => {
 
   if (img.length <= 5 && img.length !== 0 && yourGender && genderLooking && birthday && notes && tags.length) {
     if (birthday >= "2010-12-31") res.send("Please enter a valid birthday");
-    else {
+    if (JSON.stringify(tags)?.length > 250 || notes?.length > 100) {
+      // console.log(JSON.stringify(tags)?.length);
+      // console.log(notes?.length);
+      // console.log("hnaaaa");
+      res.send("data too long");
+    } else {
       const id = req.userId;
 
       saveImages(img, id)
@@ -63,38 +68,29 @@ router.post("/", isUserAuth, (req, res) => {
           resl.map((i) => {
             db.query("INSERT INTO images (image, id) VALUES (?,?)", [i, id]);
           });
-          db.query("SELECT tags, bio FROM users WHERE id = ?", id, (err, resp) => {
-            if (err) {
-              res.send({ err: err });
-            }
-            // if (resp.length > 0) {
-            if (JSON?.stringify(tags)?.length + resp[0]?.tags?.length > 300 || resp[0]?.bio?.length + notes?.length > 100) {
-              // console.log(JSON.stringify(tags)?.length + resp[0]?.tags?.length);
-              // console.log(resp[0]?.bio?.length + notes?.length);
-              res.send("data too long");
-            } else {
-              if (
-                db.query("UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?", [
-                  yourGender,
-                  genderLooking,
-                  birthday,
-                  notes,
-                  JSON.stringify(tags),
-                  resl[profileImg],
-                  latitude,
-                  longitude,
-                  city,
-                  id,
-                ])
-              ) {
-                // console.log("done");
-                res.send("done");
-              } else {
-                // console.log("error");
-              }
-            }
-            // }
-          });
+
+          if (
+            db.query(
+              "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?",
+              [
+                yourGender,
+                genderLooking,
+                birthday,
+                notes,
+                JSON.stringify(tags),
+                resl[profileImg],
+                latitude,
+                longitude,
+                city,
+                id,
+              ]
+            )
+          ) {
+            // console.log("done");
+            res.send("done");
+          } else {
+            // console.log("error");
+          }
         })
         .catch((err) => {
           // console.log(err)

@@ -34,7 +34,12 @@ function EditPass() {
               setNpassword("");
               setOpassword("");
               setverifyNpassword("");
-              Swal.fire({ icon: "success", text: "Your password has been successfully modified.", showConfirmButton: false, heightAuto: false });
+              Swal.fire({
+                icon: "success",
+                text: "Your password has been successfully modified.",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
             }
             // console.log(res.data);
           }
@@ -44,7 +49,9 @@ function EditPass() {
 
   useEffect(() => {
     if (Npassword && !isPassword(Npassword))
-      seterrNpassword("Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+      seterrNpassword(
+        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
     else seterrNpassword("");
     if (verifyNpassword && Npassword !== verifyNpassword) seterrverifyNpassword("Verify Password is not valide");
     else seterrverifyNpassword("");

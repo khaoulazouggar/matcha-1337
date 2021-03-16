@@ -104,7 +104,11 @@ function Research() {
 
     return (
       // In kilometers
-      6377.830272 * Math.acos(Math.sin(prevLatInRad) * Math.sin(latInRad) + Math.cos(prevLatInRad) * Math.cos(latInRad) * Math.cos(longInRad - prevLongInRad))
+      6377.830272 *
+      Math.acos(
+        Math.sin(prevLatInRad) * Math.sin(latInRad) +
+          Math.cos(prevLatInRad) * Math.cos(latInRad) * Math.cos(longInRad - prevLongInRad)
+      )
     );
   }
 
@@ -133,30 +137,34 @@ function Research() {
   }
   useEffect(() => {
     let unmount = false;
-    axios.get("http://localhost:3001/getusers", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (!unmount) {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          setUsers(res.data);
-          // console.log(res);
+    axios
+      .get("http://localhost:3001/getusers", { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+        if (!unmount) {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            setUsers(res.data);
+            // console.log(res);
+          }
         }
-      }
-    });
-    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (!unmount) {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          setMe(res.data);
-          setAge([calcAge(res.data[0]?.birthday) - 5, calcAge(res.data[0]?.birthday) + 15]);
-          setRating(res.data[0]?.rating + 3);
-          // setgenderLooking(res.data[0]?.genderLooking);
+      });
+    axios
+      .get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+        if (!unmount) {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            setMe(res.data);
+            setAge([calcAge(res.data[0]?.birthday) - 5, calcAge(res.data[0]?.birthday) + 15]);
+            setRating(res.data[0]?.rating + 3);
+            // setgenderLooking(res.data[0]?.genderLooking);
+          }
         }
-      }
-    });
+      });
     return () => {
       unmount = true;
     };
@@ -213,7 +221,13 @@ function Research() {
         <div className="child">
           <Box component="fieldset" mb={3} borderColor="transparent" className={classes.rating}>
             <Typography component="legend">Fame Rating</Typography>
-            <Rating name="simple-controlled" precision={0.5} value={rating} onChange={ratingChange} emptyIcon={<StarBorderIcon fontSize="inherit" />} />
+            <Rating
+              name="simple-controlled"
+              precision={0.5}
+              value={rating}
+              onChange={ratingChange}
+              emptyIcon={<StarBorderIcon fontSize="inherit" />}
+            />
           </Box>
         </div>
         <div className="child">
@@ -221,7 +235,15 @@ function Research() {
             <Typography id="range-slider" gutterBottom>
               Age
             </Typography>
-            <Slider value={age} min={18} max={100} onChange={ageChange} valueLabelDisplay="auto" aria-labelledby="range-slider" getAriaValueText={valuetext} />
+            <Slider
+              value={age}
+              min={18}
+              max={100}
+              onChange={ageChange}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaValueText={valuetext}
+            />
           </div>
         </div>
         <div className="child">
@@ -229,7 +251,15 @@ function Research() {
             <Typography id="range-slider" gutterBottom>
               Location (Km)
             </Typography>
-            <Slider value={location} min={0} max={200} onChange={locationChange} valueLabelDisplay="auto" aria-labelledby="range-slider" getAriaValueText={valuetext} />
+            <Slider
+              value={location}
+              min={0}
+              max={200}
+              onChange={locationChange}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaValueText={valuetext}
+            />
           </div>
         </div>
         <div className="child">
@@ -237,7 +267,15 @@ function Research() {
             <Typography id="range-slider" gutterBottom>
               Interests Tags
             </Typography>
-            <Slider value={tags} min={0} max={5} onChange={tagsChange} valueLabelDisplay="auto" aria-labelledby="range-slider" getAriaValueText={valuetext} />
+            <Slider
+              value={tags}
+              min={0}
+              max={5}
+              onChange={tagsChange}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              getAriaValueText={valuetext}
+            />
           </div>
         </div>
       </div>
@@ -245,10 +283,26 @@ function Research() {
         <FormControl component="fieldset">
           <FormLabel component="legend">Sort by</FormLabel>
           <RadioGroup aria-label="Sort" name="sort" value={sort} onChange={sortChange} className={classes.sort}>
-            <FormControlLabel value="age" control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />} label="Age" />
-            <FormControlLabel value="location" control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />} label="Location" />
-            <FormControlLabel value="rating" control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />} label="Fame Rating" />
-            <FormControlLabel value="tasgCount" control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />} label="Tags" />
+            <FormControlLabel
+              value="age"
+              control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />}
+              label="Age"
+            />
+            <FormControlLabel
+              value="location"
+              control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />}
+              label="Location"
+            />
+            <FormControlLabel
+              value="rating"
+              control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />}
+              label="Fame Rating"
+            />
+            <FormControlLabel
+              value="tasgCount"
+              control={<Radio classes={{ checked: classes.checked, colorSecondary: classes.radio }} />}
+              label="Tags"
+            />
           </RadioGroup>
         </FormControl>
       </div>
@@ -269,7 +323,11 @@ function Research() {
             <div className={classes.res} key={index}>
               <Card>
                 <CardActionArea className={classes.card}>
-                  <img alt="profile" className="research_image" src={"http://localhost:3001/images/" + filterPerson?.profilePic} />
+                  <img
+                    alt="profile"
+                    className="research_image"
+                    src={"http://localhost:3001/images/" + filterPerson?.profilePic}
+                  />
                   <CardContent className={classes.CardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {filterPerson?.firstname} {filterPerson?.lastname}

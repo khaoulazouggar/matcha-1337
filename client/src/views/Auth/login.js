@@ -31,7 +31,11 @@ function Login() {
         // .then((response) =>console.log(response))
         .then((response) => {
           // console.log(response.data)
-          if (response.data.message === "Wrong combination!" || response.data.message === "User Dosen't exist" || response.data.message === "error") {
+          if (
+            response.data.message === "Wrong combination!" ||
+            response.data.message === "User Dosen't exist" ||
+            response.data.message === "error"
+          ) {
             Swal.fire({
               icon: "error",
               text: "Wrong Username Or Password",
@@ -68,7 +72,8 @@ function Login() {
           <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
-            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking love.
+            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go
+            for people seeking love.
             <br />
             <br />
             Get to know more

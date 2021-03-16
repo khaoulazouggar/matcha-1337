@@ -30,7 +30,13 @@ function Edit(props) {
       <div className="editing">
         <div className="left-edit">
           <div style={ProfileImg[0] ? { border: "none" } : {}} className="edit-pic">
-            <img className="editImg" style={ProfileImg[0] ? {} : { display: "none" }} src={ProfileImg} alt={ProfileImg} key={ProfileImg} />
+            <img
+              className="editImg"
+              style={ProfileImg[0] ? {} : { display: "none" }}
+              src={ProfileImg}
+              alt={ProfileImg}
+              key={ProfileImg}
+            />
           </div>
           <div className="edit">
             <span className="edit-child" onClick={() => setRight(1)} style={Right === 1 ? { color: "#7971b8" } : {}}>

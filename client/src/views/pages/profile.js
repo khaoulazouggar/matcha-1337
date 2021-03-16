@@ -205,27 +205,29 @@ function Profile(props) {
     else if (like === "#5961f9ad") {
       setLike("#ec1212cc");
     } else setLike("#5961f9ad");
-    axios.post("http://localhost:3001/like", { username }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else if (res.data === "unliked") {
-        socket.emit("unliked", profilename);
-      } else if (res.data === "updated") {
-        socket.emit("setLike", profilename);
-      } else {
-        // console.log(res.data);
-        if (res.data === "user don't have a picture") {
-          setLike("#5961f9ad");
-          Swal.fire({
-            icon: "error",
-            text: "You must have a profile picture to complete this action",
-            showConfirmButton: false,
-            heightAuto: false,
-          });
+    axios
+      .post("http://localhost:3001/like", { username }, { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else if (res.data === "unliked") {
+          socket.emit("unliked", profilename);
+        } else if (res.data === "updated") {
+          socket.emit("setLike", profilename);
+        } else {
+          // console.log(res.data);
+          if (res.data === "user don't have a picture") {
+            setLike("#5961f9ad");
+            Swal.fire({
+              icon: "error",
+              text: "You must have a profile picture to complete this action",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          }
         }
-      }
-    });
+      });
   };
   const handelBlock = () => {
     if (like === "#ec1212cc" && block === "#5961f9ad") {
@@ -233,16 +235,18 @@ function Profile(props) {
       setLike("#5961f9ad");
     } else if (block === "#5961f9ad") setBlock("#ec1212cc");
     else setBlock("#5961f9ad");
-    axios.post("http://localhost:3001/block", { username }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else {
-        // console.log(res.data);
-        //add it or not ???????
-        window.location.href = "/error";
-      }
-    });
+    axios
+      .post("http://localhost:3001/block", { username }, { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          // console.log(res.data);
+          //add it or not ???????
+          window.location.href = "/error";
+        }
+      });
   };
   const handelReport = () => {
     if (report === "#5961f9ad" && like === "#ec1212cc") {
@@ -250,14 +254,20 @@ function Profile(props) {
       setLike("#5961f9ad");
     } else if (report === "#5961f9ad") setReport("#e8bb11");
     else setReport("#5961f9ad");
-    axios.post("http://localhost:3001/report", { username }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else {
-        // console.log(res.data);
-      }
-    });
+    axios
+      .post(
+        "http://localhost:3001/report",
+        { username },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          // console.log(res.data);
+        }
+      });
   };
 
   // #ec1212cc red
@@ -277,12 +287,14 @@ function Profile(props) {
     if (name?.usr === profilename) {
       setOnline(false);
       setlastConnection(name?.lastseen);
-      axios.post("http://localhost:3001/updateLastseen", { username: profilename, newdate: new Date() }).then((response) => {
-        if (response.data.status === true) {
-        } else {
-          // console.log(response.data.err);
-        }
-      });
+      axios
+        .post("http://localhost:3001/updateLastseen", { username: profilename, newdate: new Date() })
+        .then((response) => {
+          if (response.data.status === true) {
+          } else {
+            // console.log(response.data.err);
+          }
+        });
     } else {
     }
   });
@@ -297,7 +309,11 @@ function Profile(props) {
           <br />
           <div style={{ display: "flex", alignItems: "center" }}>
             <FiberManualRecordIcon className={online === true ? "online" : "offline"}></FiberManualRecordIcon>
-            {online === true ? "online" : <p className="lastmg">{moment(online === false ? lastconnection : "").fromNow()}</p>}
+            {online === true ? (
+              "online"
+            ) : (
+              <p className="lastmg">{moment(online === false ? lastconnection : "").fromNow()}</p>
+            )}
           </div>
           <br />
           <Rating name="half-rating-read" value={parseFloat(rating)} precision={0.5} readOnly />

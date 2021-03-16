@@ -27,16 +27,18 @@ function Notification() {
   useEffect(
     () => {
       let unmount = false;
-      axios.get("http://localhost:3001/notification", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            setNotif(res.data);
+      axios
+        .get("http://localhost:3001/notification", { headers: { "x-auth-token": localStorage.getItem("token") } })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setNotif(res.data);
+            }
           }
-        }
-      });
+        });
       return () => {
         unmount = true;
       };

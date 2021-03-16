@@ -17,10 +17,7 @@ function History() {
         })
         .then((res) => {
           if (!unmount) {
-            if (
-              res.data === "U failed to authenticate" ||
-              res.data === "we need a token"
-            ) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
               localStorage.removeItem("token");
               history.push("/login");
             } else {

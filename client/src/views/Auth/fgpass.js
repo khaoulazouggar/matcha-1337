@@ -48,8 +48,8 @@ function Fgpass() {
           <h1 className="fgp">Forgotten Your Password?</h1>
 
           <p>
-            For security reasons, we do NOT store your password. So rest assured that we will never
-            send your password via email.
+            For security reasons, we do NOT store your password. So rest assured that we will never send your password
+            via email.
           </p>
         </div>
       </div>
@@ -57,10 +57,7 @@ function Fgpass() {
       <div className="right-fgp">
         <br />
         <br />
-        <p>
-          Enter the email address you used when you joined and we’ll send you instructions to reset
-          your password.
-        </p>
+        <p>Enter the email address you used when you joined and we’ll send you instructions to reset your password.</p>
         <div className="inputs">
           <input
             className="inpt"

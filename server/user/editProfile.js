@@ -22,10 +22,10 @@ router.post("/", isUserAuth, (req, res) => {
       ) {
         res.send("nothing changed");
         // console.log("nothing changed");
-      } else if (JSON.stringify(tags).length + result[0].tags.length > 300 || result[0].bio.length + notes.length > 100) {
+      } else if (JSON.stringify(tags).length > 200 || notes.length > 100) {
         // console.log(JSON.stringify(tags).length + result[0].tags.length);
         // console.log(result[0].bio.length + notes.length);
-        // console.log("data too long")
+        // console.log("data too long");
         res.send("data too long");
       } else if (birthday >= "2010-12-31") {
         res.send("Please enter a valid birthday");

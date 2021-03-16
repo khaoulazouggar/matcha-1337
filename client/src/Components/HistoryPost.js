@@ -23,7 +23,10 @@ export const HistoryPost = (props) => {
       <div className="data-info">
         <div className="indata-info">
           <span className="infoData">
-            You viewed the profile of  <Link  to={"/profile/" + props.post.username} style={{color: "#7871b8e6"}} >{props.post.username}</Link>
+            You viewed the profile of{" "}
+            <Link to={"/profile/" + props.post.username} style={{ color: "#7871b8e6" }}>
+              {props.post.username}
+            </Link>
           </span>
         </div>
       </div>

@@ -71,7 +71,29 @@ function EditGallery(props) {
         // console.log(e);
         if (props.data.ProfileImg === "http://localhost:3001/images/" + Img[e].image) {
           props.data.setProfileImg([noUser]);
-          axios.post("http://localhost:3001/removeProfilePic", { Img, e }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
+          axios
+            .post(
+              "http://localhost:3001/removeProfilePic",
+              { Img, e },
+              { headers: { "x-auth-token": localStorage.getItem("token") } }
+            )
+            .then((res) => {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else {
+                // console.log(res.data);
+              }
+            });
+        }
+        setImg(Img.filter((item, i) => i !== e));
+        axios
+          .post(
+            "http://localhost:3001/removeimage",
+            { auto, image },
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
             if (res.data === "U failed to authenticate" || res.data === "we need a token") {
               localStorage.removeItem("token");
               history.push("/login");
@@ -79,16 +101,6 @@ function EditGallery(props) {
               // console.log(res.data);
             }
           });
-        }
-        setImg(Img.filter((item, i) => i !== e));
-        axios.post("http://localhost:3001/removeimage", { auto, image }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            // console.log(res.data);
-          }
-        });
         Swal.fire({
           icon: "success",
           text: "Your picture has been successfully deleted.",
@@ -103,22 +115,28 @@ function EditGallery(props) {
     props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
     // console.log(props.data);
 
-    axios.post("http://localhost:3001/defaultimage", { Img, e }, { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else {
-        if (res.data === "done") {
-          // console.log(res.data);
-          Swal.fire({
-            icon: "success",
-            text: "Your profile picture has been successfully modified.",
-            showConfirmButton: false,
-            heightAuto: false,
-          });
+    axios
+      .post(
+        "http://localhost:3001/defaultimage",
+        { Img, e },
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
+      )
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          if (res.data === "done") {
+            // console.log(res.data);
+            Swal.fire({
+              icon: "success",
+              text: "Your profile picture has been successfully modified.",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          }
         }
-      }
-    });
+      });
   };
 
   const handleRemoveItems = (e) => {
@@ -175,7 +193,12 @@ function EditGallery(props) {
       <div>
         <div className="fileUpload">
           <div className="image-upload-wrap">
-            <input className="file-upload-input" type="file" accept="image/*" onChange={(e) => onDrop(e, e.target.files)} />
+            <input
+              className="file-upload-input"
+              type="file"
+              accept="image/*"
+              onChange={(e) => onDrop(e, e.target.files)}
+            />
             <div className="drag-text">
               <Upload style={{ paddingTop: "50px" }} size={40} />
               <h3> Drag And Drop At Most Five Images Here</h3>
@@ -202,7 +225,11 @@ function EditGallery(props) {
           {Img.map((p, i) => (
             <div style={{ width: "227px", height: "227px" }} className="test" key={i}>
               <img className="gallery-img" src={"http://localhost:3001/images/" + p.image} alt={p} />
-              <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i, p.image, p.auto)}>
+              <button
+                className="remove-image"
+                title="remove-image"
+                onClick={() => handleRemoveItem(i, p.image, p.auto)}
+              >
                 <Trash2 size={20} />
               </button>
               <button className="default-image" title="default-image" onClick={() => handleDefaultItems(i)}>

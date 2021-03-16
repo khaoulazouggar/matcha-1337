@@ -68,24 +68,32 @@ function Chat() {
     document.getElementById("outlined-basic").value = "";
     if (msg?.trim() === "") {
     } else {
-      axios.post("http://localhost:3001/insertmsg", { msgfrom: from, msgto: to, msgcontent: msg, msgtime: new Date(), to_username: tousername }).then((response) => {
-        if (response.data.sendMsg === "done") {
-          let newValue = { content: msg, from: from, msgtime: new Date(), to: to, vu: 0, to_username: tousername };
-          let push = chat?.concat(newValue);
-          setChat(push);
-          setMsg("");
-          socket.emit("send_message", newValue);
-        } else if (response.data.status === "msg is so long") {
-          Swal.fire({
-            icon: "error",
-            text: "the msg is so long or content is not accepte",
-            showConfirmButton: false,
-            heightAuto: false,
-          });
-        } else if (response.data.sendMsg === "reload") {
-          window.location.href = "/chat";
-        }
-      });
+      axios
+        .post("http://localhost:3001/insertmsg", {
+          msgfrom: from,
+          msgto: to,
+          msgcontent: msg,
+          msgtime: new Date(),
+          to_username: tousername,
+        })
+        .then((response) => {
+          if (response.data.sendMsg === "done") {
+            let newValue = { content: msg, from: from, msgtime: new Date(), to: to, vu: 0, to_username: tousername };
+            let push = chat?.concat(newValue);
+            setChat(push);
+            setMsg("");
+            socket.emit("send_message", newValue);
+          } else if (response.data.status === "msg is so long") {
+            Swal.fire({
+              icon: "error",
+              text: "the msg is so long or content is not accepte",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          } else if (response.data.sendMsg === "reload") {
+            window.location.href = "/chat";
+          }
+        });
     }
   }
   function viewfreinds() {
@@ -112,27 +120,31 @@ function Chat() {
         setChat((oldchat) => oldchat?.concat(data));
         // console.log(data)
       });
-      axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            setMe(res.data[0]?.id);
+      axios
+        .get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setMe(res.data[0]?.id);
+            }
           }
-        }
-      });
+        });
 
-      axios.get("http://localhost:3001/getmatcheduser", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-        if (!unmount) {
-          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-            localStorage.removeItem("token");
-            history.push("/login");
-          } else {
-            setMatch(res.data);
+      axios
+        .get("http://localhost:3001/getmatcheduser", { headers: { "x-auth-token": localStorage.getItem("token") } })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              setMatch(res.data);
+            }
           }
-        }
-      });
+        });
       return () => {
         unmount = true;
       };
@@ -158,7 +170,11 @@ function Chat() {
             {matched?.map((listmatched, index) => (
               <div key={index}>
                 <Box borderBottom={1} className={classes.border} />
-                <div className="users_chat" id={listmatched.id} onClick={() => getmsg(me, listmatched.id, listmatched.username, listmatched.profilePic)}>
+                <div
+                  className="users_chat"
+                  id={listmatched.id}
+                  onClick={() => getmsg(me, listmatched.id, listmatched.username, listmatched.profilePic)}
+                >
                   <div className="profile_img">
                     <img alt="" src={"http://localhost:3001/images/" + listmatched?.profilePic} />
                     <div>

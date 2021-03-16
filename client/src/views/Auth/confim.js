@@ -26,7 +26,9 @@ function Confim(props) {
 
   return (
     <div className="box-form">
-      <div className="left" id ="left-confirm"><div className="overlay"></div></div>
+      <div className="left" id="left-confirm">
+        <div className="overlay"></div>
+      </div>
       <div className="right-confirm">
         <h1 className="fgp">Account Verified!</h1>
         <br />

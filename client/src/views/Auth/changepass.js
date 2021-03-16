@@ -22,7 +22,9 @@ function Changepass(props) {
       });
 
     if (Npassword && !isPassword(Npassword))
-      setErrNpassword("Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+      setErrNpassword(
+        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
     else setErrNpassword("");
     if (Cnpassword && Npassword !== Cnpassword) setErrCnpassword("Confirm Password is not valide");
     else setErrCnpassword("");

@@ -31,19 +31,24 @@ function Register() {
   }, [token]);
 
   useEffect(() => {
-    if (firstname && !isName(firstname) && firstname.length < 24) seterrfirstname("First name is not valide (minimum is 3 letters)");
+    if (firstname && !isName(firstname) && firstname.length < 24)
+      seterrfirstname("First name is not valide (minimum is 3 letters)");
     else if (firstname.length > 24) seterrfirstname("First name is too long (maximum is 24 letters)");
     else seterrfirstname("");
-    if (lastname && !isName(lastname) && lastname.length < 24) seterrlastname("Last Name is not valide (minimum is 3 letters)");
+    if (lastname && !isName(lastname) && lastname.length < 24)
+      seterrlastname("Last Name is not valide (minimum is 3 letters)");
     else if (lastname.length > 24) seterrlastname("Last name is too long (maximum is 24 letters)");
     else seterrlastname("");
-    if (username && !isUsername(username) && username.length < 24) seterrusername("Username is not valide (minimum is 3 characters)");
+    if (username && !isUsername(username) && username.length < 24)
+      seterrusername("Username is not valide (minimum is 3 characters)");
     else if (username.length > 24) seterrusername("Username is too long (maximum is 24 characters)");
     else seterrusername("");
     if (email && !isEmail(email)) seterremail("Email is not valide");
     else seterremail("");
     if (password && !isPassword(password))
-      seterrpassword("Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+      seterrpassword(
+        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+      );
     else seterrpassword("");
     if (verifypassword && password !== verifypassword) seterrverifypassword("Verify Password is not valide");
     else seterrverifypassword("");
@@ -114,7 +119,8 @@ function Register() {
           <h1 className="fgp">Find Your Perfect Match</h1>
           <br />
           <p>
-            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go for people seeking love.
+            We are here to build emotion, connect people and create happy stories. Online dating sites are the way to go
+            for people seeking love.
             <br />
             <br />
             Get to know more

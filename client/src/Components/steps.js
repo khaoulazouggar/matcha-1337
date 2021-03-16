@@ -200,15 +200,32 @@ function Steps(props) {
           1
         </div>
         <div style={inStep1 === 0 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(1)} style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(1)}
+          style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+        >
           2
         </div>
         <div style={inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(2)} style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          onClick={() => setInStep(2)}
+          style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}
+        >
           3
         </div>
-        <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "white" } : { background: "#646bfaad" }}></div>
-        <div onClick={() => setInStep(3)} style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
+        <div
+          style={
+            inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "white" } : { background: "#646bfaad" }
+          }
+        ></div>
+        <div
+          onClick={() => setInStep(3)}
+          style={
+            inStep1 === 0 || inStep1 === 1 || inStep1 === 2
+              ? { background: "" }
+              : { background: "#646bfaad", color: "white" }
+          }
+        >
           4
         </div>
       </div>
@@ -218,7 +235,14 @@ function Steps(props) {
             {inStep1 === 0 ? (
               <InStep data={{ gender, setGender }} />
             ) : inStep1 === 1 ? (
-              <textarea maxLength="100" className="bio" type="text" placeholder="Add Your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
+              <textarea
+                maxLength="100"
+                className="bio"
+                type="text"
+                placeholder="Add Your Bio"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
             ) : inStep1 === 2 ? (
               <Tag data={{ tags, setTags }} />
             ) : (
@@ -277,7 +301,8 @@ function Steps(props) {
               } else setInStep(inStep1 + 1);
             }}
           >
-            {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
+            {inStep1 === 3 ? "Finish" : "Next"}{" "}
+            <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
           </button>
         </div>
       </div>

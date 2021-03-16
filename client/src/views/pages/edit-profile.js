@@ -34,37 +34,52 @@ function EditProfile(props) {
           history.push("/login");
         } else {
           if (res.data === "nothing changed") {
-            Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false ,heightAuto: false});
-          }else if (res.data === "updated") {
-            Swal.fire({ icon: "success", text: "Your profile has been successfully modified.", showConfirmButton: false ,heightAuto: false});}
-            else if(res.data === "data too long"){
-              Swal.fire({ icon: "error", text: "data too long", showConfirmButton: false ,heightAuto: false});
-            }
-            else if(res.data === "Please enter a valid birthday"){
-              Swal.fire({ icon: "error", text: "Please enter a valid birthday", showConfirmButton: false ,heightAuto: false});
-            }
-            // console.log(res.data);
+            Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false, heightAuto: false });
+          } else if (res.data === "updated") {
+            Swal.fire({
+              icon: "success",
+              text: "Your profile has been successfully modified.",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          } else if (res.data === "data too long") {
+            Swal.fire({
+              icon: "error",
+              text: "data in bio or tags is too long",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          } else if (res.data === "Please enter a valid birthday") {
+            Swal.fire({
+              icon: "error",
+              text: "Please enter a valid birthday",
+              showConfirmButton: false,
+              heightAuto: false,
+            });
+          }
+          // console.log(res.data);
         }
       });
   };
 
   const getdata = () => {
-    axios.get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } }).then((res) => {
-      if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-        localStorage.removeItem("token");
-        history.push("/login");
-      } else {
-        // console.log(res.data);
-        let data = props.data.gender;
-        data.yourGender = res.data[0].gender;
-        data.genderLooking = res.data[0].genderLooking;
-        data.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
-        props.data.setGender({ ...data });
-        props.data2.setNotes(res.data[0].bio);
-        if (res.data[0].tags) props.data1.setTags(JSON.parse(res.data[0].tags));
-        
-      }
-    });
+    axios
+      .get("http://localhost:3001/getData", { headers: { "x-auth-token": localStorage.getItem("token") } })
+      .then((res) => {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+          localStorage.removeItem("token");
+          history.push("/login");
+        } else {
+          // console.log(res.data);
+          let data = props.data.gender;
+          data.yourGender = res.data[0].gender;
+          data.genderLooking = res.data[0].genderLooking;
+          data.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
+          props.data.setGender({ ...data });
+          props.data2.setNotes(res.data[0].bio);
+          if (res.data[0].tags) props.data1.setTags(JSON.parse(res.data[0].tags));
+        }
+      });
   };
 
   useEffect(() => {
@@ -161,7 +176,7 @@ function EditProfile(props) {
                   type="date"
                   InputProps={{ inputProps: { min: "1900-05-01", max: "2020-02-14" } }}
                   // value={props.data.gender.birthday}
-                  value={props.data.gender.birthday ? props.data.gender.birthday : ''}
+                  value={props.data.gender.birthday ? props.data.gender.birthday : ""}
                   onChange={(e) => {
                     // console.log(e.target.value);
                     let data = props.data.gender;
