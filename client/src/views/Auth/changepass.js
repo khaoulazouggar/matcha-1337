@@ -22,16 +22,14 @@ function Changepass(props) {
       });
 
     if (Npassword && !isPassword(Npassword))
-      setErrNpassword(
-        "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
-      );
+      setErrNpassword("Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
     else setErrNpassword("");
     if (Cnpassword && Npassword !== Cnpassword) setErrCnpassword("Confirm Password is not valide");
     else setErrCnpassword("");
   }, [Npassword, Cnpassword, history, props.match.params.token, validtoken]);
 
   const handlePass = () => {
-    console.log(props.match.params.token);
+    // console.log(props.match.params.token);
     const token = props.match.params.token;
 
     if (!Npassword) {
@@ -49,19 +47,23 @@ function Changepass(props) {
               icon: "success",
               text: "Your password has been successfully modified.",
               showConfirmButton: false,
-              heightAuto: false
+              heightAuto: false,
             });
             history.push("/login");
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // console.log(err)
+        });
     }
   };
 
   return (
     <div className="box-form">
-      <div className="left" id ="left-pass"><div className="overlay"></div></div>
-      
+      <div className="left" id="left-pass">
+        <div className="overlay"></div>
+      </div>
+
       <div className="right">
         <h1 className="fgp">Reset Password !</h1>
         <br />
@@ -94,7 +96,9 @@ function Changepass(props) {
         <button className="btn" onClick={() => handlePass()}>
           Change Password
         </button>
-        <br /><br /><br />
+        <br />
+        <br />
+        <br />
         <p>
           Just remembered? <a href="/login">Log in</a>
         </p>

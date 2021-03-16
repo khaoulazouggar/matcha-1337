@@ -177,17 +177,17 @@ function Research() {
   let meTag = [];
   if (meTags) {
     meTags = JSON.parse(meTags);
-    meTags.map((tag) => meTag.push(tag.label));
+    meTags?.map((tag) => meTag.push(tag.label));
   }
   // console.log(meTag)
   const items = [...users];
-  var people = items.map((usr) => {
+  var people = items?.map((usr) => {
     usr.age = calcAge(usr.birthday);
     usr.location = computeDistance([me[0]?.latitude, me[0]?.longitude], [usr.latitude, usr.longitude]);
 
     let allTags = JSON.parse(usr.tags);
     usr.allTags = [];
-    allTags.map((tag) => usr.allTags.push(tag.label));
+    allTags?.map((tag) => usr.allTags.push(tag.label));
     if (usr.allTags && meTags) {
       usr.tasgCount = compareArray(usr.allTags, meTag);
     }

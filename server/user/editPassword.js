@@ -21,11 +21,11 @@ router.post("/", isUserAuth, (req, res) => {
             bcrypt.hash(Npassword, 10, (err, hash) => {
               db.query("UPDATE users SET password = ? WHERE id = ?", [hash, id]);
               res.send("modified");
-            console.log("modified");
+              // console.log("modified");
             });
           } else {
             res.send("inccorect password");
-            console.log("inccorect password");
+            // console.log("inccorect password");
           }
         });
       }

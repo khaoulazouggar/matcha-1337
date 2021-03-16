@@ -17,24 +17,17 @@ router.post("/", isUserAuth, (req, res) => {
         if (result.length > 0) {
           if (result[0].latitude === lat && result[0].longitude === lng) {
             res.send("nothing changed");
-            console.log("nothing changed");
+            // console.log("nothing changed");
           } else {
-            axios
-              .get(
-                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBWRRPwssHd-F_zgFZdR1X08BtQ5i1TVmY`
-              )
-              .then((resl) => {
-                  if(resl){
-                      const city = resl.data.plus_code.compound_code.substr(8)
-                      db.query(
-                        "UPDATE users SET latitude = ?, longitude = ?, city = ? WHERE id = ?",
-                        [lat, lng, city,id]
-                      );
-                      res.send("modified");
-                      console.log("modified");
-                    console.log(resl.data.plus_code.compound_code.substr(8));
-                  }
-              });
+            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBWRRPwssHd-F_zgFZdR1X08BtQ5i1TVmY`).then((resl) => {
+              if (resl) {
+                const city = resl.data.plus_code.compound_code.substr(8);
+                db.query("UPDATE users SET latitude = ?, longitude = ?, city = ? WHERE id = ?", [lat, lng, city, id]);
+                res.send("modified");
+                // console.log("modified");
+                // console.log(resl.data.plus_code.compound_code.substr(8));
+              }
+            });
           }
         }
       }

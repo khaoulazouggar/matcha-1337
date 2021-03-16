@@ -20,7 +20,7 @@ function Notification() {
         setNotif(notif?.filter((notification) => notification.id !== id));
       }
       if (response.data.err === true) {
-        console.log("error");
+        // console.log("error");
       }
     });
   }

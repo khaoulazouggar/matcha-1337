@@ -9,15 +9,15 @@ router.post("/", isUserAuth, (req, res) => {
   const id = req.userId;
   const image = req.body.Img;
   const e = req.body.e;
-  console.log(image[e].image);
-const profilePic = image[e].image
+  // console.log(image[e].image);
+  const profilePic = image[e].image;
   const sqlInsert = "UPDATE users SET profilePic = NULL WHERE id = ?";
   db.query(sqlInsert, id, (err, result) => {
     if (err) {
       res.send({ err: err });
     } else {
       res.send("done");
-      console.log("done");
+      // console.log("done");
     }
   });
 });

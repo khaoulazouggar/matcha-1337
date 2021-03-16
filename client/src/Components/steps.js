@@ -41,16 +41,16 @@ function Steps(props) {
 
   const handleRemoveItem = (e) => {
     // console.log(e);
-    if(profileImg !== e){
+    if (profileImg !== e) {
       setImg(img.filter((item, i) => i !== e));
-    }else{
+    } else {
       Swal.fire({
         icon: "error",
         text: "this picture was setted as a default profile image you have to change it then you can remove it",
         showConfirmButton: false,
         heightAuto: false,
       });
-    }    
+    }
   };
 
   const handleDefaultItem = (e, image, auto) => {
@@ -61,8 +61,8 @@ function Steps(props) {
       showConfirmButton: false,
       heightAuto: false,
     });
-    console.log(e);
-    console.log(img[e]);
+    // console.log(e);
+    // console.log(img[e]);
   };
 
   const [inStep1, setInStep] = useState(0);
@@ -101,20 +101,18 @@ function Steps(props) {
         }
       });
     }
-    navigator.permissions
-      .query({ name: "geolocation" })
-      .then(function (result) {
-        if (!unmount) {
-          if (result.state === "granted") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "denied") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          }
-          if (result.state === "prompt") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          }
+    navigator.permissions.query({ name: "geolocation" }).then(function (result) {
+      if (!unmount) {
+        if (result.state === "granted") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if (result.state === "denied") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
         }
-      });
+        if (result.state === "prompt") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        }
+      }
+    });
     return () => {
       changeUnmount(true);
     }; // eslint-disable-next-line
@@ -127,10 +125,7 @@ function Steps(props) {
       })
       .then((res) => {
         if (!unmount) {
-          if (
-            res.data === "U failed to authenticate" ||
-            res.data === "we need a token"
-          ) {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
             localStorage.removeItem("token");
             history.push("/login");
           } else {
@@ -162,10 +157,7 @@ function Steps(props) {
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       )
       .then((res) => {
-        if (
-          res.data === "U failed to authenticate" ||
-          res.data === "we need a token"
-        ) {
+        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
           localStorage.removeItem("token");
           history.push("/login");
         } else if (res.data === "data too long") {
@@ -175,7 +167,7 @@ function Steps(props) {
             showConfirmButton: false,
             heightAuto: false,
           });
-          console.log(res.data);
+          // console.log(res.data);
         } else if (res.data === "done") {
           Swal.fire({
             icon: "success",
@@ -204,61 +196,19 @@ function Steps(props) {
   return (
     <div className="steps">
       <div className="progressbar">
-        <div
-          onClick={() => setInStep(0)}
-          style={{ background: "#646bfaad", color: "white" }}
-        >
+        <div onClick={() => setInStep(0)} style={{ background: "#646bfaad", color: "white" }}>
           1
         </div>
-        <div
-          style={
-            inStep1 === 0
-              ? { background: "white" }
-              : { background: "#646bfaad" }
-          }
-        ></div>
-        <div
-          onClick={() => setInStep(1)}
-          style={
-            inStep1 === 0
-              ? { background: "" }
-              : { background: "#646bfaad", color: "white" }
-          }
-        >
+        <div style={inStep1 === 0 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div onClick={() => setInStep(1)} style={inStep1 === 0 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
           2
         </div>
-        <div
-          style={
-            inStep1 === 0 || inStep1 === 1
-              ? { background: "white" }
-              : { background: "#646bfaad" }
-          }
-        ></div>
-        <div
-          onClick={() => setInStep(2)}
-          style={
-            inStep1 === 0 || inStep1 === 1
-              ? { background: "" }
-              : { background: "#646bfaad", color: "white" }
-          }
-        >
+        <div style={inStep1 === 0 || inStep1 === 1 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div onClick={() => setInStep(2)} style={inStep1 === 0 || inStep1 === 1 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
           3
         </div>
-        <div
-          style={
-            inStep1 === 0 || inStep1 === 1 || inStep1 === 2
-              ? { background: "white" }
-              : { background: "#646bfaad" }
-          }
-        ></div>
-        <div
-          onClick={() => setInStep(3)}
-          style={
-            inStep1 === 0 || inStep1 === 1 || inStep1 === 2
-              ? { background: "" }
-              : { background: "#646bfaad", color: "white" }
-          }
-        >
+        <div style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "white" } : { background: "#646bfaad" }}></div>
+        <div onClick={() => setInStep(3)} style={inStep1 === 0 || inStep1 === 1 || inStep1 === 2 ? { background: "" } : { background: "#646bfaad", color: "white" }}>
           4
         </div>
       </div>
@@ -268,14 +218,7 @@ function Steps(props) {
             {inStep1 === 0 ? (
               <InStep data={{ gender, setGender }} />
             ) : inStep1 === 1 ? (
-              <textarea
-                maxLength="100"
-                className="bio"
-                type="text"
-                placeholder="Add Your Bio"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-              />
+              <textarea maxLength="100" className="bio" type="text" placeholder="Add Your Bio" value={notes} onChange={(e) => setNotes(e.target.value)} />
             ) : inStep1 === 2 ? (
               <Tag data={{ tags, setTags }} />
             ) : (
@@ -286,24 +229,12 @@ function Steps(props) {
             {inStep1 === 3 && img.length ? (
               <div className="upload-image">
                 {img.map((p, i) => (
-                  <div
-                    style={{ width: "155px", height: "155px" }}
-                    className="test"
-                    key={i}
-                  >
+                  <div style={{ width: "155px", height: "155px" }} className="test" key={i}>
                     <img className="file-upload-image" src={p} alt={p} />
-                    <button
-                      className="remove-image"
-                      title="remove-image"
-                      onClick={() => handleRemoveItem(i)}
-                    >
+                    <button className="remove-image" title="remove-image" onClick={() => handleRemoveItem(i)}>
                       <Trash2 size={20} />
                     </button>
-                    <button
-                      className="default-image"
-                      title="default-image"
-                      onClick={() => handleDefaultItem(i)}
-                    >
+                    <button className="default-image" title="default-image" onClick={() => handleDefaultItem(i)}>
                       <User size={20} />
                     </button>
                   </div>
@@ -346,11 +277,7 @@ function Steps(props) {
               } else setInStep(inStep1 + 1);
             }}
           >
-            {inStep1 === 3 ? "Finish" : "Next"}{" "}
-            <ArrowRight
-              style={{ display: "flex", float: "right", marginTop: 2 }}
-              size={20}
-            />
+            {inStep1 === 3 ? "Finish" : "Next"} <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
           </button>
         </div>
       </div>

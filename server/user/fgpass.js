@@ -17,15 +17,9 @@ router.post("/", (req, res) => {
         if (result.length > 0) {
           db.query("UPDATE users SET tokenPass = ? WHERE email = ?", [token, email]);
 
-          if (
-            send_Email(
-              email,
-              "Reset password",
-              `<p>To recover your account please click <a href="http://localhost:3000/changepass/${token}">Here</a></p>`
-            )
-          )
+          if (send_Email(email, "Reset password", `<p>To recover your account please click <a href="http://localhost:3000/changepass/${token}">Here</a></p>`))
             res.send({ message: "done" });
-          console.log("Email sent");
+          // console.log("Email sent");
         } else {
           res.send("email not found");
         }

@@ -29,91 +29,32 @@ function Edit(props) {
     <div className="box-formE">
       <div className="editing">
         <div className="left-edit">
-          <div
-            style={ProfileImg[0] ? { border: "none" } : {}}
-            className="edit-pic"
-          >
-            <img
-              className="editImg"
-              style={ProfileImg[0] ? {} : { display: "none" }}
-              src={ProfileImg}
-              alt={ProfileImg}
-              key={ProfileImg}
-            />
+          <div style={ProfileImg[0] ? { border: "none" } : {}} className="edit-pic">
+            <img className="editImg" style={ProfileImg[0] ? {} : { display: "none" }} src={ProfileImg} alt={ProfileImg} key={ProfileImg} />
           </div>
           <div className="edit">
-            <span
-              className="edit-child"
-              onClick={() => setRight(1)}
-              style={Right === 1 ? { color: "#7971b8" } : {}}
-            >
-              <Edit2
-                style={
-                  Right === 1
-                    ? { color: "#7971b8", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+            <span className="edit-child" onClick={() => setRight(1)} style={Right === 1 ? { color: "#7971b8" } : {}}>
+              <Edit2 style={Right === 1 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
               Edit your information
             </span>
             <br /> <br />
-            <span
-              className="edit-child"
-              onClick={() => setRight(2)}
-              style={Right === 2 ? { color: "#7971b8" } : {}}
-            >
-              <User
-                style={
-                  Right === 2
-                    ? { color: "#7971b8", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+            <span className="edit-child" onClick={() => setRight(2)} style={Right === 2 ? { color: "#7971b8" } : {}}>
+              <User style={Right === 2 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
               Edit your profile
             </span>
             <br /> <br />
-            <span
-              className="edit-child"
-              onClick={() => setRight(3)}
-              style={Right === 3 ? { color: "#7971b8" } : {}}
-            >
-              <Key
-                style={
-                  Right === 3
-                    ? { color: "#7971b8", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+            <span className="edit-child" onClick={() => setRight(3)} style={Right === 3 ? { color: "#7971b8" } : {}}>
+              <Key style={Right === 3 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
               Change your password
             </span>
             <br /> <br />
-            <span
-              className="edit-child"
-              onClick={() => setRight(4)}
-              style={Right === 4 ? { color: "#7971b8" } : {}}
-            >
-              <Aperture
-                style={
-                  Right === 4
-                    ? { color: "#7971b8", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+            <span className="edit-child" onClick={() => setRight(4)} style={Right === 4 ? { color: "#7971b8" } : {}}>
+              <Aperture style={Right === 4 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
               Gallery
             </span>
             <br /> <br />
-            <span
-              className="edit-child"
-              onClick={() => setRight(5)}
-              style={Right === 5 ? { color: "#7971b8" } : {}}
-            >
-              <MapPin
-                style={
-                  Right === 5
-                    ? { color: "#7971b8", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+            <span className="edit-child" onClick={() => setRight(5)} style={Right === 5 ? { color: "#7971b8" } : {}}>
+              <MapPin style={Right === 5 ? { color: "#7971b8", marginRight: "10px" } : { marginRight: "10px" }} />
               Localisation
             </span>
             <br /> <br />
@@ -132,21 +73,22 @@ function Edit(props) {
                 }).then((result) => {
                   if (result.isConfirmed) {
                     axios
-                      .post("http://localhost:3001/deleteAccount", {},{
-                        headers: {
-                          "x-auth-token": localStorage.getItem("token"),
-                        },
-                      })
+                      .post(
+                        "http://localhost:3001/deleteAccount",
+                        {},
+                        {
+                          headers: {
+                            "x-auth-token": localStorage.getItem("token"),
+                          },
+                        }
+                      )
                       .then((res) => {
-                        if (
-                          res.data === "U failed to authenticate" ||
-                          res.data === "we need a token"
-                        ) {
+                        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
                           localStorage.removeItem("token");
                           history.push("/login");
                         } else {
                           history.push("/");
-                          console.log(res.data);
+                          // console.log(res.data);
                         }
                       });
                     Swal.fire({
@@ -155,6 +97,8 @@ function Edit(props) {
                       showConfirmButton: false,
                       heightAuto: false,
                     });
+                    localStorage.removeItem("token");
+                    history.push("/register");
                   } else if (result.isDismissed) {
                     setdelet(0);
                   }
@@ -162,13 +106,7 @@ function Edit(props) {
               }}
               style={delet === 1 ? { color: "#ce3535" } : {}}
             >
-              <Trash2
-                style={
-                  delet === 1
-                    ? { color: "#ce3535", marginRight: "10px" }
-                    : { marginRight: "10px" }
-                }
-              />
+              <Trash2 style={delet === 1 ? { color: "#ce3535", marginRight: "10px" } : { marginRight: "10px" }} />
               DELETE YOUR ACCOUNT
             </span>
           </div>
@@ -177,11 +115,7 @@ function Edit(props) {
           {Right === 1 ? (
             <EditInfo data={{ ProfileImg, setProfileImg }} />
           ) : Right === 2 ? (
-            <EditProfile
-              data={{ gender, setGender }}
-              data1={{ tags, setTags }}
-              data2={{ notes, setNotes }}
-            />
+            <EditProfile data={{ gender, setGender }} data1={{ tags, setTags }} data2={{ notes, setNotes }} />
           ) : Right === 3 ? (
             <EditPass />
           ) : Right === 4 ? (

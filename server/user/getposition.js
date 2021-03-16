@@ -9,8 +9,9 @@ router.get("/", isUserAuth, (req, res) => {
   db.query(sqlInsert, id, (err, result) => {
     if (err) {
       res.send({ err: err });
-    } else if (!result.length) console.log("no user found");
-    else if (result.length > 0) {
+    } else if (!result.length) {
+      // console.log("no user found")
+    } else if (result.length > 0) {
       res.send(result);
       // console.log(result[0].latitude);
     }

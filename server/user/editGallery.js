@@ -14,12 +14,12 @@ saveImage = (image, folder, i) => {
     const buffer = Buffer.from(base64Data, "base64");
     jimp.read(buffer, (err, rslt) => {
       if (err) {
-        console.log({ err: err });
+        // console.log({ err: err });
       } else {
-        console.log("rslt");
+        // console.log("rslt");
         fs.writeFile(imgDest, base64Data, "base64", function (err) {
           if (err) {
-            console.log(err);
+            // console.log(err);
 
             reject("error_1");
           } else {
@@ -49,7 +49,7 @@ saveImagess = (images, id) => {
 router.post("/", isUserAuth, (req, res) => {
   const id = req.userId;
   const { Img, img } = req.body;
-  console.log(img.length + "-------------------" + Img.length);
+  // console.log(img.length + "-------------------" + Img.length);
   // Img.map((i) => {
   //   console.log(Img[0].image);
   // });
@@ -63,10 +63,10 @@ router.post("/", isUserAuth, (req, res) => {
     if (result.length > 0) {
       if (result[0].total === Img.length && img.length === 0) {
         res.send("nothing changed");
-        console.log("nothing changed");
+        // console.log("nothing changed");
       } else if (img.length + Img.length > 5) {
         res.send("more than 5");
-        console.log("more than 5");
+        // console.log("more than 5");
       } else {
         if (img.length) {
           saveImagess(img, id).then((rslt) => {
@@ -74,7 +74,7 @@ router.post("/", isUserAuth, (req, res) => {
               // console.log(rslt);
               // console.log("---------------" + i + "--------------");
               db.query("INSERT INTO images (image, id) VALUES (?,?)", [i, id]);
-              console.log("updated");
+              // console.log("updated");
             });
             res.send("updated");
           });

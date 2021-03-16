@@ -37,6 +37,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "Product": "npm run build && PORT=3000 serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

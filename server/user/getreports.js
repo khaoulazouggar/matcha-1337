@@ -10,11 +10,11 @@ router.get("/:profilename", isUserAuth, (req, res) => {
   db.query(sqlInsert, username, (err, rslt) => {
     if (err) {
       res.send({ err: err });
-    } else if (!rslt.length) console.log("no user found");
-    else {
+    } else if (!rslt.length) {
+      // console.log("no user found");
+    } else {
       // console.log(rslt);
-      const sqlInsert =
-        "SELECT * FROM reports WHERE reporter = ? and reported = ?";
+      const sqlInsert = "SELECT * FROM reports WHERE reporter = ? and reported = ?";
       db.query(sqlInsert, [id, rslt[0].id], (err, result) => {
         if (err) {
           res.send({ err: err });

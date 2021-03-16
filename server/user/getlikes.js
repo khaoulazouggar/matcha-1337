@@ -10,8 +10,9 @@ router.get("/:profilename", isUserAuth, (req, res) => {
   db.query(sqlInsert, username, (err, rslt) => {
     if (err) {
       res.send({ err: err });
-    } else if (!rslt.length) console.log("no user found");
-    else {
+    } else if (!rslt.length) {
+      // console.log("no user found");
+    } else {
       // console.log(rslt);
       const sqlInsert = "SELECT * FROM likes WHERE liker = ? and liked = ?";
       db.query(sqlInsert, [id, rslt[0].id], (err, result) => {

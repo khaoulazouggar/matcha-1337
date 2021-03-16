@@ -7,7 +7,8 @@
     "kill-port": "^1.6.1",
     "moment": "^2.29.1",
     "react-google-maps": "^7.3.0",
-    "react-hook-google-maps": "^0.0.3"
+    "react-hook-google-maps": "^0.0.3",
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "@ubilabs/google-maps-react-hooks": "^1.4.7"

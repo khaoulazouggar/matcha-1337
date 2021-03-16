@@ -10,17 +10,18 @@ router.get("/:profilename", isUserAuth, (req, res) => {
   db.query(sqlInsert, username, (err, rslt) => {
     if (err) {
       res.send({ err: err });
-    } else if (!rslt.length) console.log("no user found");
-    else {
+    } else if (!rslt.length) {
+      //  console.log("no user found");
+    } else {
       const sqlInsert = "SELECT * FROM block WHERE blocker = ? and blocked = ? or blocker = ? and blocked = ?";
-      db.query(sqlInsert, [id, rslt[0].id, rslt[0].id , id], (err, result) => {
+      db.query(sqlInsert, [id, rslt[0].id, rslt[0].id, id], (err, result) => {
         if (err) {
           res.send({ err: err });
         } else if (result.length > 0) {
           res.send("found");
           // console.log(result);
-        }else{
-          res.send("not found")
+        } else {
+          res.send("not found");
         }
       });
     }

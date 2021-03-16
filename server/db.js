@@ -7,7 +7,6 @@ try {
     database: "matcha",
   });
   module.exports = db;
-  
 } catch (error) {
-  console.log(error)
+  // console.log(error)
 }

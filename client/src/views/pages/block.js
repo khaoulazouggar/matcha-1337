@@ -111,7 +111,7 @@ function Unblock() {
         setUsers(users.filter((user) => user.blocked !== id));
       }
       if (response.data.err === true) {
-        console.log("error");
+        // console.log("error");
       }
     });
   }

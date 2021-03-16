@@ -238,7 +238,7 @@ function Profile(props) {
         localStorage.removeItem("token");
         history.push("/login");
       } else {
-        console.log(res.data);
+        // console.log(res.data);
         //add it or not ???????
         window.location.href = "/error";
       }
@@ -255,7 +255,7 @@ function Profile(props) {
         localStorage.removeItem("token");
         history.push("/login");
       } else {
-        console.log(res.data);
+        // console.log(res.data);
       }
     });
   };
@@ -280,7 +280,7 @@ function Profile(props) {
       axios.post("http://localhost:3001/updateLastseen", { username: profilename, newdate: new Date() }).then((response) => {
         if (response.data.status === true) {
         } else {
-          console.log(response.data.err);
+          // console.log(response.data.err);
         }
       });
     } else {

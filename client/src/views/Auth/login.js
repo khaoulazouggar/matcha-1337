@@ -56,7 +56,9 @@ function Login() {
             history.push("/steps");
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // console.log(err)
+        });
     }
   };
   return (

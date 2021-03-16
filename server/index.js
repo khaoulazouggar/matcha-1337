@@ -43,113 +43,92 @@ const getmatchedusr = require("./user/getmacheduser");
 const getmsg = require("./user/getmsg");
 const getusername = require("./user/getusername");
 const removeNotificaion = require("./user/removenotification");
-const notification = require("./user/notification")
+const notification = require("./user/notification");
 const redis = require("redis");
 const client = redis.createClient({ detect_buffers: true });
 const http = require("http");
-let users = {}
+let users = {};
 const socketIo = require("socket.io");
 const { use } = require("bcrypt/promises");
 const server = http.createServer(app);
 const io = socketIo(server, {
-  transports: ['websocket', 'polling'],
+  transports: ["websocket", "polling"],
   cors: {
     origin: "*",
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
-
-io.on("connection", function(socket)  {
-    socket.on('userconnected', function(username){
-      var usr = username
-      if (usr)
-      {
-          users[username] = socket
-          client.set(username, socket.id);
-          client.dbsize(function(err, nuMkey){
-          socket.broadcast.emit('usersOnline', nuMkey);
+io.on("connection", function (socket) {
+  socket.on("userconnected", function (username) {
+    var usr = username;
+    if (usr) {
+      users[username] = socket;
+      client.set(username, socket.id);
+      client.dbsize(function (err, nuMkey) {
+        socket.broadcast.emit("usersOnline", nuMkey);
+      });
+      socket.broadcast.emit("online", usr);
+    }
+    socket.on("disconnect", () => {
+      if (usr) {
+        client.del(usr);
+        client.dbsize(function (err, nuMkey) {
+          socket.broadcast.emit("usersOnline", nuMkey);
         });
-        socket.broadcast.emit('online', usr);
       }
-          socket.on('disconnect', () => {
-          if (usr)
-          {
-            client.del(usr);
-            client.dbsize(function(err, nuMkey){
-            socket.broadcast.emit('usersOnline', nuMkey);
-            });
-          }
-          var data = {usr : usr, lastseen : new Date()}
-          socket.broadcast.emit('offline', data);
-      });
+      var data = { usr: usr, lastseen: new Date() };
+      socket.broadcast.emit("offline", data);
+    });
   });
-      socket.on('stateOfuser', function(profile_name){
-      client.get(profile_name, function(err, reply) {
-        if (reply !== null)
-        {
-          socket.emit('online', profile_name);
-        }
-        else
-        {
-
-        }
-      });
+  socket.on("stateOfuser", function (profile_name) {
+    client.get(profile_name, function (err, reply) {
+      if (reply !== null) {
+        socket.emit("online", profile_name);
+      } else {
+      }
+    });
   });
-    socket.on('send_message', function(data){
-    client.get(data?.to_username, function(err, reply) {
-      if (reply !== null)
-      {
-        if (users[data?.to_username])
-        {
-            users[data?.to_username].emit('new_message', data);
-            users[data?.to_username].emit('notification_message', data?.to_username);
+  socket.on("send_message", function (data) {
+    client.get(data?.to_username, function (err, reply) {
+      if (reply !== null) {
+        if (users[data?.to_username]) {
+          users[data?.to_username].emit("new_message", data);
+          users[data?.to_username].emit("notification_message", data?.to_username);
         }
+      } else {
       }
-      else
-      {
-      }
-    })
-  })
-  socket.on('getUsersOnline', function(data)
-  {
-    if (data === 'true')
-    {
-        client.dbsize(function(err, nuMkey){
-        socket.emit('usersOnline', nuMkey);
+    });
+  });
+  socket.on("getUsersOnline", function (data) {
+    if (data === "true") {
+      client.dbsize(function (err, nuMkey) {
+        socket.emit("usersOnline", nuMkey);
       });
     }
-})
-    socket.on("setLike", function(data){
-      if (users[data])
-      {
-         users[data].emit("notification_Like", data)
-      }
-  })
-  socket.on("viewed your profile", function(data)
-  {
-    if (users[data])
-    {
-      users[data].emit("notification_viewed", data)
+  });
+  socket.on("setLike", function (data) {
+    if (users[data]) {
+      users[data].emit("notification_Like", data);
     }
-  })
-  socket.on("unliked", function(data)
-  {
-    if (users[data])
-    {
-      users[data].emit("unliked", data)
+  });
+  socket.on("viewed your profile", function (data) {
+    if (users[data]) {
+      users[data].emit("notification_viewed", data);
     }
-  })
-  socket.on("checkuser", function(data)
-  {
+  });
+  socket.on("unliked", function (data) {
+    if (users[data]) {
+      users[data].emit("unliked", data);
+    }
+  });
+  socket.on("checkuser", function (data) {
     client.del(data);
-    var data = {usr : data, lastseen : new Date()}
-    socket.broadcast.emit('offline', data);
-  })
-
-}).setMaxListeners(0)
+    var data = { usr: data, lastseen: new Date() };
+    socket.broadcast.emit("offline", data);
+  });
+}).setMaxListeners(0);
 
 app.use(cors());
-
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use("/images", express.static("./images"));
 app.use("/register", register);
@@ -196,6 +175,4 @@ app.use("/getposition", getposition);
 app.use("/gethistory", gethistory);
 app.use("/deleteAccount", deleteAccount);
 
-server.listen(3001, () => {
-  console.log("hello server");
-});
+server.listen(3001, () => {});
