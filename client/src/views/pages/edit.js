@@ -87,7 +87,8 @@ function Edit(props) {
                           localStorage.removeItem("token");
                           history.push("/login");
                         } else {
-                          history.push("/");
+                          localStorage.removeItem("token");
+                          history.push("/register");
                           // console.log(res.data);
                         }
                       });
@@ -97,8 +98,6 @@ function Edit(props) {
                       showConfirmButton: false,
                       heightAuto: false,
                     });
-                    localStorage.removeItem("token");
-                    history.push("/register");
                   } else if (result.isDismissed) {
                     setdelet(0);
                   }
