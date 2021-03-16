@@ -85,13 +85,14 @@ function Profile(props) {
               headers: { "x-auth-token": localStorage.getItem("token") },
             })
             .then((res) => {
+              // console.log(res.data);
               if (!unmount) {
                 if (res.data === "U failed to authenticate" || res.data === "we need a token") {
                   localStorage.removeItem("token");
                   history.push("/login");
                 } else if (res.data === "user logged") {
                   setUserlogged(1);
-                } else {
+                } else if (res.data === "done") {
                   socket.emit("viewed your profile", profilename);
                 }
               }

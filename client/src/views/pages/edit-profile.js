@@ -18,48 +18,57 @@ function EditProfile(props) {
     let gender = props.data.gender;
     let tags = props.data1.tags;
     let notes = props.data2.notes;
-    axios
-      .post(
-        "http://localhost:3001/editProfile",
-        {
-          ...gender,
-          tags,
-          notes,
-        },
-        { headers: { "x-auth-token": localStorage.getItem("token") } }
-      )
-      .then((res) => {
-        if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-          localStorage.removeItem("token");
-          history.push("/login");
-        } else {
-          if (res.data === "nothing changed") {
-            Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false, heightAuto: false });
-          } else if (res.data === "updated") {
-            Swal.fire({
-              icon: "success",
-              text: "Your profile has been successfully modified.",
-              showConfirmButton: false,
-              heightAuto: false,
-            });
-          } else if (res.data === "data too long") {
-            Swal.fire({
-              icon: "error",
-              text: "data in bio or tags is too long",
-              showConfirmButton: false,
-              heightAuto: false,
-            });
-          } else if (res.data === "Please enter a valid birthday") {
-            Swal.fire({
-              icon: "error",
-              text: "Please enter a valid birthday",
-              showConfirmButton: false,
-              heightAuto: false,
-            });
+    if (gender.birthday && tags.length && notes) {
+      axios
+        .post(
+          "http://localhost:3001/editProfile",
+          {
+            ...gender,
+            tags,
+            notes,
+          },
+          { headers: { "x-auth-token": localStorage.getItem("token") } }
+        )
+        .then((res) => {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            if (res.data === "nothing changed") {
+              Swal.fire({ icon: "error", text: "Nothing Changed", showConfirmButton: false, heightAuto: false });
+            } else if (res.data === "updated") {
+              Swal.fire({
+                icon: "success",
+                text: "Your profile has been successfully modified.",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
+            } else if (res.data === "data too long") {
+              Swal.fire({
+                icon: "error",
+                text: "data in bio or tags is too long",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
+            } else if (res.data === "Please enter a valid birthday") {
+              Swal.fire({
+                icon: "error",
+                text: "Please enter a valid birthday",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
+            }
+            // console.log(res.data);
           }
-          // console.log(res.data);
-        }
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: "Please enter a valid information",
+        showConfirmButton: false,
+        heightAuto: false,
       });
+    }
   };
 
   const getdata = () => {

@@ -27,7 +27,7 @@ router.post("/", isUserAuth, (req, res) => {
         // console.log(result[0].bio.length + notes.length);
         // console.log("data too long");
         res.send("data too long");
-      } else if (birthday >= "2010-12-31") {
+      } else if (birthday <= "1920-12-31" || birthday >= "2010-12-31"  ) {
         res.send("Please enter a valid birthday");
       } else {
         db.query("UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ? WHERE id = ?", [

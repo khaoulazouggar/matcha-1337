@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { socketConn as socket } from "tools/socket_con";
 import Swal from "sweetalert2";
+import noUser from "../../photos/noUser.png";
 
 const useStyles = makeStyles({
   chat: {
@@ -176,7 +177,10 @@ function Chat() {
                   onClick={() => getmsg(me, listmatched.id, listmatched.username, listmatched.profilePic)}
                 >
                   <div className="profile_img">
-                    <img alt="" src={"http://localhost:3001/images/" + listmatched?.profilePic} />
+                    <img
+                      alt=""
+                      src={listmatched?.profilePic ? "http://localhost:3001/images/" + listmatched?.profilePic : noUser}
+                    />
                     <div>
                       <h4>
                         {listmatched.firstname} {listmatched.lastname}
@@ -207,7 +211,11 @@ function Chat() {
           {tousername != null ? (
             <div className="chatDiv">
               <ArrowBackIcon className="backbutton" onClick={() => viewfreinds()}></ArrowBackIcon>
-              <img className="chatprofileImg" alt="" src={"http://localhost:3001/images/" + profile} />
+              <img
+                className="chatprofileImg"
+                alt=""
+                src={profile ? "http://localhost:3001/images/" + profile : noUser}
+              />
               <h3>
                 <Link className="username" to={`/profile/${tousername}`}>
                   @{tousername}
@@ -227,7 +235,7 @@ function Chat() {
                     </div>
                   ) : (
                     <div className="you">
-                      <img alt="" src={"http://localhost:3001/images/" + profile} />
+                      <img alt="" src={profile ? "http://localhost:3001/images/" + profile : noUser} />
                       <div>
                         <p>{chatmsg?.content}</p>
                       </div>

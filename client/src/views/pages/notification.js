@@ -5,6 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import moment from "moment";
 import Swal from "sweetalert2";
+import noUser from "../../photos/noUser.png";
 
 function Notification() {
   const [notif, setNotif] = useState();
@@ -49,7 +50,10 @@ function Notification() {
     <div className="notif">
       {notif?.map((notification, index) => (
         <div className="stylenotif" key={index}>
-          <img src={"http://localhost:3001/images/" + notification?.profilePic} alt="aa" />
+          <img
+            src={notification?.profilePic ? "http://localhost:3001/images/" + notification?.profilePic : noUser}
+            alt="aa"
+          />
           <h3>{notification?.username + "  " + notification?.subject}</h3>
           <p>{moment(notification?.time).fromNow()}</p>
           <Link to={"/profile/" + notification?.username}>viewd profile</Link>

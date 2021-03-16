@@ -205,6 +205,7 @@ function Research() {
     people = people.filter((items) => items.id !== id);
     setUsers(people);
   }
+  people?.filter((fil) => fil.rating > 5).map((rat) => (rat.rating = 5));
   if (!users) return <div></div>;
   return (
     <div className="filter">

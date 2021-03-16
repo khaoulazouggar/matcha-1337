@@ -17,27 +17,38 @@ router.get("/:profilename", isUserAuth, (req, res) => {
       if (result.length > 0) {
         if (result[0].id === id) res.send("user logged");
         else {
-          res.send("not the user logged");
+          // res.send("not the user logged");
           db.query(
-            "select * from block where blocker = ? and blocked = ?",
-            [id, result[0].id],
+            "select * from block where blocker = ? and blocked = ? or blocker = ? and blocked",
+            [id, result[0].id, result[0].id, id],
             (err, rslt) => {
               if (err) {
                 res.send({ err: err });
               } else if (rslt.length === 0) {
-                db.query("Insert into history (watcher, watched,date) values(? , ?, ?)", [id, result[0].id, d], (err, rows) => {
-                  if (err) {
-                    res.send({ err: err });
-                  } else{
-                    db.query("INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values(? , ?, 'viewed your profile', ?)", [id, result[0].id, d], (err, result) => {
-                      if (err) {
-                        res.send({ err: err });
-                      } else{
-                      }
-                    })
+                db.query(
+                  "Insert into history (watcher, watched,date) values(? , ?, ?)",
+                  [id, result[0].id, d],
+                  (err, rows) => {
+                    if (err) {
+                      res.send({ err: err });
+                    } else {
+                      db.query(
+                        "INSERT INTO `notification` (`from`, `to`, `subject`, `time`) values(? , ?, 'viewed your profile', ?)",
+                        [id, result[0].id, d],
+                        (err, result) => {
+                          if (err) {
+                            res.send({ err: err });
+                          } else {
+                            res.send("done");
+                          }
+                        }
+                      );
+                    }
                   }
-                })
-              }})
+                );
+              }
+            }
+          );
         }
       }
     } else res.send("no user found");
