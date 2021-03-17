@@ -14,6 +14,8 @@ import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+import noUser from "../../photos/noUser.png";
+
 
 const useStyles = makeStyles({
   root: {
@@ -207,7 +209,7 @@ function Unblock() {
                 <img
                   alt="profile"
                   className="research_image"
-                  src={"http://localhost:3001/images/" + filterPerson?.profilePic}
+                  src={filterPerson?.profilePic ? (filterPerson?.profilePic.substr(0, 5) === "https" ? filterPerson?.profilePic : "http://localhost:3001/images/" + filterPerson?.profilePic) : noUser}
                 />
                 <CardContent className={classes.CardContent}>
                   <Typography gutterBottom variant="h5" component="h2">

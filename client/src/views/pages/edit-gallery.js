@@ -114,7 +114,7 @@ function EditGallery(props) {
     // console.log("-----------", e, "---------", Img);
     props.data.setProfileImg("http://localhost:3001/images/" + Img[e].image);
     // console.log(props.data);
-
+    // console.log(Img[e].image);
     axios
       .post(
         "http://localhost:3001/defaultimage",

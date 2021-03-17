@@ -15,7 +15,13 @@ export const HistoryPost = (props) => {
         <div className="inpic-profile">
           <img
             className="inpic-profile-img"
-            src={props.post.profilePic ? "http://localhost:3001/images/" + props.post.profilePic : noUser}
+            src={
+              props.post.profilePic
+                ? props.post.profilePic.substr(0, 5) === "https"
+                  ? props.post.profilePic
+                  : "http://localhost:3001/images/" + props.post.profilePic
+                : noUser
+            }
             alt="..."
           />
         </div>

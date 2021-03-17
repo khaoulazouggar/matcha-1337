@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
                 [firstname, lastname, username, email, hash, token, date],
                 (err, result) => {
                   if (err) {
-                    console.log(err);
+                    // console.log(err);
                   } else {
                     if (
                       send_Email(

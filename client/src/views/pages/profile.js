@@ -147,7 +147,12 @@ function Profile(props) {
                 center.lng = res.data[0].longitude;
                 setCenter({ ...center });
                 setNotes(res.data[0].bio);
-                if (res.data[0].profilePic) setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+                if (res.data[0].profilePic)
+                  setProfileImg(
+                    res.data[0]?.profilePic.substr(0, 5) === "https"
+                      ? res.data[0].profilePic
+                      : "http://localhost:3001/images/" + res.data[0].profilePic
+                  );
                 if (res.data[0].image) setImg(res.data);
               }
             }

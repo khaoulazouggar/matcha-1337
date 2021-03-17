@@ -148,7 +148,11 @@ function EditInfo(props) {
               setNemail(res.data[0].email);
               // console.log(res.data);
               if (res.data[0].profilePic)
-                props.data.setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+                props.data.setProfileImg(
+                  res.data[0].profilePic.substr(0, 5) === "https"
+                    ? res.data[0].profilePic
+                    : "http://localhost:3001/images/" + res.data[0].profilePic
+                );
             }
           }
         });

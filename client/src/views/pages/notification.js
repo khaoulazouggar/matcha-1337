@@ -80,7 +80,13 @@ function Notification() {
       {notif?.map((notification, index) => (
         <div className="stylenotif" key={index}>
           <img
-            src={notification?.profilePic ? "http://localhost:3001/images/" + notification?.profilePic : noUser}
+            src={
+              notification?.profilePic
+                ? notification?.profilePic.substr(0, 5) === "https"
+                  ? notification?.profilePic
+                  : "http://localhost:3001/images/" + notification?.profilePic
+                : noUser
+            }
             alt="aa"
           />
           <h3>{notification?.username + "  " + notification?.subject}</h3>

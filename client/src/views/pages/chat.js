@@ -208,7 +208,13 @@ function Chat() {
                   <div className="profile_img">
                     <img
                       alt=""
-                      src={listmatched?.profilePic ? "http://localhost:3001/images/" + listmatched?.profilePic : noUser}
+                      src={
+                        listmatched?.profilePic
+                          ? listmatched?.profilePic.substr(0, 5) === "https"
+                            ? listmatched?.profilePic
+                            : "http://localhost:3001/images/" + listmatched?.profilePic
+                          : noUser
+                      }
                     />
                     <div>
                       <h4>
@@ -243,7 +249,13 @@ function Chat() {
               <img
                 className="chatprofileImg"
                 alt=""
-                src={profile ? "http://localhost:3001/images/" + profile : noUser}
+                src={
+                  profile
+                    ? profile.substr(0, 5) === "https"
+                      ? profile
+                      : "http://localhost:3001/images/" + profile
+                    : noUser
+                }
               />
               <h3>
                 <Link className="username" to={`/profile/${tousername}`}>
@@ -264,7 +276,16 @@ function Chat() {
                     </div>
                   ) : (
                     <div className="you">
-                      <img alt="" src={profile ? "http://localhost:3001/images/" + profile : noUser} />
+                      <img
+                        alt=""
+                        src={
+                          profile
+                            ? profile.substr(0, 5) === "https"
+                              ? profile
+                              : "http://localhost:3001/images/" + profile
+                            : noUser
+                        }
+                      />
                       <div>
                         <p>{chatmsg?.content}</p>
                       </div>

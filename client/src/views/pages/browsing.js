@@ -21,6 +21,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useHistory } from "react-router-dom";
+import noUser from "../../photos/noUser.png";
 
 const useStyles = makeStyles({
   root: {
@@ -136,7 +137,6 @@ function Research() {
     return ~~((Date.now() - birthday) / 31557600000);
   }
 
-
   useEffect(() => {
     return new Promise((resolve, reject) => {
       let unmount = false;
@@ -165,7 +165,6 @@ function Research() {
     }); // eslint-disable-next-line
   }, []);
 
-  
   useEffect(() => {
     let unmount = false;
     axios
@@ -358,7 +357,13 @@ function Research() {
                   <img
                     alt="profile"
                     className="research_image"
-                    src={"http://localhost:3001/images/" + filterPerson?.profilePic}
+                    src={
+                      filterPerson?.profilePic
+                        ? filterPerson?.profilePic.substr(0, 5) === "https"
+                          ? filterPerson?.profilePic
+                          : "http://localhost:3001/images/" + filterPerson?.profilePic
+                        : noUser
+                    }
                   />
                   <CardContent className={classes.CardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
