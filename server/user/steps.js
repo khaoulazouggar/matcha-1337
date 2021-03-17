@@ -15,7 +15,7 @@ saveOneImage = (image, folder, i) => {
     // console.log(buffer);
     jimp.read(buffer, (err, rslt) => {
       if (err) {
-        // console.log({ err: err });
+        reject();
       } else {
         // console.log("rslt");
         fs.writeFile(imgDest, base64Data, "base64", function (err) {
@@ -53,13 +53,13 @@ router.post("/", isUserAuth, (req, res) => {
   // console.log(req.body);
   // console.log(req.body.img);
 
-  if (img.length <= 5 && img.length !== 0 && yourGender && genderLooking && birthday && notes && tags.length) {
-    if (birthday <= "1920-12-31" || birthday >= "2010-12-31") res.send("Please enter a valid birthday");
+  if (img?.length <= 5 && img?.length !== 0 && yourGender && genderLooking && birthday && notes && tags?.length) {
+    if (birthday <= "1920-12-31" || birthday >= "2010-12-31") return res.send("Please enter a valid birthday");
     if (JSON.stringify(tags)?.length > 250 || notes?.length > 100) {
       // console.log(JSON.stringify(tags)?.length);
       // console.log(notes?.length);
       // console.log("hnaaaa");
-      res.send("data too long");
+      return res.send("data too long");
     } else {
       const id = req.userId;
 
@@ -69,34 +69,35 @@ router.post("/", isUserAuth, (req, res) => {
             db.query("INSERT INTO images (image, id) VALUES (?,?)", [i, id]);
           });
 
-            db.query(
-              "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?",
-              [
-                yourGender,
-                genderLooking,
-                birthday,
-                notes,
-                JSON.stringify(tags),
-                resl[profileImg],
-                latitude,
-                longitude,
-                city,
-                id,
-              ],(err, rslt) =>{
-                if(err){
-                  res.send("incorrect information in bio")
-                }
-                else{
-                   res.send("done");
-                }
-            })
+          db.query(
+            "UPDATE users SET gender = ?, genderLooking = ?, birthday= ?,bio= ?, tags= ?, profilePic =?,latitude = ?,longitude= ? , city = ? WHERE id = ?",
+            [
+              yourGender,
+              genderLooking,
+              birthday,
+              notes,
+              JSON.stringify(tags),
+              resl[profileImg],
+              latitude,
+              longitude,
+              city,
+              id,
+            ],
+            (err, rslt) => {
+              if (err) {
+                res.send("incorrect information in bio");
+              } else {
+                res.send("done");
+              }
+            }
+          );
         })
         .catch((err) => {
-          // console.log(err)
+          res.end();
         });
     }
   } else {
-    res.send("You have to complete all the steps first!");
+    return res.send("You have to complete all the steps first!");
   }
 });
 module.exports = router;

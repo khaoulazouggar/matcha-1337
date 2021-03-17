@@ -12,16 +12,16 @@ router.post("/", (req, res) => {
   const { firstname, lastname, username, email, password } = req.body;
   var date = new Date();
   if (
-    (firstname,
-    lastname,
-    username,
-    email,
-    password,
-    isName(firstname),
-    isName(lastname),
-    isUsername(username),
-    isEmail(email),
-    isPassword(password))
+    firstname &&
+    lastname &&
+    username &&
+    email &&
+    password &&
+    isName(firstname) &&
+    isName(lastname) &&
+    isUsername(username) &&
+    isEmail(email) &&
+    isPassword(password)
   ) {
     require("crypto").randomBytes(48, function (err, buffer) {
       var token = buffer.toString("hex");

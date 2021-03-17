@@ -48,31 +48,53 @@ function Profile(props) {
   }
 
   useEffect(() => {
-    return new Promise((resolve, reject) => {
-      let unmount = false;
-      axios
-        .get("http://localhost:3001/getposition", {
-          headers: { "x-auth-token": localStorage.getItem("token") },
-        })
-        .then((res) => {
-          if (!unmount) {
-            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-              localStorage.removeItem("token");
-              history.push("/login");
+    let unmount = false;
+    axios
+      .get("http://localhost:3001/getposition", {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (!unmount) {
+          if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+            localStorage.removeItem("token");
+            history.push("/login");
+          } else {
+            if (!res?.data[0]?.latitude) {
+              history.push("/steps");
+              // console.log(res);
             } else {
-              if (!res?.data[0]?.latitude) {
-                history.push("/steps");
-                // console.log(res);
-              } else {
-                setdone(1);
-              }
+              setdone(1);
             }
           }
-        });
-      return () => {
-        unmount = true;
-      };
-    }); // eslint-disable-next-line
+        }
+      });
+    socket.emit("stateOfuser", profilename);
+    socket.on("online", function (data) {
+      if (data === profilename) {
+        if (!unmount) setOnline(true);
+      } else {
+      }
+    });
+    socket.on("offline", function (name) {
+      if (name?.usr === profilename) {
+        if (!unmount) {
+          setOnline(false);
+          setlastConnection(name?.lastseen);
+        }
+        axios
+          .post("http://localhost:3001/updateLastseen", { username: profilename, newdate: new Date() })
+          .then((response) => {
+            if (response.data.status === true) {
+            } else {
+              // console.log(response.data.err);
+            }
+          });
+      } else {
+      }
+    });
+    return () => {
+      unmount = true;
+    }; // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -277,28 +299,6 @@ function Profile(props) {
 
   // const URL = "http://localhost:3001";
   // const socket = socketIOClient(URL);
-  socket.emit("stateOfuser", profilename);
-  socket.on("online", function (data) {
-    if (data === profilename) {
-      setOnline(true);
-    } else {
-    }
-  });
-  socket.on("offline", function (name) {
-    if (name?.usr === profilename) {
-      setOnline(false);
-      setlastConnection(name?.lastseen);
-      axios
-        .post("http://localhost:3001/updateLastseen", { username: profilename, newdate: new Date() })
-        .then((response) => {
-          if (response.data.status === true) {
-          } else {
-            // console.log(response.data.err);
-          }
-        });
-    } else {
-    }
-  });
   if (!firstname) return <div> </div>;
   return (
     <div className="profile">

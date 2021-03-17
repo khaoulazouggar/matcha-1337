@@ -40,15 +40,15 @@ function Home() {
           }
         }
       });
+    socket.emit("getUsersOnline", "true");
+    socket.on("usersOnline", function (data) {
+      //   console.log(data)
+      if (!unmount) setOnlineUsers(data);
+    });
     return () => {
       unmount = true;
     };
   }, []);
-  socket.emit("getUsersOnline", "true");
-  socket.on("usersOnline", function (data) {
-    //   console.log(data)
-    setOnlineUsers(data);
-  });
   return (
     <div className="center">
       <div className="home">

@@ -7,7 +7,7 @@ const isPassword = require("../tools/isPassword");
 router.post("/", (req, res) => {
   const token = req.body.token;
   const password = req.body.password;
-  if ((password, isPassword(password))) {
+  if ((password && isPassword(password))) {
     bcrypt.hash(password, 10, (err, hash) => {
       const sqlInsert = "SELECT * FROM users WHERE tokenPass = ?";
       db.query(sqlInsert, token, (err, result) => {

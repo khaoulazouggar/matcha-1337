@@ -108,7 +108,7 @@ function Steps(props) {
         if (result.state === "granted") {
           navigator.geolocation.getCurrentPosition(success, errors, options);
         } else if (result.state === "denied") {
-          navigator.geolocation.getCurrentPosition(success, errors, options);
+          errors();
         }
         if (result.state === "prompt") {
           navigator.geolocation.getCurrentPosition(success, errors, options);
@@ -201,6 +201,7 @@ function Steps(props) {
             heightAuto: false,
           });
         }
+        setLoading(false);
       });
   };
   return (
@@ -304,9 +305,7 @@ function Steps(props) {
             ""
           )}
           {loading ? (
-            <button className="next">
-              <Spinner color="primary" />
-            </button>
+            <button className="next">{inStep1 === 3 ? <Spinner color="primary" /> : "Next"}</button>
           ) : (
             <button
               className="next"
@@ -316,7 +315,7 @@ function Steps(props) {
                 } else setInStep(inStep1 + 1);
               }}
             >
-              {inStep1 === 3 ? "Finish" : "Next"}{" "}
+              {inStep1 === 3 ? "Finish" : "Next"}
               <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
             </button>
           )}
