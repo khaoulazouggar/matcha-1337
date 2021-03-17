@@ -46,6 +46,35 @@ function Notification() {
     }, // eslint-disable-next-line
     []
   );
+
+  useEffect(() => {
+    return new Promise((resolve, reject) => {
+      let unmount = false;
+      axios
+        .get("http://localhost:3001/getposition", {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        })
+        .then((res) => {
+          if (!unmount) {
+            if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+              localStorage.removeItem("token");
+              history.push("/login");
+            } else {
+              if (!res?.data[0]?.latitude) {
+                history.push("/steps");
+                // console.log(res);
+              } else {
+                // setdone(1);
+              }
+            }
+          }
+        });
+      return () => {
+        unmount = true;
+      };
+    }); // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="notif">
       {notif?.map((notification, index) => (

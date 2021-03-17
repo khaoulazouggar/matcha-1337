@@ -57,8 +57,15 @@ function EditProfile(props) {
                 showConfirmButton: false,
                 heightAuto: false,
               });
+            } else if (res.data === "incorrect information in bio") {
+              Swal.fire({
+                icon: "error",
+                text: "Incorrect information in bio or tags",
+                showConfirmButton: false,
+                heightAuto: false,
+              });
             }
-            // console.log(res.data);
+            console.log(res.data);
           }
         });
     } else {

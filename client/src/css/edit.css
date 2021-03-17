@@ -169,6 +169,7 @@ input.inptE:focus {
 
 .gallery-img {
   max-width: 225px;
+  max-height: 225px;
   padding: 11px;
   box-sizing: border-box;
   background-size: contain;

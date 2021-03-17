@@ -53,7 +53,6 @@ function Home() {
     <div className="center">
       <div className="home">
         <div className="started">
-          <h3></h3>
           <p>
             We are here to build emotion, connect people and create happy stories.Online dating sites are the way to go
             for people seeking love or to meet singles while they don’t know where to find them. There are lots of

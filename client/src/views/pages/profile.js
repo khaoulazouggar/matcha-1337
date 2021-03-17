@@ -76,123 +76,123 @@ function Profile(props) {
   }, []);
 
   useEffect(() => {
-    const getInfos = () => {
-      let unmount = false;
-      if (done) {
-        if (profilename) {
-          axios
-            .get(`http://localhost:3001/getIdByUser/${profilename}`, {
-              headers: { "x-auth-token": localStorage.getItem("token") },
-            })
-            .then((res) => {
-              // console.log(res.data);
-              if (!unmount) {
-                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                  localStorage.removeItem("token");
-                  history.push("/login");
-                } else if (res.data === "user logged") {
-                  setUserlogged(1);
-                } else if (res.data === "done") {
-                  socket.emit("viewed your profile", profilename);
-                }
+    // const getInfos = () => {
+    let unmount = false;
+    if (done) {
+      if (profilename) {
+        axios
+          .get(`http://localhost:3001/getIdByUser/${profilename}`, {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          })
+          .then((res) => {
+            // console.log(res.data);
+            if (!unmount) {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else if (res.data === "user logged") {
+                setUserlogged(1);
+              } else if (res.data === "done") {
+                socket.emit("viewed your profile", profilename);
               }
-            });
-          axios
-            .get(`http://localhost:3001/getDataByUser/${profilename}`, {
-              headers: { "x-auth-token": localStorage.getItem("token") },
-            })
-            .then((res) => {
-              if (!unmount) {
-                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                  localStorage.removeItem("token");
-                  history.push("/login");
-                } else if (res.data === "no user found") history.push("/");
-                else {
-                  // setprofile(1);
-                  // console.log(res.data);
-                  setfirstname(res.data[0].firstname);
-                  setlastname(res.data[0].lastname);
-                  setusername(res.data[0].username);
-                  setRating(res.data[0].rating);
-                  setCity(res.data[0].city);
-                  setlastConnection(res.data[0]?.last_connection);
-                  if (res.data[0].tags) setTags(JSON.parse(res.data[0].tags));
-                  gender.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
-                  gender.yourGender = res.data[0].gender;
-                  gender.genderLooking = res.data[0].genderLooking;
-                  setGender({ ...gender });
-                  center.lat = res.data[0].latitude;
-                  center.lng = res.data[0].longitude;
-                  setCenter({ ...center });
-                  setNotes(res.data[0].bio);
-                  if (res.data[0].profilePic) setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
-                  if (res.data[0].image) setImg(res.data);
-                }
+            }
+          });
+        axios
+          .get(`http://localhost:3001/getDataByUser/${profilename}`, {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          })
+          .then((res) => {
+            if (!unmount) {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else if (res.data === "no user found") history.push("/");
+              else {
+                // setprofile(1);
+                // console.log(res.data);
+                setfirstname(res.data[0].firstname);
+                setlastname(res.data[0].lastname);
+                setusername(res.data[0].username);
+                setRating(res.data[0].rating);
+                setCity(res.data[0].city);
+                setlastConnection(res.data[0]?.last_connection);
+                if (res.data[0].tags) setTags(JSON.parse(res.data[0].tags));
+                gender.birthday = moment(res.data[0].birthday).format("YYYY-MM-DD");
+                gender.yourGender = res.data[0].gender;
+                gender.genderLooking = res.data[0].genderLooking;
+                setGender({ ...gender });
+                center.lat = res.data[0].latitude;
+                center.lng = res.data[0].longitude;
+                setCenter({ ...center });
+                setNotes(res.data[0].bio);
+                if (res.data[0].profilePic) setProfileImg("http://localhost:3001/images/" + res.data[0].profilePic);
+                if (res.data[0].image) setImg(res.data);
               }
-            });
-          axios
-            .get(
-              `http://localhost:3001/getLike/${profilename}`,
+            }
+          });
+        axios
+          .get(
+            `http://localhost:3001/getLike/${profilename}`,
 
-              { headers: { "x-auth-token": localStorage.getItem("token") } }
-            )
-            .then((res) => {
-              if (!unmount) {
-                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                  localStorage.removeItem("token");
-                  history.push("/login");
-                } else if (res.data === "found") {
-                  setLike("#ec1212cc");
-                  // console.log(res.data);
-                }
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
+            if (!unmount) {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else if (res.data === "found") {
+                setLike("#ec1212cc");
+                // console.log(res.data);
               }
-            });
-          axios
-            .get(
-              `http://localhost:3001/getReport/${profilename}`,
+            }
+          });
+        axios
+          .get(
+            `http://localhost:3001/getReport/${profilename}`,
 
-              { headers: { "x-auth-token": localStorage.getItem("token") } }
-            )
-            .then((res) => {
-              if (!unmount) {
-                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                  localStorage.removeItem("token");
-                  history.push("/login");
-                } else if (res.data === "found") {
-                  setReport("#e8bb11");
-                  // console.log(res.data);
-                }
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
+            if (!unmount) {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else if (res.data === "found") {
+                setReport("#e8bb11");
+                // console.log(res.data);
               }
-            });
-          axios
-            .get(
-              `http://localhost:3001/getBlock/${profilename}`,
+            }
+          });
+        axios
+          .get(
+            `http://localhost:3001/getBlock/${profilename}`,
 
-              { headers: { "x-auth-token": localStorage.getItem("token") } }
-            )
-            .then((res) => {
-              if (!unmount) {
-                if (res.data === "U failed to authenticate" || res.data === "we need a token") {
-                  localStorage.removeItem("token");
-                  history.push("/login");
-                } else if (res.data === "found") {
-                  setBlock("#ec1212cc");
-                  history.push("/error");
-                  // console.log(res.data);
-                } else if (res.data === "not found") {
-                  setprofile(1);
-                }
+            { headers: { "x-auth-token": localStorage.getItem("token") } }
+          )
+          .then((res) => {
+            if (!unmount) {
+              if (res.data === "U failed to authenticate" || res.data === "we need a token") {
+                localStorage.removeItem("token");
+                history.push("/login");
+              } else if (res.data === "found") {
+                setBlock("#ec1212cc");
+                history.push("/error");
+                // console.log(res.data);
+              } else if (res.data === "not found") {
+                setprofile(1);
               }
-            });
-        }
+            }
+          });
       }
+    }
 
-      return () => {
-        unmount = true;
-      };
+    return () => {
+      unmount = true;
     };
-    setTimeout(getInfos, 500);
-    return clearTimeout();
+    // };
+    // setTimeout(getInfos, 500);
+    // return clearTimeout();
     // eslint-disable-next-line
   }, [history, profilename, done]);
   // console.log(tags[0].value);

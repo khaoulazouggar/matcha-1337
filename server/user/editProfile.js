@@ -37,9 +37,15 @@ router.post("/", isUserAuth, (req, res) => {
           notes,
           JSON.stringify(tags),
           id,
-        ]);
-        res.send("updated");
-        // console.log("updated");
+        ], (err, rslt) =>{
+          if(err){
+            res.send("incorrect information in bio")
+          }
+          else{
+            res.send("updated");
+            // console.log("updated");
+          }
+        });
       }
     }
   });

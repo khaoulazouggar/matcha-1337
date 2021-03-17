@@ -15,6 +15,7 @@ import { User } from "react-feather";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { split } from "lodash";
+import { Spinner } from "reactstrap";
 
 let handleImg = (nbrStep) => {
   let srcImg;
@@ -38,6 +39,7 @@ function Steps(props) {
   const [profileImg, setProfileImg] = useState([]);
   const history = useHistory();
   let [unmount, changeUnmount] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRemoveItem = (e) => {
     // console.log(e);
@@ -142,6 +144,7 @@ function Steps(props) {
   }, []);
 
   const handelSteps = () => {
+    setLoading(true);
     axios
       .post(
         "http://localhost:3001/steps",
@@ -187,6 +190,13 @@ function Steps(props) {
           Swal.fire({
             icon: "error",
             text: "You have to complete all the steps first!",
+            showConfirmButton: false,
+            heightAuto: false,
+          });
+        } else if (res.data === "incorrect information in bio") {
+          Swal.fire({
+            icon: "error",
+            text: "Incorrect information in bio or tags",
             showConfirmButton: false,
             heightAuto: false,
           });
@@ -293,17 +303,23 @@ function Steps(props) {
           ) : (
             ""
           )}
-          <button
-            className="next"
-            onClick={() => {
-              if (inStep1 === 3) {
-                handelSteps();
-              } else setInStep(inStep1 + 1);
-            }}
-          >
-            {inStep1 === 3 ? "Finish" : "Next"}{" "}
-            <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
-          </button>
+          {loading ? (
+            <button className="next">
+              <Spinner color="primary" />
+            </button>
+          ) : (
+            <button
+              className="next"
+              onClick={() => {
+                if (inStep1 === 3) {
+                  handelSteps();
+                } else setInStep(inStep1 + 1);
+              }}
+            >
+              {inStep1 === 3 ? "Finish" : "Next"}{" "}
+              <ArrowRight style={{ display: "flex", float: "right", marginTop: 2 }} size={20} />
+            </button>
+          )}
         </div>
       </div>
     </div>
