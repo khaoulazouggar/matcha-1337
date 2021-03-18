@@ -11,6 +11,10 @@ like them, and chat with those who have liked them in return.
 
 We realized this project in Node.js under MySql with the help of the framework Express.js
 
+## Authors
+
+***Khaoula zouggar && Abdellah Azeroual***
+
 ## Features
 
 - Registration and login
@@ -71,31 +75,31 @@ About :
  ```
  Account Verified: 
  ```
- ![Account Verified](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.23.58%AM.png)
+ ![Account Verified](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.23.58%20AM.png)
  ```
  Forget Password: 
  ```
- ![Forget Password](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.24.18%AM.png)
+ ![Forget Password](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.24.18%20AM.png)
  ```
  Reset Password: 
  ```
- ![Reset Password](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.25.01%AM.png)
+ ![Reset Password](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.25.01%20AM.png)
  ```
  Steps: 
  ```
- ![Steps](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.25.52%AM.png)
+ ![Steps](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.25.52%20AM.png)
  ```
  Steps: 
  ```
- ![Steps](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.26.38%AM.png)
+ ![Steps](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.26.38%20AM.png)
  ```
  Edit Account: 
  ```
- ![Edit Account](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.31.57%AM.png)
+ ![Edit Account](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.31.57%20AM.png)
  ```
  Profile: 
  ```
- ![Profile](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.32.19%AM.png)
+ ![Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.32.19%20AM.png)
  ``` 
  Others Profile
  ```
@@ -103,28 +107,25 @@ About :
  ```
  Browsing :
  ```
- ![Browsing](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.34.04%AM.png)
+ ![Browsing](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.34.04%20AM.png)
  ``` 
  Unblock :
  ```
- ![Unblock](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.35.05%AM.png)
+ ![Unblock](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.35.05%20AM.png)
  ```
  History : 
  ```
- ![History](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.35.19%AM.png)
+ ![History](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.35.19%20AM.png)
  ```
  Notification : 
  ```
- ![Notification](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.39.42%AM.png)
+ ![Notification](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.39.42%20AM.png)
  ``` 
  Chat :
  ```
- ![Chat](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.40.41%AM.png)
+ ![Chat](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.40.41%20AM.png)
  ```
  Error : 
  ```
- ![Error](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.41.10%AM.png)
+ ![Error](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.41.10%20AM.png)
 
-## Authors
-
-***Khaoula zouggar && Abdellah Azeroual***
