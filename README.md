@@ -87,7 +87,7 @@ About :
  ```
  Steps: 
  ```
- ![Steps](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.25.52%20AM.png)
+ ![Steps](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%202.11.50%20PM.png)
  ```
  Steps: 
  ```
@@ -99,11 +99,11 @@ About :
  ```
  Profile: 
  ```
- ![Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.32.19%20AM.png)
+ ![Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%202.12.50%20PM.png)
  ``` 
  Others Profile
  ```
- ![Others Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.33.21%20AM.png)
+ ![Others Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%202.28.45%20PM.png)
  ```
  Browsing :
  ```
