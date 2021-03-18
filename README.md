@@ -67,7 +67,7 @@ About :
  ```
  Home: 
  ```
- ![Home](https://github.com/khaoulazouggar/Matcha/blob/master/Images/Screen%Shot%2021-03-18%at%10.19.39AM.png)
+ ![Home](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%2010.19.39%20AM.png)
  ```
  Account Verified: 
  ```
