@@ -103,7 +103,7 @@ About :
  ``` 
  Others Profile
  ```
- ![Others Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%202.28.45%20PM.png)
+ ![Others Profile](https://github.com/khaoulazouggar/matcha/raw/master/Images/Screen%20Shot%202021-03-18%20at%202.41.22%20PM.png)
  ```
  Browsing :
  ```
